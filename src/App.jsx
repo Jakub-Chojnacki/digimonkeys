@@ -1,11 +1,11 @@
 import './App.css'
-import VideoLibrary from './components/videos/VideoLibrary'
+import Layout from './components/Layout'
 function App() {
 
 
   return (
     <div className="App">
-      <VideoLibrary/>
+      <Layout/>
     </div>
   )
 }

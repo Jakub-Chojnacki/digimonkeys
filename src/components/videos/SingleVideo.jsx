@@ -10,6 +10,7 @@ const SingleVideo = ({type,id,addedAt}) => {
         <h4>{items.snippet.title}</h4>
         <p>{`Views: ${items.statistics.viewCount}`}</p>
         <p>{`Likes: ${items.statistics.likeCount}`}</p>
+        <p>{`Added at : ${addedAt}`}</p>
       </div>
       )
     
@@ -21,6 +22,7 @@ const SingleVideo = ({type,id,addedAt}) => {
         <img src={items.pictures.sizes[3].link}/>
         <h4>{items.name}</h4>
         <p>{`Likes: ${items.metadata.connections.likes.total}`}</p>
+        <p>{`Added at : ${addedAt}`}</p>
       </div>
       )
     
@@ -29,7 +31,7 @@ const SingleVideo = ({type,id,addedAt}) => {
 
   return (
     <div>
-      <h1>We couldn't find the video</h1>
+      <h1>Fetching data</h1>
     </div>
   )
 }

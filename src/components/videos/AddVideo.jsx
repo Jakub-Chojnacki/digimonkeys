@@ -4,31 +4,62 @@ import VideoContext from '../../context/video-context'
 import { format} from 'date-fns'
 
 const AddVideo = () => {
-    const [newVideoId,setNewVideoId] = useState('')
-    const [newVimeo,setNewVimeo] = useState('')
+    const [newYtId,setNewYtId] = useState('')
+    const [newVimeoId,setNewVimeoId] = useState('')
     const [error,setError] = useState('')
     const [buttonMode,setButtonMode] = useState('YOUTUBE')
     const {ytStoredVideos,setYtStoredVideos,vimeoStoredVideos,setVimeoStoredVideos} = useContext(VideoContext)
+
+    function matchYoutubeUrl(url) {
+      var p = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+      var matches = url.match(p);
+      if(matches){
+          return matches[1];
+      }
+      return false;
+  }
+
+    function matchVimeoUrl(url) {
+      var p = /(?:http|https)?:?\/?\/?(?:www\.)?(?:player\.)?vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/(?:[^\/]*)\/videos\/|video\/|)(\d+)(?:|\/\?)/;
+      var matches = url.match(p);
+      if(matches){
+          return matches[1];
+      }
+      return false;
+  }
+    
+  let validationYt = matchYoutubeUrl(newYtId)
+  let validationVimeo = matchVimeoUrl(newVimeoId)
     const addYoutube = () => {
-        if(ytStoredVideos){
-          let current = {type:'YOUTUBE',id:newVideoId, addedAt:format(Date.now(),'do MMM y')}
+        if((ytStoredVideos && !ytStoredVideos.find(vid => vid.id == validationYt)) && newYtId.length){
+
+          let current = {type:'YOUTUBE',id:validationYt, addedAt:format(Date.now(),'do MMM y')}
+          
           setYtStoredVideos(prev => [...prev,current])
-  
-         
+
           setError(null)
-        }else {
-          setError('This video is already stored in your playlist')
+        }else{
+          if(newYtId.length){
+            setError('This video is already stored in your playlist')
+          }else {
+            setError('You must enter a link/id')
+          }
+         
         }
      
     }
 
     const addVimeo = () => {
-      if(vimeoStoredVideos){
-        let current = {type:'VIMEO',id:newVimeo, addedAt:format(Date.now(),'do MMM y')}
+      if((vimeoStoredVideos && !vimeoStoredVideos.find(vid => vid.id == validationVimeo)) && newVimeoId.length){
+        let current = {type:'VIMEO',id:validationVimeo, addedAt:format(Date.now(),'do MMM y')}
         setVimeoStoredVideos(prev=> [...prev,current])
         setError(null)
       }else {
-        setError('This video is already stored in your playlist')
+        if(newVimeoId.length){
+          setError('This video is already stored in your playlist')
+        }else {
+          setError('You must enter a link/id')
+        }
       }
     }
     
@@ -45,14 +76,15 @@ const AddVideo = () => {
 
           {buttonMode =='YOUTUBE' &&  
           <div>
-            <Input value={newVideoId} onChange={e=> setNewVideoId(e.target.value) } placeholder="Input a youtube id/link"/>
+            <Input value={newYtId} onChange={e=> setNewYtId(e.target.value) } placeholder="Input a youtube id/link"/>
             <Button type="submit" onClick={addYoutube} >Submit</Button>
           </div> }
           {buttonMode =='VIMEO' &&
           <div>
-          <Input value={newVimeo} onChange={e=> setNewVimeo(e.target.value) } placeholder="Input a vimeo id"/>
+          <Input value={newVimeoId} onChange={e=> setNewVimeoId(e.target.value) } placeholder="Input a vimeo id"/>
           <Button type="submit" onClick={addVimeo} >Submit</Button>
           </div> }  
+          {error && <p className="error">{error}</p>}
     </div>
   )
 }

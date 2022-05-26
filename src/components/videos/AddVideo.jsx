@@ -1,18 +1,17 @@
 import React,{useState,useContext} from 'react'
 import {Input,Button} from 'reactstrap'
 import VideoContext from '../../context/video-context'
+import { format} from 'date-fns'
 
 const AddVideo = () => {
     const [newVideoId,setNewVideoId] = useState('')
     const [newVimeo,setNewVimeo] = useState('')
     const [error,setError] = useState('')
-   
+  
     const {ytStoredVideos,setYtStoredVideos,vimeoStoredVideos,setVimeoStoredVideos} = useContext(VideoContext)
-    
-
     const addYoutube = () => {
         if(ytStoredVideos){
-          let current = {type:'YOUTUBE',id:newVideoId, addedAt:'27th May 2022'}
+          let current = {type:'YOUTUBE',id:newVideoId, addedAt:format(Date.now(),'do MMM y')}
           setYtStoredVideos(prev => [...prev,current])
   
          
@@ -25,7 +24,7 @@ const AddVideo = () => {
 
     const addVimeo = () => {
       if(vimeoStoredVideos){
-        let current = {type:'VIMEO',id:newVimeo, addedAt:'26th May 2022'}
+        let current = {type:'VIMEO',id:newVimeo, addedAt:format(Date.now(),'do MMM y')}
         setVimeoStoredVideos(prev=> [...prev,current])
         setError(null)
       }else {

@@ -1,0 +1,15 @@
+.video {
+    display:flex;
+    flex-direction: column;
+    padding: 0 0.5em;
+    
+}
+
+.icons{
+    font-size: 1.5rem;
+    padding:  0.5rem 0;
+    display:flex;
+    align-items:center;
+    justify-content: space-around;
+    cursor:pointer;
+}

@@ -1,7 +1,9 @@
 import React from 'react'
+import YoutubeVideos from './YoutubeVideos'
+import VimeoVideos from './VimeoVideos'
 const VideoLibrary = () => { 
   return (
-    <div>library</div>
+    <div><YoutubeVideos/> <VimeoVideos/></div>
      
   )
 }

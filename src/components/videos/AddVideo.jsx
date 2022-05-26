@@ -7,7 +7,7 @@ const AddVideo = () => {
     const [newVideoId,setNewVideoId] = useState('')
     const [newVimeo,setNewVimeo] = useState('')
     const [error,setError] = useState('')
-  
+    const [buttonMode,setButtonMode] = useState('YOUTUBE')
     const {ytStoredVideos,setYtStoredVideos,vimeoStoredVideos,setVimeoStoredVideos} = useContext(VideoContext)
     const addYoutube = () => {
         if(ytStoredVideos){
@@ -32,16 +32,27 @@ const AddVideo = () => {
       }
     }
     
+    const changeModeHandler = (e) => {
+      setButtonMode(e.target.innerText)
+    }
    
   return (
     <div>
-        <Input value={newVideoId} onChange={e=> setNewVideoId(e.target.value)}/>
-        <Button type="submit" onClick={addYoutube} >Submit</Button>
-        <p className="error">{error}</p>
+      <div>
+        <Button color={buttonMode == 'YOUTUBE' ? 'primary' : 'secondary'} onClick={changeModeHandler}>YOUTUBE</Button>
+        <Button color={buttonMode == 'VIMEO' ? 'primary' : 'secondary'} onClick={changeModeHandler}>VIMEO</Button>
+      </div>
 
-        <Input value={newVimeo} onChange={e=> setNewVimeo(e.target.value)}/>
-        <Button type="submit" onClick={addVimeo} >Submit</Button>
-        <p className="error">{error}</p>
+          {buttonMode =='YOUTUBE' &&  
+          <div>
+            <Input value={newVideoId} onChange={e=> setNewVideoId(e.target.value) } placeholder="Input a youtube id/link"/>
+            <Button type="submit" onClick={addYoutube} >Submit</Button>
+          </div> }
+          {buttonMode =='VIMEO' &&
+          <div>
+          <Input value={newVimeo} onChange={e=> setNewVimeo(e.target.value) } placeholder="Input a vimeo id"/>
+          <Button type="submit" onClick={addVimeo} >Submit</Button>
+          </div> }  
     </div>
   )
 }

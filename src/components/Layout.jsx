@@ -7,7 +7,9 @@ const Layout = () => {
   return (
     <div className={styles.layout}>
       <AddVideo/>
+      <main>
       <VideoLibrary/>
+      </main>
     </div>
   )
 }

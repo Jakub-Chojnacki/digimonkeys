@@ -1,5 +1,6 @@
 import './App.css'
 import Layout from './components/Layout'
+import 'bootstrap/dist/css/bootstrap.min.css';
 function App() {
 
 

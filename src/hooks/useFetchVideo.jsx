@@ -1,7 +1,7 @@
 import {useEffect,useState} from 'react'
 import axios from 'axios'
 const useFetchVideo =  (type,identifier) => {
-    const [data,setData] = useState()
+    const [res,setRes] = useState()
     const [isPending,setIsPending] = useState(true)
     const [error,setError] = useState()
     useEffect(()=> {
@@ -16,7 +16,7 @@ const useFetchVideo =  (type,identifier) => {
               yourHeaders =  {Authorization: `Bearer ${import.meta.env.VITE_VIMEO_API_TOKEN}`}
             }
             const response = await axios.get(url, {headers: yourHeaders});
-            setData(response)
+            setRes(response)
             setIsPending(false) 
           }
 
@@ -25,7 +25,7 @@ const useFetchVideo =  (type,identifier) => {
           
     },[])
 
-    return {data,isPending,error}
+    return {res,isPending,error}
 }
 
 export default useFetchVideo;

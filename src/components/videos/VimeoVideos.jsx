@@ -2,9 +2,9 @@ import React,{useState,useContext} from 'react'
 import {Button } from 'reactstrap'
 import SingleVideo from './SingleVideo'
 import VideoContext from '../../context/video-context'
-import styles from './VimeoVideos.module.css'
+import styles from './Videos.module.css'
 const VimeoVideos = () => {
- const {vimeoStoredVideos,setVimeoStoredVideos} = useContext(VideoContext)
+ const {vimeoStoredVideos,setVimeoStoredVideos,clearVimeoStoredVideos} = useContext(VideoContext)
  const [isReversed,setIsReversed] = useState(false)
  const [showOnlyFav,setShowOnlyFav] = useState(false)   
 
@@ -18,19 +18,23 @@ const VimeoVideos = () => {
     
 
  return (
-   <div>
-      <div><Button onClick={handleReverse}>{!isReversed ? 'Reverse the order' : 'Go to original order'}</Button></div>
-     {!showOnlyFav && <div><Button onClick={()=> {setShowOnlyFav(true)}}>Show Favourite Videos</Button></div>}
-     {showOnlyFav &&<div><Button onClick={()=> {setShowOnlyFav(false)}}>Show All</Button></div>}
-      <div className={styles.container}>
-  {!showOnlyFav && vimeoStoredVideos.map((video)=> {
-    return <SingleVideo key={video.id} type={video.type} id={video.id} addedAt={video.addedAt} isFav={video.isFav}/>
-   })}
+   <div className={styles.container}>
+      <div className="buttons-container">
+            <Button onClick={handleReverse}>{!isReversed ? 'Reverse the order' : 'Go to original order'}</Button>
+            {!showOnlyFav && <Button onClick={()=> {setShowOnlyFav(true)}}>Show Favourite Videos</Button>}
+            {showOnlyFav &&<Button onClick={()=> {setShowOnlyFav(false)}}>Show All</Button>}
+            <Button onClick={clearVimeoStoredVideos}>Clear All</Button>
+      </div>
 
-   {showOnlyFav && favouriteVideos.map((video)=> {
-    return <SingleVideo key={video.id} type={video.type} id={video.id} addedAt={video.addedAt} isFav={video.isFav}/>
-   })} 
-   </div>
+      <div className={styles.videos}>
+          {!showOnlyFav && vimeoStoredVideos.map((video)=> {
+            return <SingleVideo key={video.id} type={video.type} id={video.id} addedAt={video.addedAt} isFav={video.isFav}/>
+          })}
+
+          {showOnlyFav && favouriteVideos.map((video)=> {
+            return <SingleVideo key={video.id} type={video.type} id={video.id} addedAt={video.addedAt} isFav={video.isFav}/>
+          })} 
+       </div>
    </div>
   )
 }

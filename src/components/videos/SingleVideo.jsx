@@ -4,10 +4,16 @@ import {AiOutlineStar,AiFillStar,AiFillEye} from 'react-icons/ai'
 import {FaTrashAlt} from 'react-icons/fa'
 import styles from './SingleVideo.module.css'
 import VideoContext from '../../context/video-context'
+import {Card} from 'reactstrap'
+import  ModalPlayer from './ModalPlayer'
+
 const SingleVideo = ({type,id,addedAt,isFav}) => {
   const {res,isPending,error} = useFetchVideo(type,id)
   const {ytStoredVideos,vimeoStoredVideos,setYtStoredVideos,setVimeoStoredVideos} = useContext(VideoContext)
-
+  const [showModal,setShowModal] = useState(false)
+  const showVideo = () => {
+    setShowModal(true)
+ }
   const deleteHandler = () => {
     if(type==='YOUTUBE'){
       setYtStoredVideos(prev => prev.filter((el)=> el.id !== id))
@@ -49,7 +55,7 @@ const SingleVideo = ({type,id,addedAt,isFav}) => {
     const items = res.data.items[0];
    
      displayData = 
-     <div>
+     <div >
         <img src={items.snippet.thumbnails.high.url}/>
         <h4>{items.snippet.title}</h4>
         <p>{`Views: ${items.statistics.viewCount}`}</p>
@@ -59,7 +65,7 @@ const SingleVideo = ({type,id,addedAt,isFav}) => {
   }else if(res && type==='VIMEO'){
     const items = res.data;
      displayData = 
-     <div>
+     <div >
         <img src={items.pictures.sizes[3].link}/>
         <h4>{items.name}</h4>
         <p>{`Likes: ${items.metadata.connections.likes.total}`}</p>
@@ -67,10 +73,11 @@ const SingleVideo = ({type,id,addedAt,isFav}) => {
       </div>
   }
   return (
-    <div>
+    <Card color="light">
       { displayData}
-      <div className={styles.icons}><AiFillEye /> <FaTrashAlt onClick={deleteHandler} /> {isFav ? <AiFillStar  onClick={toggleFavHandler} /> : <AiOutlineStar  onClick={toggleFavHandler}/>  } </div>
-    </div>
+      <div className={styles.icons}><AiFillEye onClick={showVideo} /> <FaTrashAlt onClick={deleteHandler} /> {isFav ? <AiFillStar  onClick={toggleFavHandler} /> : <AiOutlineStar  onClick={toggleFavHandler}/>  } </div>
+      {showModal && <ModalPlayer type={type} id={id} hideModal={()=>setShowModal(false)}/>}
+    </Card>
   )
 }
 

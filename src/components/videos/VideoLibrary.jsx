@@ -7,9 +7,17 @@ const VideoLibrary = () => {
   return (
     <div>
        <Button color="primary" onClick={toggleDisplayMode}>Change display mode</Button>
-       <Videos type='YOUTUBE'/>
+       <div>
+         <h2>Your Youtube Library</h2> 
+          <Videos type='YOUTUBE'/>
+       </div>
+      
 
-       <Videos type='VIMEO'/>
+        <div>
+        <h2>Your Vimeo Library</h2>
+        <Videos type='VIMEO'/>
+        </div>
+     
        </div>
      
   )

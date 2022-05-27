@@ -4,7 +4,7 @@ import {AiOutlineStar,AiFillStar,AiFillEye} from 'react-icons/ai'
 import {FaTrashAlt} from 'react-icons/fa'
 import styles from './SingleVideo.module.css'
 import VideoContext from '../../context/video-context'
-import {Card} from 'reactstrap'
+import {Card,List,ListInlineItem,Button} from 'reactstrap'
 import  ModalPlayer from './ModalPlayer'
 
 const SingleVideo = ({type,id,addedAt,isFav}) => {
@@ -16,73 +16,94 @@ const SingleVideo = ({type,id,addedAt,isFav}) => {
  }
 
 
-  const deleteHandler = () => {
-    if(type==='YOUTUBE'){
-      setYtStoredVideos(prev => prev.filter((el)=> el.id !== id))
-    }else if (type ==='VIMEO'){
-      setVimeoStoredVideos(prev => prev.filter((el)=> el.id !== id))
+    const deleteHandler = () => {
+      if(type==='YOUTUBE'){
+        setYtStoredVideos(prev => prev.filter((el)=> el.id !== id))
+      }else if (type ==='VIMEO'){
+        setVimeoStoredVideos(prev => prev.filter((el)=> el.id !== id))
+      }
+  
+      
     }
- 
+
+  
+
+    const toggleFavHandler = () => {
+      if(type === 'YOUTUBE'){
+        setYtStoredVideos(ytStoredVideos.map((item) => {
+          if(item.id === id){
+            return {
+              ...item, isFav: !item.isFav
+            }
     
-  }
-
-  
-
-  const toggleFavHandler = () => {
-    if(type === 'YOUTUBE'){
-      setYtStoredVideos(ytStoredVideos.map((item) => {
-        if(item.id === id){
-          return {
-            ...item, isFav: !item.isFav
           }
-  
-        }
-        return item;
-      }))
-    }
-    else if(type === 'VIMEO'){
-      setVimeoStoredVideos(vimeoStoredVideos.map((item) => {
-        if(item.id === id){
-          return {
-            ...item, isFav: !item.isFav
+          return item;
+        }))
+      }
+      else if(type === 'VIMEO'){
+        setVimeoStoredVideos(vimeoStoredVideos.map((item) => {
+          if(item.id === id){
+            return {
+              ...item, isFav: !item.isFav
+            }
+    
           }
-  
-        }
-        return item;
-      }))
-    }
-    }
+          return item;
+        }))
+      }
+      }
    
 
-  let displayData = <p>Fetching Data</p>
-  if(res && type==='YOUTUBE'){
-    const items = res.data.items[0];
-   
-     displayData = 
-     <div >
-        <img className={styles.thumbnail} src={items.snippet.thumbnails.high.url} onClick={showVideo}/>
-        <h4>{items.snippet.title}</h4>
-        <p>{`Views: ${items.statistics.viewCount}`}</p>
-        <p>{`Likes: ${items.statistics.likeCount}`}</p>
-        <p>{`Added at : ${addedAt}`}</p>
-      </div>
-  }else if(res && type==='VIMEO'){
-    const items = res.data;
-     displayData = 
-     <div className={styles.kafelki}>
-        <img className={styles.thumbnail} src={items.pictures.sizes[3].link}  onClick={showVideo}/>
-        <h4>{items.name}</h4>
-        <p>{`Likes: ${items.metadata.connections.likes.total}`}</p>
-        <p>{`Added at : ${addedAt}`}</p>
-      </div>
-  }
+      let displayData = <p>Fetching Data</p>
+      if(res && type==='YOUTUBE'){
+        const items = res.data.items[0];
+      
+        displayData = 
+        <div >
+            <img className={styles.thumbnail} src={items.snippet.thumbnails.medium.url} onClick={showVideo}/>
+            <h5>{items.snippet.title}</h5>
+            <p>{`Views: ${items.statistics.viewCount}`}</p>
+            <p>{`Likes: ${items.statistics.likeCount}`}</p>
+            <p>{`Added at : ${addedAt}`}</p>
+          </div>
+      }else if(res && type==='VIMEO'){
+        const items = res.data;
+        displayData = 
+        <div className={`${listView ? styles.list : ''}`}>
+            <img className={styles.thumbnail} src={items.pictures.sizes[2].link}  onClick={showVideo}/>
+            <h5>{items.name}</h5>
+            <p>{`Likes: ${items.metadata.connections.likes.total}`}</p>
+            <p>{`Added at : ${addedAt}`}</p>
+          </div>
+         
+        //  if(listView){
+        //   displayData = <List>
+        //   <ListInlineItem><img className={styles.thumbnail} src={items.pictures.sizes[3].link}  onClick={showVideo}/></ListInlineItem>
+        //   <ListInlineItem><h4>{items.name}</h4></ListInlineItem>
+        //   <ListInlineItem> <p>{`Likes: ${items.metadata.connections.likes.total}`}</p></ListInlineItem>
+        //   <ListInlineItem><p>{`Added at : ${addedAt}`}</p></ListInlineItem>
+        //     </List>
+        // }
+      }
+
+
+    let cardDisplay = <Card color="light" >
+          { displayData}
+          <div className={styles.icons}><AiFillEye onClick={showVideo} /> <FaTrashAlt onClick={deleteHandler} /> {isFav ? <AiFillStar  onClick={toggleFavHandler} /> : <AiOutlineStar  onClick={toggleFavHandler}/>  } </div>
+          {showModal && <ModalPlayer type={type} id={id} hideModal={()=>setShowModal(false)}/>}
+        </Card>
+
+
+    let listDisplay = <List >
+            <ListInlineItem>{ displayData}</ListInlineItem>
+            <ListInlineItem className={`${styles.icons} ${styles.icons__list}`}><AiFillEye onClick={showVideo} /> <FaTrashAlt onClick={deleteHandler} /> {isFav ? <AiFillStar  onClick={toggleFavHandler} /> : <AiOutlineStar  onClick={toggleFavHandler}/>  } </ListInlineItem>
+            {showModal && <ModalPlayer type={type} id={id} hideModal={()=>setShowModal(false)}/>}
+          </List>
   return (
-    <Card color="light" >
-        { displayData}
-        <div className={styles.icons}><AiFillEye onClick={showVideo} /> <FaTrashAlt onClick={deleteHandler} /> {isFav ? <AiFillStar  onClick={toggleFavHandler} /> : <AiOutlineStar  onClick={toggleFavHandler}/>  } </div>
-        {showModal && <ModalPlayer type={type} id={id} hideModal={()=>setShowModal(false)}/>}
-      </Card>
-
+    <div>
+      {!listView && cardDisplay}
+      {listView && listDisplay}
+    </div>
   )
 }
 

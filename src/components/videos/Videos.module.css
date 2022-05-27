@@ -1,8 +1,13 @@
-
+.container{
+    display:flex; 
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 .videos {
     display:grid;
     grid-template-columns:  repeat(4,1fr) ;
-    gap: 10px;
+    gap: 1em;
     
 }
 
@@ -22,5 +27,21 @@
 
 .list {
     display: flex;
+    flex-direction: column;
+    justify-items: center;
+}
+
+.buttons{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+ .buttons__list {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
     flex-direction: column;
 }

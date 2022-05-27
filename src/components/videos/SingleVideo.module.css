@@ -20,7 +20,10 @@
 
 .list{
     display:flex;
-    flex-direction: row;
     gap: 0.5em;
 
+}
+
+.icons__list{
+    flex-direction: column;
 }

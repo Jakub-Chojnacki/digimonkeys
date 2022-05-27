@@ -83,12 +83,12 @@ const AddVideo = () => {
           {buttonMode =='YOUTUBE' &&  
           <div>
             <Input value={newYtId} onChange={e=> setNewYtId(e.target.value) } placeholder="Input a youtube id/link"/>
-            <Button type="submit" onClick={addYoutube} >Submit</Button>
+            <Button type="submit" color="success" outline onClick={addYoutube} >Submit</Button>
           </div> }
           {buttonMode =='VIMEO' &&
           <div>
           <Input value={newVimeoId} onChange={e=> setNewVimeoId(e.target.value) } placeholder="Input a vimeo id"/>
-          <Button type="submit" onClick={addVimeo} >Submit</Button>
+          <Button type="submit"color="success" outline onClick={addVimeo} >Submit</Button>
           </div> }  
           {error && <p className="error">{error}</p>}
     </div>

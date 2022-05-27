@@ -17,13 +17,15 @@ const SingleVideo = ({type,id,addedAt,isFav}) => {
 
 
     const deleteHandler = () => {
-      if(type==='YOUTUBE'){
+      if(type=='YOUTUBE'){
         setYtStoredVideos(prev => prev.filter((el)=> el.id !== id))
-      }else if (type ==='VIMEO'){
+        let stored = JSON.parse(localStorage.getItem("ytVideos"))
+        localStorage.setItem('ytVideos', JSON.stringify(stored.filter((el)=> el.id !== id)))
+      }else if (type =='VIMEO'){
         setVimeoStoredVideos(prev => prev.filter((el)=> el.id !== id))
+        let stored = JSON.parse(localStorage.getItem("vimeoVideos"))
+        localStorage.setItem('vimeoVideos', JSON.stringify(stored.filter((el)=> el.id !== id)))
       }
-  
-      
     }
 
   
@@ -32,9 +34,21 @@ const SingleVideo = ({type,id,addedAt,isFav}) => {
       if(type === 'YOUTUBE'){
         setYtStoredVideos(ytStoredVideos.map((item) => {
           if(item.id === id){
+
+            let stored = JSON.parse(localStorage.getItem("ytVideos"))
+            stored.map((item) => {
+              if(item.id == id){
+                console.log(item)
+                item.isFav = !item.isFav
+                const newStorage = JSON.stringify(stored,{...item,isFav:!isFav})
+                localStorage.setItem('ytVideos',newStorage)
+                
+              }
+          })
             return {
               ...item, isFav: !item.isFav
             }
+    
     
           }
           return item;
@@ -43,6 +57,16 @@ const SingleVideo = ({type,id,addedAt,isFav}) => {
       else if(type === 'VIMEO'){
         setVimeoStoredVideos(vimeoStoredVideos.map((item) => {
           if(item.id === id){
+            let stored = JSON.parse(localStorage.getItem("vimeoVideos"))
+            stored.map((item) => {
+              if(item.id == id){
+                console.log(item)
+                item.isFav = !item.isFav
+                const newStorage = JSON.stringify(stored,{...item,isFav:!isFav})
+                localStorage.setItem('vimeoVideos',newStorage)
+                
+              }
+          })
             return {
               ...item, isFav: !item.isFav
             }
@@ -51,7 +75,9 @@ const SingleVideo = ({type,id,addedAt,isFav}) => {
           return item;
         }))
       }
-      }
+     
+
+    }
    
 
       let displayData = <p>Fetching Data</p>
@@ -76,14 +102,6 @@ const SingleVideo = ({type,id,addedAt,isFav}) => {
             <p>{`Added at : ${addedAt}`}</p>
           </div>
          
-        //  if(listView){
-        //   displayData = <List>
-        //   <ListInlineItem><img className={styles.thumbnail} src={items.pictures.sizes[3].link}  onClick={showVideo}/></ListInlineItem>
-        //   <ListInlineItem><h4>{items.name}</h4></ListInlineItem>
-        //   <ListInlineItem> <p>{`Likes: ${items.metadata.connections.likes.total}`}</p></ListInlineItem>
-        //   <ListInlineItem><p>{`Added at : ${addedAt}`}</p></ListInlineItem>
-        //     </List>
-        // }
       }
 
 

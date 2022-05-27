@@ -13,3 +13,14 @@
     justify-content: space-around;
     cursor:pointer;
 }
+
+.thumbnail{
+    cursor:pointer;
+}
+
+.list{
+    display:flex;
+    flex-direction: row;
+    gap: 0.5em;
+
+}

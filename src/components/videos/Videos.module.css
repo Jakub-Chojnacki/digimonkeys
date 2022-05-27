@@ -19,3 +19,8 @@
         grid-template-columns:1fr ;
     }
 }
+
+.list {
+    display: flex;
+    flex-direction: column;
+}

@@ -9,11 +9,13 @@ import  ModalPlayer from './ModalPlayer'
 
 const SingleVideo = ({type,id,addedAt,isFav}) => {
   const {res,isPending,error} = useFetchVideo(type,id)
-  const {ytStoredVideos,vimeoStoredVideos,setYtStoredVideos,setVimeoStoredVideos} = useContext(VideoContext)
+  const {ytStoredVideos,vimeoStoredVideos,setYtStoredVideos,setVimeoStoredVideos,listView} = useContext(VideoContext)
   const [showModal,setShowModal] = useState(false)
   const showVideo = () => {
     setShowModal(true)
  }
+
+
   const deleteHandler = () => {
     if(type==='YOUTUBE'){
       setYtStoredVideos(prev => prev.filter((el)=> el.id !== id))
@@ -23,6 +25,8 @@ const SingleVideo = ({type,id,addedAt,isFav}) => {
  
     
   }
+
+  
 
   const toggleFavHandler = () => {
     if(type === 'YOUTUBE'){
@@ -56,7 +60,7 @@ const SingleVideo = ({type,id,addedAt,isFav}) => {
    
      displayData = 
      <div >
-        <img src={items.snippet.thumbnails.high.url}/>
+        <img className={styles.thumbnail} src={items.snippet.thumbnails.high.url} onClick={showVideo}/>
         <h4>{items.snippet.title}</h4>
         <p>{`Views: ${items.statistics.viewCount}`}</p>
         <p>{`Likes: ${items.statistics.likeCount}`}</p>
@@ -65,19 +69,20 @@ const SingleVideo = ({type,id,addedAt,isFav}) => {
   }else if(res && type==='VIMEO'){
     const items = res.data;
      displayData = 
-     <div >
-        <img src={items.pictures.sizes[3].link}/>
+     <div className={styles.kafelki}>
+        <img className={styles.thumbnail} src={items.pictures.sizes[3].link}  onClick={showVideo}/>
         <h4>{items.name}</h4>
         <p>{`Likes: ${items.metadata.connections.likes.total}`}</p>
         <p>{`Added at : ${addedAt}`}</p>
       </div>
   }
   return (
-    <Card color="light">
-      { displayData}
-      <div className={styles.icons}><AiFillEye onClick={showVideo} /> <FaTrashAlt onClick={deleteHandler} /> {isFav ? <AiFillStar  onClick={toggleFavHandler} /> : <AiOutlineStar  onClick={toggleFavHandler}/>  } </div>
-      {showModal && <ModalPlayer type={type} id={id} hideModal={()=>setShowModal(false)}/>}
-    </Card>
+    <Card color="light" >
+        { displayData}
+        <div className={styles.icons}><AiFillEye onClick={showVideo} /> <FaTrashAlt onClick={deleteHandler} /> {isFav ? <AiFillStar  onClick={toggleFavHandler} /> : <AiOutlineStar  onClick={toggleFavHandler}/>  } </div>
+        {showModal && <ModalPlayer type={type} id={id} hideModal={()=>setShowModal(false)}/>}
+      </Card>
+
   )
 }
 

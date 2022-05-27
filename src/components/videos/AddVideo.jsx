@@ -10,6 +10,13 @@ const AddVideo = () => {
     const [buttonMode,setButtonMode] = useState('YOUTUBE')
     const {ytStoredVideos,setYtStoredVideos,vimeoStoredVideos,setVimeoStoredVideos} = useContext(VideoContext)
 
+    //change input mode(YOUTUBE/VIMEO)
+    const changeModeHandler = (e) => {
+      setButtonMode(e.target.innerText)
+    }
+   
+
+    //validations
     function matchYoutubeUrl(url) {
       var p = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
       var matches = url.match(p);
@@ -30,6 +37,8 @@ const AddVideo = () => {
     
   let validationYt = matchYoutubeUrl(newYtId)
   let validationVimeo = matchVimeoUrl(newVimeoId)
+
+  //adding the video
     const addYoutube = () => {
         if((ytStoredVideos && !ytStoredVideos.find(vid => vid.id == validationYt)) && newYtId.length){
 
@@ -63,10 +72,7 @@ const AddVideo = () => {
       }
     }
     
-    const changeModeHandler = (e) => {
-      setButtonMode(e.target.innerText)
-    }
-   
+    
   return (
     <div>
       <div>

@@ -53,7 +53,6 @@ const AddVideo = () => {
             localStorage.setItem('ytVideos',JSON.stringify([ current]))
           }
          
-          console.log(localStorage.getItem("ytVideos"))
           setYtStoredVideos(prev => [...prev,current])
           
 
@@ -82,8 +81,7 @@ const AddVideo = () => {
           localStorage.setItem('vimeoVideos',JSON.stringify([ current]))
         }
        
-        console.log(localStorage.getItem("vimeoVideos"))
-        setYtStoredVideos(prev => [...prev,current])
+       
         
         setVimeoStoredVideos(prev=> [...prev,current])
         setError(null)

@@ -88,7 +88,7 @@ const SingleVideo = ({type,id,addedAt,isFav}) => {
         displayData = 
         <div className={listView ? styles.list : ''}>
             <img className={`${styles.thumbnail} ${listView ? styles['thumbnail--list']:''}`} src={items.snippet.thumbnails.high.url} onClick={showVideo}/>
-            <div>
+            <div className={styles.text}>
               <h5 className={`${styles.title}  ${listView ? styles['title--list']:''}`}>{items.snippet.title}</h5>
               <p>{`Views: ${items.statistics.viewCount}`}</p>
               <p>{`Likes: ${items.statistics.likeCount}`}</p>
@@ -100,7 +100,7 @@ const SingleVideo = ({type,id,addedAt,isFav}) => {
         displayData = 
         <div className={listView ? styles.list : ''} >
             <img className={` ${styles.thumbnail} ${listView ? styles['thumbnail--list']:""}`} src={items.pictures.sizes[3].link}  onClick={showVideo}/>
-            <div>
+            <div className={styles.text}>
               <h5 className={` ${styles.title}  ${listView ? styles['title--list']:''}`}>{items.name}</h5>
               <p>{`Likes: ${items.metadata.connections.likes.total}`}</p>
               <p>{`Added at : ${addedAt}`}</p>

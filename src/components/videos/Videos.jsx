@@ -9,7 +9,7 @@ const Videos = ({type}) => {
     const [isReversed,setIsReversed] = useState(false)
     const [showOnlyFav,setShowOnlyFav] = useState(false)   
     const [currentPage,setCurrentPage] = useState(1)
-    const [videosPerPage,setVideosPerPage] = useState(12)
+    const [videosPerPage,setVideosPerPage] = useState(4)
     let favouriteVideos;
     let displayVideo;
     let videosLink;
@@ -39,9 +39,7 @@ const Videos = ({type}) => {
        videosLink = ytStoredVideos
 
     }else if(type=='VIMEO'){
-       videosLink = vimeoStoredVideos
-
-        
+       videosLink = vimeoStoredVideos  
     }
     currentVideos = videosLink.slice(indexOfFirstVid,indexOfLastVid)
     favouriteVideos = videosLink.filter(video => video.isFav == true);

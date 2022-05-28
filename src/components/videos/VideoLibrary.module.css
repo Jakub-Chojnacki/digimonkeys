@@ -1,4 +1,9 @@
 
-.library{
+.library,.container{
     margin-top: 3em;
+}
+
+.display{
+    display:flex; 
+    gap: 0.5em;
 }

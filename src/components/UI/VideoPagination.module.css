@@ -1,3 +1,7 @@
 .pagination__container{
     margin-top: 2em;
 }
+
+.pagination__control{
+    justify-content:center;
+}

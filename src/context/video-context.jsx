@@ -20,14 +20,18 @@ export function VideoProvider({children}){
         localStorage.setItem('vimeoVideos', JSON.stringify([]))
     }
 
-    const toggleDisplayMode = () => {
-        setListView(prev => !prev)
+    const toggleListDisplay = () => {
+        setListView(true)
+    }
+
+    const toggleTileDisplay = () => {
+        setListView(false)
     }
     
     return (
         <VideoContext.Provider
          value={{
-           ytStoredVideos,setYtStoredVideos,vimeoStoredVideos,setVimeoStoredVideos,clearYtStoredVideos,clearVimeoStoredVideos,listView,setListView,toggleDisplayMode
+           ytStoredVideos,setYtStoredVideos,vimeoStoredVideos,setVimeoStoredVideos,clearYtStoredVideos,clearVimeoStoredVideos,listView,setListView,toggleListDisplay,toggleTileDisplay
              }}>
                  
             {children}

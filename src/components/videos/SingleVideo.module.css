@@ -1,17 +1,32 @@
 .video {
-    display:flex;
-    flex-direction: column;
-    padding: 0 0.5em;
+   display:flex;
+   justify-content: space-between;
+   margin-bottom: 1em;
     
 }
 
+.video__container{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
 .icons{
     font-size: 1.5rem;
-    padding:  0.5rem 0;
+    padding:  0.5em 0;
     display:flex;
     align-items:center;
     justify-content: space-around;
     cursor:pointer;
+    width:100%;
+   
+}
+.icons--list{
+    flex-direction: column;
+    align-items: end;
+    padding: 0 0.5em;
+    gap: 1em;
+    flex-shrink: 3;
+  
 }
 
 .thumbnail{
@@ -20,10 +35,45 @@
 
 .list{
     display:flex;
+    flex-direction: row;
     gap: 0.5em;
 
 }
 
-.icons__list{
-    flex-direction: column;
+.video__container--list{
+   display:flex;
+   width: 100%;
+}
+  
+
+
+@media (max-width: 920px){
+    
+    .video{
+        font-size: 0.8rem;
+    }
+    .thumbnail--list{
+        max-width: 50%;
+        
+    }
+    
+    .title{
+        font-size: 1rem;
+    }
+}
+
+
+@media (max-width: 600px){
+    .icons{
+        font-size: 1rem;
+    }
+    .title--list{
+        font-size: 0.85rem;
+    }
+    .video{
+        font-size: 0.7rem;
+    }
+    .thumbnail--list{
+        max-width: 40%;
+    }
 }

@@ -13,7 +13,7 @@ const VideoPagination = ({ postsPerPage, totalPosts, paginate }) => {
       <Pagination >
         {pageNumbers.map(number => (
           <PaginationItem key={number}>
-            <PaginationLink onClick={() => paginate(number)} href='#'>
+            <PaginationLink  onClick={() => paginate(number)} href='#'>
               {number}
             </PaginationLink>
           </PaginationItem>

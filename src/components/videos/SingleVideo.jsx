@@ -4,7 +4,7 @@ import {AiOutlineStar,AiFillStar,AiFillEye} from 'react-icons/ai'
 import {FaTrashAlt} from 'react-icons/fa'
 import styles from './SingleVideo.module.css'
 import VideoContext from '../../context/video-context'
-import {Card,List,ListInlineItem,Spinner} from 'reactstrap'
+import {Card,List,ListInlineItem} from 'reactstrap'
 import  ModalPlayer from './ModalPlayer'
 
 const SingleVideo = ({type,id,addedAt,isFav}) => {
@@ -81,46 +81,54 @@ const SingleVideo = ({type,id,addedAt,isFav}) => {
    
 
       let displayData = <p>Loading...</p>
+
+       // if and else if  breaks DRY principles but it's more readable this way
       if(res && type==='YOUTUBE'){
         const items = res.data.items[0];
-      
         displayData = 
-        <div >
-            <img className={styles.thumbnail} src={items.snippet.thumbnails.medium.url} onClick={showVideo}/>
-            <h5>{items.snippet.title}</h5>
-            <p>{`Views: ${items.statistics.viewCount}`}</p>
-            <p>{`Likes: ${items.statistics.likeCount}`}</p>
-            <p>{`Added at : ${addedAt}`}</p>
+        <div className={listView ? styles.list : ''}>
+            <img className={`${styles.thumbnail} ${listView ? styles['thumbnail--list']:''}`} src={items.snippet.thumbnails.high.url} onClick={showVideo}/>
+            <div>
+              <h5 className={`${styles.title}  ${listView ? styles['title--list']:''}`}>{items.snippet.title}</h5>
+              <p>{`Views: ${items.statistics.viewCount}`}</p>
+              <p>{`Likes: ${items.statistics.likeCount}`}</p>
+              <p>{`Added at : ${addedAt}`}</p>
+            </div>
           </div>
       }else if(res && type==='VIMEO'){
         const items = res.data;
         displayData = 
-        <div className={`${listView ? styles.list : ''}`}>
-            <img className={styles.thumbnail} src={items.pictures.sizes[2].link}  onClick={showVideo}/>
-            <h5>{items.name}</h5>
-            <p>{`Likes: ${items.metadata.connections.likes.total}`}</p>
-            <p>{`Added at : ${addedAt}`}</p>
+        <div className={listView ? styles.list : ''} >
+            <img className={` ${styles.thumbnail} ${listView ? styles['thumbnail--list']:""}`} src={items.pictures.sizes[3].link}  onClick={showVideo}/>
+            <div>
+              <h5 className={` ${styles.title}  ${listView ? styles['title--list']:''}`}>{items.name}</h5>
+              <p>{`Likes: ${items.metadata.connections.likes.total}`}</p>
+              <p>{`Added at : ${addedAt}`}</p>
+            </div>
           </div>
          
       }
 
 
-    let cardDisplay = <Card color="light" >
+    let cardDisplay = <Card color="light" className={styles.video__container}>
           { displayData}
-          <div className={styles.icons}><AiFillEye onClick={showVideo} /> <FaTrashAlt onClick={deleteHandler} /> {isFav ? <AiFillStar  onClick={toggleFavHandler} /> : <AiOutlineStar  onClick={toggleFavHandler}/>  } </div>
-          {showModal && <ModalPlayer type={type} id={id} hideModal={()=>setShowModal(false)}/>}
+          <div className={`${styles.icons} ${listView ? styles['icons--list'] : ''}`}><AiFillEye onClick={showVideo} /> <FaTrashAlt onClick={deleteHandler} /> {isFav ? <AiFillStar  onClick={toggleFavHandler} /> : <AiOutlineStar  onClick={toggleFavHandler}/>  } </div>
+         
         </Card>
 
 
-    let listDisplay = <List >
-            <ListInlineItem>{ displayData}</ListInlineItem>
-            <ListInlineItem className={`${styles.icons} ${styles.icons__list}`}><AiFillEye onClick={showVideo} /> <FaTrashAlt onClick={deleteHandler} /> {isFav ? <AiFillStar  onClick={toggleFavHandler} /> : <AiOutlineStar  onClick={toggleFavHandler}/>  } </ListInlineItem>
-            {showModal && <ModalPlayer type={type} id={id} hideModal={()=>setShowModal(false)}/>}
-          </List>
+    let listDisplay = <div className={styles['video__container--list']}>
+             { displayData}
+            <div className={`${styles.icons} ${listView ? styles['icons--list'] : ''}`}>
+              <AiFillEye onClick={showVideo} /> <FaTrashAlt onClick={deleteHandler} /> {isFav ? <AiFillStar  onClick={toggleFavHandler} /> : <AiOutlineStar  onClick={toggleFavHandler}/>  } 
+            </div>
+
+          </div>
   return (
-    <div>
+    <div className={styles.video}>
       {!listView && cardDisplay}
       {listView && listDisplay}
+      {showModal && <ModalPlayer type={type} id={id} hideModal={()=>setShowModal(false)}/>}
     </div>
   )
 }

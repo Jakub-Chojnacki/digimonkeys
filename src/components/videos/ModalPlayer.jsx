@@ -3,7 +3,6 @@ import ReactDom from 'react-dom'
 import styles from './ModalPlayer.module.css'
 import ReactPlayer from 'react-player'
 import {AiFillCloseSquare} from 'react-icons/ai'
-import {Modal} from 'reactstrap'
 const PlayerModal = ({type,id,hideModal}) => {
 
   let modalLink; 
@@ -23,7 +22,7 @@ const PlayerModal = ({type,id,hideModal}) => {
       return (
         <div className={styles.modal}>
             <AiFillCloseSquare className={styles.close} onClick={hideModal}/>
-            <ReactPlayer controls url={modalLink} playing  width="100%" />
+            <ReactPlayer controls url={modalLink}   width="100%" />
           
         </div>
       )

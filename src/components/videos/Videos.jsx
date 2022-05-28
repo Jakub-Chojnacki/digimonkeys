@@ -12,6 +12,7 @@ const Videos = ({type}) => {
     const [videosPerPage,setVideosPerPage] = useState(12)
     let favouriteVideos;
     let displayVideo;
+    let videosLink;
 
     const handleReverse = () => {
         setIsReversed(prev => !prev)
@@ -28,34 +29,30 @@ const Videos = ({type}) => {
 
     //pagination
     let currentVideos;
+    
     const indexOfLastVid = currentPage * videosPerPage;
     const indexOfFirstVid = indexOfLastVid - videosPerPage;
     const paginate = pageNumber => setCurrentPage(pageNumber);
-  
+
 
     if(type == 'YOUTUBE'){
-          currentVideos = ytStoredVideos.slice(indexOfFirstVid,indexOfLastVid)
-          favouriteVideos = ytStoredVideos.filter(video => video.isFav == true);
-           displayVideo =   currentVideos.map((video)=> {
-            return <SingleVideo key={video.id} type={video.type} id={video.id} addedAt={video.addedAt} isFav={video.isFav}/>
-            })
+       videosLink = ytStoredVideos
 
-            
-        
     }else if(type=='VIMEO'){
-         currentVideos = vimeoStoredVideos.slice(indexOfFirstVid,indexOfLastVid)
-         favouriteVideos = vimeoStoredVideos.filter(video => video.isFav == true);
-         displayVideo = currentVideos.map((video)=> {
-            return <SingleVideo key={video.id} type={video.type} id={video.id} addedAt={video.addedAt} isFav={video.isFav}/>
-          })
-         
+       videosLink = vimeoStoredVideos
 
         
     }
+    currentVideos = videosLink.slice(indexOfFirstVid,indexOfLastVid)
+    favouriteVideos = videosLink.filter(video => video.isFav == true);
+    displayVideo = currentVideos.map((video)=> {
+       return <SingleVideo key={video.id} type={video.type} id={video.id} addedAt={video.addedAt} isFav={video.isFav}/>
+     })
 
   return (
-    <div className={`${styles.container} `} >
-        <div className={`${styles.buttons} `}>
+    <div className={styles.container} >
+
+        <div className={styles.buttons}>
             <Button color="primary" outline onClick={handleReverse}>{!isReversed ? 'Reverse the order' : 'Show the original order'}</Button> 
             {<Button color="primary" outline onClick={()=> {setShowOnlyFav(prev => !prev)}}>{!showOnlyFav  ? 'Show Favourite Videos' : 'Show All Videos'}</Button>}
 
@@ -66,7 +63,6 @@ const Videos = ({type}) => {
 
         <div className={`${styles.videos} ${listView ? styles.list : ''} `}>
             {!showOnlyFav && displayVideo}
-
             {showOnlyFav && favouriteVideos.map((video)=> {
             return <SingleVideo key={video.id} type={video.type} id={video.id} addedAt={video.addedAt} isFav={video.isFav}/>
             })} 

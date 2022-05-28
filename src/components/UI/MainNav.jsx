@@ -1,8 +1,5 @@
 import { FaGithub } from 'react-icons/fa';
 import styles from './MainNav.module.css'
-
-
-
 const MainNav = () => {
     return (
         <header className={styles.container}>

@@ -1,9 +1,24 @@
 
-.library,.container{
-    margin-top: 3em;
+.library
+{
+    margin-top: 8em;
+   
 }
 
-.display{
+.container{
+    margin: 3em 0;
+}
+
+.settings{
+    margin-top: 1em;
     display:flex; 
-    gap: 0.5em;
+    flex-direction: column;
+    gap: 1.5em;
+    
+}
+
+.flex {
+    display:flex;
+    align-items: center;
+    gap: 1em;
 }

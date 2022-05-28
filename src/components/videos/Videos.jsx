@@ -5,11 +5,11 @@ import SingleVideo from './SingleVideo'
 import VideoContext from '../../context/video-context'
 import styles from './Videos.module.css'
 const Videos = ({type}) => {
-    const {vimeoStoredVideos,ytStoredVideos,clearVimeoStoredVideos,clearYtStoredVideos,listView} = useContext(VideoContext)
+    const {vimeoStoredVideos,ytStoredVideos,clearVimeoStoredVideos,clearYtStoredVideos,listView,videosPerPage} = useContext(VideoContext)
     const [isReversed,setIsReversed] = useState(false)
     const [showOnlyFav,setShowOnlyFav] = useState(false)   
     const [currentPage,setCurrentPage] = useState(1)
-    const [videosPerPage,setVideosPerPage] = useState(4)
+   
     let favouriteVideos;
     let displayVideo;
     let videosLink;
@@ -78,6 +78,7 @@ const Videos = ({type}) => {
                 paginate={paginate}
             />}
 
+         {(!favouriteVideos.length && !currentVideos.length ) && <p className={styles.empty}>Your library is empty! Please add some videos.</p>}
    </div>
   )
 }

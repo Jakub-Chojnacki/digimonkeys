@@ -3,6 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "author": "Jakub Chojnacki",
+  "description": "An online youtube and vimeo videos library.",
   "license": "ISC",
   "repository": {
     "type": "git",

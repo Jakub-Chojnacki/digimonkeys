@@ -1,4 +1,4 @@
-import React,{useState,useContext,Fragment} from 'react'
+import React,{useState,useContext} from 'react'
 import {Input,Button} from 'reactstrap'
 import VideoContext from '../../context/video-context'
 import { format} from 'date-fns'
@@ -22,9 +22,10 @@ const AddVideo = () => {
       var p = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
       var matches = url.match(p);
       if(matches){
+        console.log(matches[1])
           return matches[1];
       }
-      return false;
+      return url;
   }
 
     function matchVimeoUrl(url) {
@@ -33,13 +34,15 @@ const AddVideo = () => {
       if(matches){
           return matches[1];
       }
-      return false;
+      return url;
   }
     
   let validationYt = matchYoutubeUrl(newYtId)
   let validationVimeo = matchVimeoUrl(newVimeoId)
 
   //adding the video
+
+     // Making two similar functions breaks DRY principles but it's more readable this way
     const addYoutube = () => {
         if((ytStoredVideos && !ytStoredVideos.find(vid => vid.id == validationYt)) && newYtId.length){
 
@@ -50,7 +53,7 @@ const AddVideo = () => {
             const newStoredYt = JSON.stringify([...stored, current])
             localStorage.setItem('ytVideos', newStoredYt)
           }else {
-            localStorage.setItem('ytVideos',JSON.stringify([ current]))
+            localStorage.setItem('ytVideos',JSON.stringify([current]))
           }
          
           setYtStoredVideos(prev => [...prev,current])
@@ -78,11 +81,9 @@ const AddVideo = () => {
           const newStoredVimeo = JSON.stringify([...storedVimeo, current])
           localStorage.setItem('vimeoVideos', newStoredVimeo)
         }else {
-          localStorage.setItem('vimeoVideos',JSON.stringify([ current]))
+          localStorage.setItem('vimeoVideos',JSON.stringify([current]))
         }
        
-       
-        
         setVimeoStoredVideos(prev=> [...prev,current])
         setError(null)
       }else {
@@ -93,8 +94,9 @@ const AddVideo = () => {
         }
       }
     }
-    
-    
+
+
+  
   return (
     <div  className={styles.container}>
       <div className={styles.button__mode}>

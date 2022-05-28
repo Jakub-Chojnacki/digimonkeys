@@ -1,6 +1,6 @@
 import React,{useState,useContext} from 'react'
 import {Button } from 'reactstrap'
-import VideoPagination from '../UI/VideoPagination'
+import VideoPagination from '../UI/Pagination'
 import SingleVideo from './SingleVideo'
 import VideoContext from '../../context/video-context'
 import styles from './Videos.module.css'
@@ -29,18 +29,22 @@ const Videos = ({type}) => {
 
     //pagination
     let currentVideos;
-    
     const indexOfLastVid = currentPage * videosPerPage;
     const indexOfFirstVid = indexOfLastVid - videosPerPage;
-    const paginate = pageNumber => setCurrentPage(pageNumber);
+    const paginate = (pageNumber) =>{
+        setCurrentPage(pageNumber)
+       
+        
+    } 
 
 
     if(type == 'YOUTUBE'){
-       videosLink = ytStoredVideos
+       videosLink = ytStoredVideos}
 
-    }else if(type=='VIMEO'){
-       videosLink = vimeoStoredVideos  
-    }
+    if(type=='VIMEO'){
+        videosLink = vimeoStoredVideos  
+        }
+
     currentVideos = videosLink.slice(indexOfFirstVid,indexOfLastVid)
     favouriteVideos = videosLink.filter(video => video.isFav == true);
     displayVideo = currentVideos.map((video)=> {
@@ -49,13 +53,11 @@ const Videos = ({type}) => {
 
   return (
     <div className={styles.container} >
-
         <div className={styles.buttons}>
            {<Button color="primary" outline onClick={()=> {setShowOnlyFav(prev => !prev)}}>{!showOnlyFav  ? 'Show Favourite Videos' : 'Show All Videos'}</Button>}
             <Button color="primary" outline onClick={handleReverse}>{!isReversed ? 'Reverse the order' : 'Show the original order'}</Button> 
             { type=="VIMEO" && <Button onClick={clearVimeoStoredVideos} color="danger">Clear All</Button>}
             { type =="YOUTUBE" &&  <Button onClick={clearYtStoredVideos} color="danger">Clear All</Button>}
-            
         </div>
 
         <div className={`${styles.videos} ${listView ? styles.list : ''} `}>
@@ -63,18 +65,17 @@ const Videos = ({type}) => {
             {showOnlyFav && favouriteVideos.map((video)=> {
             return <SingleVideo key={video.id} type={video.type} id={video.id} addedAt={video.addedAt} isFav={video.isFav}/>
             })} 
-
         </div>
         
         {!showOnlyFav && <VideoPagination
-            postsPerPage={videosPerPage}
-            totalPosts={type=='YOUTUBE'? ytStoredVideos.length : vimeoStoredVideos.length}
+            itemsPerPage={videosPerPage}
+            totalItems={type=='YOUTUBE'? ytStoredVideos.length : vimeoStoredVideos.length}
             paginate={paginate}
         />}
 
         {showOnlyFav &&<VideoPagination
-                postsPerPage={videosPerPage}
-                totalPosts={favouriteVideos.length}
+                itemsPerPage={videosPerPage}
+                totalItems={favouriteVideos.length}
                 paginate={paginate}
             />}
 

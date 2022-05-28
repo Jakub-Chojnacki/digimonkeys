@@ -4,14 +4,15 @@ import {AiOutlineStar,AiFillStar,AiFillEye} from 'react-icons/ai'
 import {FaTrashAlt} from 'react-icons/fa'
 import styles from './SingleVideo.module.css'
 import VideoContext from '../../context/video-context'
-import {Card,List,ListInlineItem} from 'reactstrap'
+import {Card} from 'reactstrap'
 import  ModalPlayer from './ModalPlayer'
 
 const SingleVideo = ({type,id,addedAt,isFav}) => {
-  const {res,isPending,error} = useFetchVideo(type,id)
+  const {res} = useFetchVideo(type,id)
   const {ytStoredVideos,vimeoStoredVideos,setYtStoredVideos,setVimeoStoredVideos,listView} = useContext(VideoContext)
   const [showModal,setShowModal] = useState(false)
-  const showVideo = () => {
+
+  const showVideoHandler = () => {
     setShowModal(true)
  }
 
@@ -76,9 +77,11 @@ const SingleVideo = ({type,id,addedAt,isFav}) => {
         }))
       }
      
-
     }
-   
+    
+   const toggleFav = (type) =>{
+
+   }
 
       let displayData = <p>Loading...</p>
 
@@ -87,7 +90,7 @@ const SingleVideo = ({type,id,addedAt,isFav}) => {
         const items = res.data.items[0];
         displayData = 
         <div className={listView ? styles.list : ''}>
-            <img className={`${styles.thumbnail} ${listView ? styles['thumbnail--list']:''}`} src={items.snippet.thumbnails.high.url} onClick={showVideo}/>
+            <img className={`${styles.thumbnail} ${listView ? styles['thumbnail--list']:''}`} src={items.snippet.thumbnails.high.url} onClick={showVideoHandler}/>
             <div className={styles.text}>
               <h5 className={`${styles.title}  ${listView ? styles['title--list']:''}`}>{items.snippet.title}</h5>
               <p>{`Views: ${items.statistics.viewCount}`}</p>
@@ -99,7 +102,7 @@ const SingleVideo = ({type,id,addedAt,isFav}) => {
         const items = res.data;
         displayData = 
         <div className={listView ? styles.list : ''} >
-            <img className={` ${styles.thumbnail} ${listView ? styles['thumbnail--list']:""}`} src={items.pictures.sizes[3].link}  onClick={showVideo}/>
+            <img className={` ${styles.thumbnail} ${listView ? styles['thumbnail--list']:""}`} src={items.pictures.sizes[3].link}  onClick={showVideoHandler}/>
             <div className={styles.text}>
               <h5 className={` ${styles.title}  ${listView ? styles['title--list']:''}`}>{items.name}</h5>
               <p>{`Likes: ${items.metadata.connections.likes.total}`}</p>
@@ -112,7 +115,7 @@ const SingleVideo = ({type,id,addedAt,isFav}) => {
 
     let cardDisplay = <Card color="light" className={styles.video__container}>
           { displayData}
-          <div className={`${styles.icons} ${listView ? styles['icons--list'] : ''}`}><AiFillEye onClick={showVideo} /> <FaTrashAlt onClick={deleteHandler} /> {isFav ? <AiFillStar  onClick={toggleFavHandler} /> : <AiOutlineStar  onClick={toggleFavHandler}/>  } </div>
+          <div className={`${styles.icons} ${listView ? styles['icons--list'] : ''}`}><AiFillEye onClick={showVideoHandler} /> <FaTrashAlt onClick={deleteHandler} /> {isFav ? <AiFillStar  onClick={toggleFavHandler} /> : <AiOutlineStar  onClick={toggleFavHandler}/>  } </div>
          
         </Card>
 
@@ -120,7 +123,7 @@ const SingleVideo = ({type,id,addedAt,isFav}) => {
     let listDisplay = <div className={styles['video__container--list']}>
              { displayData}
             <div className={`${styles.icons} ${listView ? styles['icons--list'] : ''}`}>
-              <AiFillEye onClick={showVideo} /> <FaTrashAlt onClick={deleteHandler} /> {isFav ? <AiFillStar  onClick={toggleFavHandler} /> : <AiOutlineStar  onClick={toggleFavHandler}/>  } 
+              <AiFillEye onClick={showVideoHandler} /> <FaTrashAlt onClick={deleteHandler} /> {isFav ? <AiFillStar  onClick={toggleFavHandler} /> : <AiOutlineStar  onClick={toggleFavHandler}/>  } 
             </div>
 
           </div>

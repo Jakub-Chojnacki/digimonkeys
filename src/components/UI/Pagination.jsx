@@ -1,10 +1,10 @@
 import React from 'react';
 import {Pagination,PaginationItem,PaginationLink} from 'reactstrap'
-import styles from './VideoPagination.module.css'
-const VideoPagination = ({ postsPerPage, totalPosts, paginate }) => {
+import styles from './Pagination.module.css'
+const VideoPagination = ({ itemsPerPage, totalItems, paginate }) => {
   const pageNumbers = [];
 
-  for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(totalItems / itemsPerPage); i++) {
     pageNumbers.push(i);
   }
 

@@ -15,12 +15,18 @@ const useFetchVideo =  (type,identifier) => {
               url =`https://api.vimeo.com/videos/${ID}`
               yourHeaders =  {Authorization: `Bearer ${import.meta.env.VITE_VIMEO_API_TOKEN}`}
             }
+            try{
             const response = await axios.get(url, {headers: yourHeaders});
             setRes(response)
-            setIsPending(false) 
+            setIsPending(false)}
+            catch(err){
+              setError(err)
+            }
           }
 
+     
           getVideoData(type,identifier)
+        
 
           
     },[]) // no dependencies because we want to fetch only once 

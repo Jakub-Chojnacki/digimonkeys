@@ -1,7 +1,8 @@
-import React,{useState,useContext} from 'react'
+import React,{useState,useContext,Fragment} from 'react'
 import {Input,Button} from 'reactstrap'
 import VideoContext from '../../context/video-context'
 import { format} from 'date-fns'
+import styles from './AddVideo.module.css'
 
 const AddVideo = () => {
     const [newYtId,setNewYtId] = useState('')
@@ -97,21 +98,21 @@ const AddVideo = () => {
     
     
   return (
-    <div>
-      <div>
+    <div  className={styles.container}>
+      <div className={styles.button__mode}>
         <Button color={buttonMode == 'YOUTUBE' ? 'primary' : 'secondary'} onClick={changeModeHandler}>YOUTUBE</Button>
         <Button color={buttonMode == 'VIMEO' ? 'primary' : 'secondary'} onClick={changeModeHandler}>VIMEO</Button>
       </div>
 
           {buttonMode =='YOUTUBE' &&  
-          <div>
-            <Input value={newYtId} onChange={e=> setNewYtId(e.target.value) } placeholder="Input a youtube id/link"/>
-            <Button type="submit" color="success" outline onClick={addYoutube} >Submit</Button>
+          <div className={styles.input__container}>
+            <Input  value={newYtId} onChange={e=> setNewYtId(e.target.value) } placeholder="Input a youtube video link/id"/>
+            <Button type="submit" color="success"  onClick={addYoutube} >Submit</Button>
           </div> }
           {buttonMode =='VIMEO' &&
-          <div>
-          <Input value={newVimeoId} onChange={e=> setNewVimeoId(e.target.value) } placeholder="Input a vimeo id"/>
-          <Button type="submit"color="success" outline onClick={addVimeo} >Submit</Button>
+          <div className={styles.input__container}>
+          <Input value={newVimeoId} onChange={e=> setNewVimeoId(e.target.value) } placeholder="Input a vimeo video link/id"/>
+          <Button type="submit"color="success"  onClick={addVimeo} >Submit</Button>
           </div> }  
           {error && <p className="error">{error}</p>}
     </div>

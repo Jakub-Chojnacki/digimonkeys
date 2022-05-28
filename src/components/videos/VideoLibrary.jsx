@@ -2,18 +2,20 @@ import React,{useContext} from 'react'
 import {Button} from 'reactstrap'
 import VideoContext from '../../context/video-context'
 import Videos from './Videos'
+import styles from './VideoLibrary.module.css'
 const VideoLibrary = () => { 
-  const {toggleDisplayMode} = useContext(VideoContext)
+  const {toggleDisplayMode,listView} = useContext(VideoContext)
   return (
-    <div>
-       <Button color="primary" onClick={toggleDisplayMode}>Change display mode</Button>
-       <div>
+    <div className={styles.container}>
+       {!listView && <Button color="primary" onClick={toggleDisplayMode}>Change display to list</Button>}
+       {listView && <Button color="primary" onClick={toggleDisplayMode}>Change display to normal</Button>}
+
+       <div className={styles.library}>
          <h2>Your Youtube Library</h2> 
           <Videos type='YOUTUBE'/>
        </div>
-      
-
-        <div>
+    
+        <div className={styles.library}>
         <h2>Your Vimeo Library</h2>
         <Videos type='VIMEO'/>
         </div>

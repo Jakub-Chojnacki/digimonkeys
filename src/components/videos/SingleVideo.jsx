@@ -4,7 +4,7 @@ import {AiOutlineStar,AiFillStar,AiFillEye} from 'react-icons/ai'
 import {FaTrashAlt} from 'react-icons/fa'
 import styles from './SingleVideo.module.css'
 import VideoContext from '../../context/video-context'
-import {Card,List,ListInlineItem,Button} from 'reactstrap'
+import {Card,List,ListInlineItem,Spinner} from 'reactstrap'
 import  ModalPlayer from './ModalPlayer'
 
 const SingleVideo = ({type,id,addedAt,isFav}) => {
@@ -80,7 +80,7 @@ const SingleVideo = ({type,id,addedAt,isFav}) => {
     }
    
 
-      let displayData = <p>Fetching Data</p>
+      let displayData = <p>Loading...</p>
       if(res && type==='YOUTUBE'){
         const items = res.data.items[0];
       

@@ -22,7 +22,6 @@ export function VideoProvider({children}){
 
     const toggleDisplayMode = () => {
         setListView(prev => !prev)
-        console.log(listView)
     }
     
     return (

@@ -1,5 +1,6 @@
 import React from 'react';
 import {Pagination,PaginationItem,PaginationLink} from 'reactstrap'
+import styles from './VideoPagination.module.css'
 const VideoPagination = ({ postsPerPage, totalPosts, paginate }) => {
   const pageNumbers = [];
 
@@ -8,7 +9,7 @@ const VideoPagination = ({ postsPerPage, totalPosts, paginate }) => {
   }
 
   return (
-    <nav>
+    <nav className={styles.pagination__container}>
       <Pagination >
         {pageNumbers.map(number => (
           <PaginationItem key={number}>

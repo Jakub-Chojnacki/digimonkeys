@@ -23,7 +23,7 @@ const useFetchVideo =  (type,identifier) => {
           getVideoData(type,identifier)
 
           
-    },[])
+    },[]) // no dependencies because we want to fetch only once 
 
     return {res,isPending,error}
 }

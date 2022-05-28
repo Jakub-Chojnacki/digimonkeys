@@ -1,6 +1,6 @@
 import React,{useState,useContext} from 'react'
 import {Button } from 'reactstrap'
-import VideoPagination from '../VideoPagination'
+import VideoPagination from '../UI/VideoPagination'
 import SingleVideo from './SingleVideo'
 import VideoContext from '../../context/video-context'
 import styles from './Videos.module.css'
@@ -56,11 +56,11 @@ const Videos = ({type}) => {
   return (
     <div className={`${styles.container} `} >
         <div className={`${styles.buttons} `}>
-            <Button color="primary" outline onClick={handleReverse}>{!isReversed ? 'Reverse the order' : 'Go to original order'}</Button>
-            {!showOnlyFav && <Button color="primary" outline onClick={()=> {setShowOnlyFav(true)}}>Show Favourite Videos</Button>}
-            {showOnlyFav &&<Button color="primary" outline onClick={()=> {setShowOnlyFav(false)}}>Show All</Button>}
-           { type=="VIMEO" && <Button onClick={clearVimeoStoredVideos} color="danger">Clear All</Button>}
-          { type =="YOUTUBE" &&  <Button onClick={clearYtStoredVideos} color="danger">Clear All</Button>}
+            <Button color="primary" outline onClick={handleReverse}>{!isReversed ? 'Reverse the order' : 'Show the original order'}</Button> 
+            {<Button color="primary" outline onClick={()=> {setShowOnlyFav(prev => !prev)}}>{!showOnlyFav  ? 'Show Favourite Videos' : 'Show All Videos'}</Button>}
+
+            { type=="VIMEO" && <Button onClick={clearVimeoStoredVideos} color="danger">Clear All</Button>}
+            { type =="YOUTUBE" &&  <Button onClick={clearYtStoredVideos} color="danger">Clear All</Button>}
             
         </div>
 
@@ -84,6 +84,7 @@ const Videos = ({type}) => {
                 totalPosts={favouriteVideos.length}
                 paginate={paginate}
             />}
+
    </div>
   )
 }

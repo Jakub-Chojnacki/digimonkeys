@@ -29,7 +29,7 @@ const VideoLibrary = () => {
           </div>
           <div className={styles.flex}>
               <Button color="primary" onClick={loadDemo}>Load Demo Videos</Button>
-              <p>  Note: They won't persist if you add your videos and refresh</p>
+              <p className="warning">  Note: This will overwrite your existing library!!!</p>
           </div>
         
             <div className={styles.flex}>

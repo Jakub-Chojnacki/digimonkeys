@@ -32,6 +32,8 @@ export function VideoProvider({children}){
     const loadDemo = () => {
         setVimeoStoredVideos(demoVimeo)
         setYtStoredVideos(demoYt)
+        localStorage.setItem('ytVideos', JSON.stringify(demoYt))
+        localStorage.setItem('vimeoVideos', JSON.stringify(demoVimeo))
     }
     
     return (

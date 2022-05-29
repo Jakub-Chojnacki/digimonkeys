@@ -68,6 +68,8 @@ const AddVideo = () => {
           }
          
         }
+
+        setNewYtId('')
      
     }
 
@@ -93,6 +95,8 @@ const AddVideo = () => {
           setError('You must enter a link/id')
         }
       }
+
+      setNewVimeoId('')
     }
 
 

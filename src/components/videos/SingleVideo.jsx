@@ -35,16 +35,14 @@ const SingleVideo = ({type,id,addedAt,isFav}) => {
       if(type === 'YOUTUBE'){
         setYtStoredVideos(ytStoredVideos.map((item) => {
           if(item.id === id){
-
             let stored = JSON.parse(localStorage.getItem("ytVideos"))
-            stored.map((item) => {
+             stored.map((item) => {
               if(item.id == id){
-                console.log(item)
                 item.isFav = !item.isFav
                 const newStorage = JSON.stringify(stored,{...item,isFav:!isFav})
                 localStorage.setItem('ytVideos',newStorage)
                 
-              }
+              } 
           })
             return {
               ...item, isFav: !item.isFav
@@ -61,7 +59,6 @@ const SingleVideo = ({type,id,addedAt,isFav}) => {
             let stored = JSON.parse(localStorage.getItem("vimeoVideos"))
             stored.map((item) => {
               if(item.id == id){
-                console.log(item)
                 item.isFav = !item.isFav
                 const newStorage = JSON.stringify(stored,{...item,isFav:!isFav})
                 localStorage.setItem('vimeoVideos',newStorage)
@@ -79,9 +76,6 @@ const SingleVideo = ({type,id,addedAt,isFav}) => {
      
     }
     
-   const toggleFav = (type) =>{
-
-   }
 
       let displayData = <p>Loading...</p>
 
@@ -115,7 +109,7 @@ const SingleVideo = ({type,id,addedAt,isFav}) => {
 
     let cardDisplay = <Card color="light" className={styles.video__container}>
           { displayData}
-          <div className={`${styles.icons} ${listView ? styles['icons--list'] : ''}`}><AiFillEye onClick={showVideoHandler} /> <FaTrashAlt onClick={deleteHandler} /> {isFav ? <AiFillStar  onClick={toggleFavHandler} /> : <AiOutlineStar  onClick={toggleFavHandler}/>  } </div>
+          <div className={`${styles.icons} ${listView ? styles['icons--list'] : ''}`}><AiFillEye data-test-name='watch' onClick={showVideoHandler} /> <FaTrashAlt data-test-name='delete' onClick={deleteHandler} /> {isFav ? <AiFillStar  data-test-name='fav' onClick={toggleFavHandler} /> : <AiOutlineStar data-test-name='notFav'  onClick={toggleFavHandler}/>  } </div>
          
         </Card>
 
@@ -123,7 +117,7 @@ const SingleVideo = ({type,id,addedAt,isFav}) => {
     let listDisplay = <div className={styles['video__container--list']}>
              { displayData}
             <div className={`${styles.icons} ${listView ? styles['icons--list'] : ''}`}>
-              <AiFillEye onClick={showVideoHandler} /> <FaTrashAlt onClick={deleteHandler} /> {isFav ? <AiFillStar  onClick={toggleFavHandler} /> : <AiOutlineStar  onClick={toggleFavHandler}/>  } 
+              <AiFillEye data-test-name='watch' onClick={showVideoHandler} /> <FaTrashAlt data-test-name='delete' onClick={deleteHandler} /> {isFav ? <AiFillStar data-test-name='fav' onClick={toggleFavHandler} /> : <AiOutlineStar data-test-name='notFav'  onClick={toggleFavHandler}/>  } 
             </div>
 
           </div>

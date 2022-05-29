@@ -55,7 +55,7 @@ const Videos = ({type}) => {
     <div className={styles.container} >
         <div className={styles.buttons}>
            {<Button color="primary" outline onClick={()=> {setShowOnlyFav(prev => !prev)}}>{!showOnlyFav  ? 'Show Favourite Videos' : 'Show All Videos'}</Button>}
-            <Button color="primary" outline onClick={handleReverse}>{!isReversed ? 'Reverse the order' : 'Show the original order'}</Button> 
+            <Button color="primary" outline onClick={handleReverse}>{!isReversed ? 'Sort by oldest' : 'Sort by newest'}</Button> 
             { type=="VIMEO" && <Button onClick={clearVimeoStoredVideos} color="danger">Clear All</Button>}
             { type =="YOUTUBE" &&  <Button onClick={clearYtStoredVideos} color="danger">Clear All</Button>}
         </div>

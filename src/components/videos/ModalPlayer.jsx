@@ -21,7 +21,7 @@ const PlayerModal = ({type,id,hideModal}) => {
   const ModalOverlay = () =>{
       return (
         <div className={styles.modal}>
-            <AiFillCloseSquare className={styles.close} onClick={hideModal}/>
+            <AiFillCloseSquare data-test-name='close_modal' className={styles.close} onClick={hideModal}/>
             <ReactPlayer controls url={modalLink}   width="100%" />
           
         </div>

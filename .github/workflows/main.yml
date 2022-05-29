@@ -15,6 +15,7 @@ jobs:
         uses: cypress-io/github-action@v2
         env: 
           VITE_YOUTUBE_API_KEY: ${{ secrets.VITE_YOUTUBE_API_KEY }}
+          VITE_VIMEO_API_TOKEN: ${{ secrets.VITE_VIMEO_API_TOKEN }}
         with:
           build: npm run build
           start: npm run dev

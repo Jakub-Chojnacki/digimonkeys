@@ -1,6 +1,5 @@
 import React from 'react';
-import {Pagination,PaginationItem,PaginationLink} from 'reactstrap'
-import styles from './Pagination.module.css'
+import {Flex,Link} from '@chakra-ui/react'
 const VideoPagination = ({ itemsPerPage, totalItems, paginate }) => {
   const pageNumbers = [];
 
@@ -9,17 +8,15 @@ const VideoPagination = ({ itemsPerPage, totalItems, paginate }) => {
   }
 
   return (
-    <nav className={styles.pagination__container}>
-      <Pagination >
+    <Flex as='nav' align='center' justify='center' marginTop={4}>
+      <Flex gap={1}>
         {pageNumbers.map(number => (
-          <PaginationItem key={number}>
-            <PaginationLink  onClick={() => paginate(number)} href='#'>
+            <Link key={number} p={2} bgColor='blue.400' color='white' borderRadius='8px' onClick={() => paginate(number)}>
               {number}
-            </PaginationLink>
-          </PaginationItem>
+            </Link>
         ))}
-      </Pagination>
-    </nav>
+      </Flex>
+    </Flex>
   );
 };
 

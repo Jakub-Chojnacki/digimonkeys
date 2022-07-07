@@ -1,8 +1,5 @@
 import React,{useContext,useState} from 'react'
-import {Button,Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem} from 'reactstrap'
+import { Select,Button } from '@chakra-ui/react'
 import {AiOutlineUnorderedList} from 'react-icons/ai'
 import {CgMenuGridR} from 'react-icons/cg'
 import VideoContext from '../../context/video-context'
@@ -10,13 +7,9 @@ import Videos from './Videos'
 import styles from './VideoLibrary.module.css'
 const VideoLibrary = () => { 
   const {toggleListDisplay,toggleTileDisplay,listView,videosPerPage,setVideosPerPage,loadDemo} = useContext(VideoContext)
-  const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const toggle = () => setDropdownOpen(prevState => !prevState);
-
-  const handleChange = (e) => {
+  const handleChangeVidsPerPage = (e) => {
     setVideosPerPage(e.target.value)
-    
 }
   return (
     <div className={styles.container}>
@@ -24,24 +17,21 @@ const VideoLibrary = () => {
       <div className={styles.settings}>
           <div className={styles.flex}>
           <h4>Display mode :</h4>
-          <Button color={!listView ? "primary" : "secondary"} onClick={toggleTileDisplay}><CgMenuGridR/></Button>
-          <Button color={listView ? "primary" : "secondary"} onClick={toggleListDisplay}> <AiOutlineUnorderedList/></Button>
+          <Button colorScheme={!listView ? "blue" : "gray"} onClick={toggleTileDisplay}><CgMenuGridR/></Button>
+          <Button colorScheme={listView ? "blue" : "gray"} onClick={toggleListDisplay}> <AiOutlineUnorderedList/></Button>
           </div>
           <div className={styles.flex}>
-              <Button color="primary" onClick={loadDemo}>Load Demo Videos</Button>
+              <Button colorScheme="red" onClick={loadDemo}>Load Demo Videos</Button>
               <p className="warning">  Note: This will overwrite your existing library!!!</p>
           </div>
         
             <div className={styles.flex}>
-              <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-                <DropdownToggle color="primary" caret>Posts per page</DropdownToggle>
-                <DropdownMenu onChange={handleChange}>
-                  <DropdownItem value={4} onClick={handleChange}>4</DropdownItem>
-                  <DropdownItem value={8} onClick={handleChange}>8</DropdownItem>
-                  <DropdownItem value={12} onClick={handleChange}>12</DropdownItem>
-                </DropdownMenu>
-              </Dropdown>
-              <p>Posts per page:  {videosPerPage}</p>
+              <Select size='md' onClick={handleChangeVidsPerPage}>
+                <option value='12'>12</option>
+                <option value='8'>8</option>
+                <option value='4'>4</option>
+             </Select>
+              <p>Videos per page:  {videosPerPage}</p>
             </div>
        </div>
 

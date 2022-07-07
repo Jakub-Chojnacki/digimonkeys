@@ -1,5 +1,5 @@
 import React,{useState,useContext} from 'react'
-import {Input,Button} from 'reactstrap'
+import{Input,Button} from '@chakra-ui/react'
 import VideoContext from '../../context/video-context'
 import { format} from 'date-fns'
 import styles from './AddVideo.module.css'
@@ -22,7 +22,6 @@ const AddVideo = () => {
       var p = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
       var matches = url.match(p);
       if(matches){
-        console.log(matches[1])
           return matches[1];
       }
       return url;
@@ -104,19 +103,19 @@ const AddVideo = () => {
   return (
     <div  className={styles.container}>
       <div className={styles.button__mode}>
-        <Button color={buttonMode == 'YOUTUBE' ? 'primary' : 'secondary'} onClick={changeModeHandler}>YOUTUBE</Button>
-        <Button color={buttonMode == 'VIMEO' ? 'primary' : 'secondary'} onClick={changeModeHandler}>VIMEO</Button>
+        <Button colorScheme={buttonMode == 'YOUTUBE' ? 'blue' : 'gray'} onClick={changeModeHandler}>YOUTUBE</Button>
+        <Button colorScheme={buttonMode == 'VIMEO' ? 'blue' : 'gray'} onClick={changeModeHandler}>VIMEO</Button>
       </div>
 
           {buttonMode =='YOUTUBE' &&  
           <div className={styles.input__container}>
             <Input  value={newYtId} onChange={e=> setNewYtId(e.target.value) } placeholder="Input a youtube video link/id"/>
-            <Button type="submit" color="success"  onClick={addYoutube} >Submit</Button>
+            <Button type="submit" colorScheme="green"  onClick={addYoutube}>Submit</Button>
           </div> }
           {buttonMode =='VIMEO' &&
           <div className={styles.input__container}>
           <Input value={newVimeoId} onChange={e=> setNewVimeoId(e.target.value) } placeholder="Input a vimeo video link/id"/>
-          <Button type="submit"color="success"  onClick={addVimeo} >Submit</Button>
+          <Button type="submit" colorScheme="green"   onClick={addVimeo}>Submit</Button>
           </div> }  
           {error && <p className="error">{error}</p>}
     </div>

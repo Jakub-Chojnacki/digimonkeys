@@ -4,9 +4,8 @@ import {AiOutlineStar,AiFillStar,AiFillEye} from 'react-icons/ai'
 import {FaTrashAlt} from 'react-icons/fa'
 import styles from './SingleVideo.module.css'
 import VideoContext from '../../context/video-context'
-import {Card} from 'reactstrap'
+import {Flex} from '@chakra-ui/react'
 import  ModalPlayer from './ModalPlayer'
-
 const SingleVideo = ({type,id,addedAt,isFav}) => {
   const {res} = useFetchVideo(type,id)
   const {ytStoredVideos,vimeoStoredVideos,setYtStoredVideos,setVimeoStoredVideos,listView} = useContext(VideoContext)
@@ -27,6 +26,7 @@ const SingleVideo = ({type,id,addedAt,isFav}) => {
         let stored = JSON.parse(localStorage.getItem("vimeoVideos"))
         localStorage.setItem('vimeoVideos', JSON.stringify(stored.filter((el)=> el.id !== id)))
       }
+      
     }
 
   
@@ -107,11 +107,11 @@ const SingleVideo = ({type,id,addedAt,isFav}) => {
       }
 
 
-    let cardDisplay = <Card color="light" className={styles.video__container}>
+    let cardDisplay = <Flex color="light" className={styles.video__container}>
           { displayData}
           <div className={`${styles.icons} ${listView ? styles['icons--list'] : ''}`}><AiFillEye data-test-name='watch' onClick={showVideoHandler} /> <FaTrashAlt data-test-name='delete' onClick={deleteHandler} /> {isFav ? <AiFillStar  data-test-name='fav' onClick={toggleFavHandler} /> : <AiOutlineStar data-test-name='notFav'  onClick={toggleFavHandler}/>  } </div>
          
-        </Card>
+        </Flex>
 
 
     let listDisplay = <div className={styles['video__container--list']}>

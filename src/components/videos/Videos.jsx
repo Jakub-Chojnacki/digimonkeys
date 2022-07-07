@@ -1,5 +1,5 @@
 import React,{useState,useContext} from 'react'
-import {Button } from 'reactstrap'
+import {Button } from '@chakra-ui/react'
 import VideoPagination from '../UI/Pagination'
 import SingleVideo from './SingleVideo'
 import VideoContext from '../../context/video-context'
@@ -21,9 +21,7 @@ const Videos = ({type}) => {
             ytStoredVideos.reverse()
         }else if(type ==='VIMEO'){
             vimeoStoredVideos.reverse()
-        }
-       
-      
+        } 
     }
 
 
@@ -54,10 +52,10 @@ const Videos = ({type}) => {
   return (
     <div className={styles.container} >
         <div className={styles.buttons}>
-           {<Button color="primary" outline onClick={()=> {setShowOnlyFav(prev => !prev)}}>{!showOnlyFav  ? 'Show Favourite Videos' : 'Show All Videos'}</Button>}
-            <Button color="primary" outline onClick={handleReverse}>{!isReversed ? 'Sort by oldest' : 'Sort by newest'}</Button> 
-            { type=="VIMEO" && <Button onClick={clearVimeoStoredVideos} color="danger">Clear All</Button>}
-            { type =="YOUTUBE" &&  <Button onClick={clearYtStoredVideos} color="danger">Clear All</Button>}
+           {<Button colorScheme="blue" outline onClick={()=> {setShowOnlyFav(prev => !prev)}}>{!showOnlyFav  ? 'Show Favourite Videos' : 'Show All Videos'}</Button>}
+            <Button colorScheme="blue" outline onClick={handleReverse}>{!isReversed ? 'Sort by oldest' : 'Sort by newest'}</Button> 
+            { type=="VIMEO" && <Button onClick={clearVimeoStoredVideos} colorScheme="red">Clear All</Button>}
+            { type =="YOUTUBE" &&  <Button onClick={clearYtStoredVideos} colorScheme="red">Clear All</Button>}
         </div>
 
         <div className={`${styles.videos} ${listView ? styles.list : ''} `}>

@@ -1,54 +1,71 @@
-import React,{useContext,useState} from 'react'
-import { Select,Button } from '@chakra-ui/react'
-import {AiOutlineUnorderedList} from 'react-icons/ai'
-import {CgMenuGridR} from 'react-icons/cg'
-import VideoContext from '../../context/video-context'
-import Videos from './Videos'
-import styles from './VideoLibrary.module.css'
-const VideoLibrary = () => { 
-  const {toggleListDisplay,toggleTileDisplay,listView,videosPerPage,setVideosPerPage,loadDemo} = useContext(VideoContext)
+import React, { useContext } from "react";
+import { Select, Button, Container, Heading, Text, Flex } from "@chakra-ui/react";
+import { AiOutlineUnorderedList } from "react-icons/ai";
+import { CgMenuGridR } from "react-icons/cg";
+import VideoContext from "../../context/video-context";
+import Videos from "./Videos";
+const VideoLibrary = () => {
+  const {
+    toggleListDisplay,
+    toggleTileDisplay,
+    listView,
+    videosPerPage,
+    setVideosPerPage,
+    loadDemo,
+  } = useContext(VideoContext);
 
   const handleChangeVidsPerPage = (e) => {
-    setVideosPerPage(e.target.value)
-}
+    setVideosPerPage(e.target.value);
+  };
   return (
-    <div className={styles.container}>
-      <h2>Settings:</h2>
-      <div className={styles.settings}>
-          <div className={styles.flex}>
-          <h4>Display mode :</h4>
-          <Button colorScheme={!listView ? "blue" : "gray"} onClick={toggleTileDisplay}><CgMenuGridR/></Button>
-          <Button colorScheme={listView ? "blue" : "gray"} onClick={toggleListDisplay}> <AiOutlineUnorderedList/></Button>
-          </div>
-          <div className={styles.flex}>
-              <Button colorScheme="red" onClick={loadDemo}>Load Demo Videos</Button>
-              <p className="warning">  Note: This will overwrite your existing library!!!</p>
-          </div>
-        
-            <div className={styles.flex}>
-              <Select size='md' onClick={handleChangeVidsPerPage}>
-                <option value='12'>12</option>
-                <option value='8'>8</option>
-                <option value='4'>4</option>
-             </Select>
-              <p>Videos per page:  {videosPerPage}</p>
-            </div>
-       </div>
+    <Container maxW='1200px' marginY={6}>
+      <Heading as={'h2'} size='xl'>Settings:</Heading>
+      <Flex marginY={6} gap={4} direction='column'>
+        <Flex gap={4} >
+          <Heading as={'h4'} size='md'>Display mode :</Heading>
+          <Button
+            colorScheme={!listView ? "blue" : "gray"}
+            onClick={toggleTileDisplay}
+          >
+            <CgMenuGridR />
+          </Button>
+          <Button
+            colorScheme={listView ? "blue" : "gray"}
+            onClick={toggleListDisplay}
+          >
+            <AiOutlineUnorderedList />
+          </Button>
+        </Flex>
+        <Flex align='center' gap={4}>
+          <Button colorScheme="red" onClick={loadDemo}>
+            Load Demo Videos
+          </Button>
+          <Text color='red'>
+            Note: This will overwrite your existing library!!!
+          </Text>
+        </Flex>
 
+        <Flex gap={4} align='center'>
+          <Select size="md" onClick={handleChangeVidsPerPage} maxW='80px'>
+            <option value="12">12</option>
+            <option value="8">8</option>
+            <option value="4">4</option>
+          </Select>
+          <Text>Videos per page: {videosPerPage}</Text>
+        </Flex>
+      </Flex>
 
+      <div>
+        <Heading as='h3' size='lg'>Your Youtube Library</Heading>
+        <Videos type="YOUTUBE" />
+      </div>
 
-       <div className={styles.library}>
-          <h2>Your Youtube Library</h2> 
-          <Videos type='YOUTUBE'/>
-       </div>
-    
-        <div className={styles.library}>
-          <h2>Your Vimeo Library</h2>
-          <Videos type='VIMEO'/>
-        </div>
-       </div>
-     
-  )
-}
+      <div>
+        <Heading as='h3' size='lg'>Your Vimeo Library</Heading>
+        <Videos type="VIMEO" />
+      </div>
+    </Container>
+  );
+};
 
-export default VideoLibrary
+export default VideoLibrary;

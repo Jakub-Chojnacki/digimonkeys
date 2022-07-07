@@ -1,42 +1,32 @@
-import React from 'react'
-import ReactDom from 'react-dom'
-import styles from './ModalPlayer.module.css'
-import ReactPlayer from 'react-player'
-import {AiFillCloseSquare} from 'react-icons/ai'
-const PlayerModal = ({type,id,hideModal}) => {
+import React from "react";
+import ReactPlayer from "react-player";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalBody,
+  ModalCloseButton,
+} from "@chakra-ui/react";
 
-  let modalLink; 
-
-  if(type==='YOUTUBE'){
-      modalLink = `https://www.youtube.com/watch?v=${id}`
-  }else if(type === 'VIMEO'){
-      modalLink =`https://vimeo.com/${id}`
+const PlayerModal = ({ type, id, hideModal,showModal }) => {
+  let modalLink;
+  if (type === "YOUTUBE") {
+    modalLink = `https://www.youtube.com/watch?v=${id}`;
+  } else if (type === "VIMEO") {
+    modalLink = `https://vimeo.com/${id}`;
   }
-
-
-  const Backdrop = () => {
-    return <div className={styles.backdrop} onClick={hideModal}></div>
-  }
-
-  const ModalOverlay = () =>{
-      return (
-        <div className={styles.modal}>
-            <AiFillCloseSquare data-test-name='close_modal' className={styles.close} onClick={hideModal}/>
-            <ReactPlayer controls url={modalLink}   width="100%" />
-          
-        </div>
-      )
-    }
 
   return (
-    <React.Fragment>
-      {ReactDom.createPortal(<Backdrop onClick={hideModal}/>, document.getElementById('video-modal__backdrop'))}
-      {ReactDom.createPortal(<ModalOverlay/>,document.getElementById('video-modal'))}
-    </React.Fragment>
+      <Modal size={['xs','xs','md','2xl']} isOpen={showModal} onClose={hideModal} motionPreset='slideInBottom'  isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalCloseButton />
+          <ModalBody p={10}>
+            <ReactPlayer controls url={modalLink} width="100%" />
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+  );
+};
 
-    
-    
-  )
-}
-
-export default PlayerModal
+export default PlayerModal;

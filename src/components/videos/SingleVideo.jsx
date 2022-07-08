@@ -6,90 +6,45 @@ import VideoContext from "../../context/video-context";
 import {
   Flex,
   Box,
-  Text,
   Heading,
   Image,
   Icon,
-  Spinner,
+  Skeleton,
+  SkeletonCircle,
+  SkeletonText,
+  Stack,
+  Text
 } from "@chakra-ui/react";
 import ModalPlayer from "./ModalPlayer";
 const SingleVideo = ({ type, id, addedAt, isFav }) => {
   const { res } = useFetchVideo(type, id);
-  const {
-    ytStoredVideos,
-    vimeoStoredVideos,
-    setYtStoredVideos,
-    setVimeoStoredVideos,
-    listView,
-    deleteVideoHandler,
-  } = useContext(VideoContext);
+  const { listView, deleteVideoHandler, toggleFavHandler } =
+    useContext(VideoContext);
   const [showModal, setShowModal] = useState(false);
 
-  const showVideoHandler = () => {
+  const showVideoModalHandler = () => {
     setShowModal(true);
   };
-  const toggleFavHandler = () => {
-    if (type === "YOUTUBE") {
-      setYtStoredVideos(
-        ytStoredVideos.map((item) => {
-          if (item.id === id) {
-            let stored = JSON.parse(localStorage.getItem("ytVideos"));
-            stored.map((item) => {
-              if (item.id == id) {
-                item.isFav = !item.isFav;
-                const newStorage = JSON.stringify(stored, {
-                  ...item,
-                  isFav: !isFav,
-                });
-                localStorage.setItem("ytVideos", newStorage);
-              }
-            });
-            return {
-              ...item,
-              isFav: !item.isFav,
-            };
-          }
-          return item;
-        })
-      );
-    } else if (type === "VIMEO") {
-      setVimeoStoredVideos(
-        vimeoStoredVideos.map((item) => {
-          if (item.id === id) {
-            let stored = JSON.parse(localStorage.getItem("vimeoVideos"));
-            stored.map((item) => {
-              if (item.id == id) {
-                item.isFav = !item.isFav;
-                const newStorage = JSON.stringify(stored, {
-                  ...item,
-                  isFav: !isFav,
-                });
-                localStorage.setItem("vimeoVideos", newStorage);
-              }
-            });
-            return {
-              ...item,
-              isFav: !item.isFav,
-            };
-          }
-          return item;
-        })
-      );
-    }
-  };
 
-  let displayVideoData = <p>Loading...</p>;
+  let displayVideoData = (
+    <Stack width={["250px", "400px", "200px"]}>
+      <Skeleton height="140px" />
+      <Skeleton height="30px" />
+      <SkeletonText mt="4" noOfLines={4} spacing="4" />
+      <Flex justify="space-between" align="center">
+        <SkeletonCircle />
+        <SkeletonCircle />
+        <SkeletonCircle />
+      </Flex>
+    </Stack>
+  );
   const icons = (
-    <Flex
-      align="center"
-      justify="space-around"
-      fontSize={24}
-    >
+    <Flex align="center" justify="space-around" fontSize={24}>
       <Icon
         as={AiFillEye}
         cursor="pointer"
         data-test-name="watch"
-        onClick={showVideoHandler}
+        onClick={showVideoModalHandler}
       />{" "}
       <Icon
         as={FaTrashAlt}
@@ -102,85 +57,81 @@ const SingleVideo = ({ type, id, addedAt, isFav }) => {
           as={AiFillStar}
           cursor="pointer"
           data-test-name="fav"
-          onClick={toggleFavHandler}
+          onClick={() => toggleFavHandler(type, id, isFav)}
         />
       ) : (
         <Icon
           as={AiOutlineStar}
           cursor="pointer"
           data-test-name="notFav"
-          onClick={toggleFavHandler}
+          onClick={() => toggleFavHandler(type, id, isFav)}
         />
       )}
     </Flex>
   );
 
-  // if and else if  breaks DRY principles but it's more readable this way
-  if (res && type === "YOUTUBE") {
-    const items = res.data.items[0];
-    displayVideoData = (
-      <Flex direction={listView ? "row" : "column"} width='100%'>
-        <Image
-          cursor="pointer"
-          src={items.snippet.thumbnails.high.url}
-          onClick={showVideoHandler}
-        />
-        <Flex direction='column' justify='space-between' flexGrow='3'>
-          <Box padding={2}>
-            <Heading size="sm" noOfLines={2}>
-              {items.snippet.title}
+  const getVideoDataTemplate = (url, title, views, likes, addedAt) => {
+    return (
+      <Flex direction={listView ? "row" : "column"}>
+        <Image cursor="pointer" src={url} onClick={showVideoModalHandler} maxW={listView && ['50%','50%','50%','100%']}/>
+        <Flex direction="column" justify="space-between" width='100%'>
+          <Box padding={2} fontSize={['12','12','14']}>
+            <Heading size="sm" noOfLines={2} fontSize={['16','16','18']}>
+              {title}
             </Heading>
-            <p>{`Views: ${items.statistics.viewCount}`}</p>
-            <p>{`Likes: ${items.statistics.likeCount}`}</p>
-            <p>{`Added at : ${addedAt}`}</p>
+            {views && <Text>{`Views: ${views}`}</Text>}
+            <Text>{`Likes: ${likes}`}</Text>
+            <Text>{`Added at : ${addedAt}`}</Text>
           </Box>
           {icons}
         </Flex>
       </Flex>
     );
+  };
+
+  if (res && type === "YOUTUBE") {
+    const {
+      snippet: {
+        title,
+        thumbnails: {
+          high: { url },
+        },
+      },
+      statistics: { viewCount: views, likeCount: likes },
+    } = res.items[0];
+    displayVideoData = getVideoDataTemplate(url, title, views, likes, addedAt);
   } else if (res && type === "VIMEO") {
-    const items = res.data;
-    displayVideoData = (
-      <Flex direction={listView ? "row" : "column"}>
-        <Image src={items.pictures.sizes[3].link} onClick={showVideoHandler} />
-        <Flex direction='column' justify='space-between'>
-        <Box p={2}>
-          <Heading size="sm" noOfLines={2}>
-            {items.name}
-          </Heading>
-          <p>{`Likes: ${items.metadata.connections.likes.total}`}</p>
-          <p>{`Added at : ${addedAt}`}</p>
-        </Box>
-        {icons}
-        </Flex>
-      </Flex>
+    const {
+      name: title,
+      metadata: {
+        connections: {
+          likes: { total: likes },
+        },
+      },
+      pictures: { sizes },
+    } = res;
+    displayVideoData = getVideoDataTemplate(
+      sizes[3].link,
+      title,
+      null,
+      likes,
+      addedAt
     );
   }
 
-  let cardDisplay = (
-    <Flex
-      background="gray.100"
-      p={4}
-      borderRadius="8px"
-      direction="column"
-      justify="space-between"
-      gap={2}
-    >
-      {displayVideoData}
-   
-    </Flex>
-  );
-
-  let listDisplay = (
-    <Flex direction="row" justify="space-between" width='100%'>
-      {displayVideoData}
-    </Flex>
-  );
-
   return (
-    <Flex justify="space-between" marginBottom={4}>
-      {!listView && cardDisplay}
-      {listView && listDisplay}
+    <Flex justify="space-between" marginBottom={4} width="100%">
+      <Flex
+        background="gray.100"
+        p={4}
+        borderRadius="8px"
+        direction="column"
+        justify="space-between"
+        gap={2}
+        width="100%"
+      >
+        {displayVideoData}
+      </Flex>
       {showModal && (
         <ModalPlayer
           type={type}

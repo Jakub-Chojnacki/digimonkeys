@@ -49,23 +49,16 @@ export function VideoProvider({ children }) {
     { type: "VIMEO", id: "181696349", addedAt: "25th May 2022", isFav: false },
     { type: "VIMEO", id: "267520931", addedAt: "27th May 2022", isFav: false },
   ];
-  const [ytStoredVideos, setYtStoredVideos] = useState(
-    JSON.parse(localStorage.getItem("ytVideos")) || []
-  );
-  const [vimeoStoredVideos, setVimeoStoredVideos] = useState(
-    JSON.parse(localStorage.getItem("vimeoVideos")) || []
+
+  const [storedVideos, setStoredVideos] = useState(
+    JSON.parse(localStorage.getItem("storedVideos")) || []
   );
   const [videosPerPage, setVideosPerPage] = useState(12);
   const [listView, setListView] = useState(false);
 
-  const clearYtStoredVideos = () => {
-    setYtStoredVideos([]);
-    localStorage.setItem("ytVideos", JSON.stringify([]));
-  };
-
-  const clearVimeoStoredVideos = () => {
-    setVimeoStoredVideos([]);
-    localStorage.setItem("vimeoVideos", JSON.stringify([]));
+  const clearStoredVideos = () => {
+    setStoredVideos([]);
+    localStorage.setItem("storedVideos", JSON.stringify([]));
   };
 
   const toggleListDisplay = () => {
@@ -101,12 +94,11 @@ export function VideoProvider({ children }) {
     }
   };
 
-  const toggleFavHandler = (type,id,isFav) => {
-    if (type === "YOUTUBE") {
-      setYtStoredVideos(
-        ytStoredVideos.map((item) => {
+  const toggleFavHandler = (id,isFav) => {
+      setStoredVideos(
+        storedVideos.map((item) => {
           if (item.id === id) {
-            let stored = JSON.parse(localStorage.getItem("ytVideos"));
+            let stored = JSON.parse(localStorage.getItem("storedVideos"));
             stored.map((item) => {
               if (item.id == id) {
                 item.isFav = !item.isFav;
@@ -114,7 +106,7 @@ export function VideoProvider({ children }) {
                   ...item,
                   isFav: !isFav,
                 });
-                localStorage.setItem("ytVideos", newStorage);
+                localStorage.setItem("storedVideos", newStorage);
               }
             });
             return {
@@ -125,41 +117,13 @@ export function VideoProvider({ children }) {
           return item;
         })
       );
-    } else if (type === "VIMEO") {
-      setVimeoStoredVideos(
-        vimeoStoredVideos.map((item) => {
-          if (item.id === id) {
-            let stored = JSON.parse(localStorage.getItem("vimeoVideos"));
-            stored.map((item) => {
-              if (item.id == id) {
-                item.isFav = !item.isFav;
-                const newStorage = JSON.stringify(stored, {
-                  ...item,
-                  isFav: !isFav,
-                });
-                localStorage.setItem("vimeoVideos", newStorage);
-              }
-            });
-            return {
-              ...item,
-              isFav: !item.isFav,
-            };
-          }
-          return item;
-        })
-      );
-    }
+     
   };
 
   return (
     <VideoContext.Provider
       value={{
-        ytStoredVideos,
-        setYtStoredVideos,
-        vimeoStoredVideos,
-        setVimeoStoredVideos,
-        clearYtStoredVideos,
-        clearVimeoStoredVideos,
+        clearStoredVideos,
         listView,
         setListView,
         toggleListDisplay,
@@ -170,7 +134,8 @@ export function VideoProvider({ children }) {
         setVideosPerPage,
         loadDemo,
         deleteVideoHandler,
-        toggleFavHandler
+        toggleFavHandler,
+        storedVideos, setStoredVideos
       }}
     >
       {children}

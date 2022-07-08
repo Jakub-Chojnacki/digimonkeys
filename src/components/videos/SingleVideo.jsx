@@ -16,8 +16,8 @@ import {
   Text
 } from "@chakra-ui/react";
 import ModalPlayer from "./ModalPlayer";
-const SingleVideo = ({ type, id, addedAt, isFav }) => {
-  const { res } = useFetchVideo(type, id);
+const SingleVideo = ({ type, id, addedAt, isFav,isVimeo,isYt }) => {
+  const { res } = useFetchVideo(type,id,isYt,isVimeo);
   const { listView, deleteVideoHandler, toggleFavHandler } =
     useContext(VideoContext);
   const [showModal, setShowModal] = useState(false);
@@ -25,19 +25,6 @@ const SingleVideo = ({ type, id, addedAt, isFav }) => {
   const showVideoModalHandler = () => {
     setShowModal(true);
   };
-
-  let displayVideoData = (
-    <Stack width={["250px", "400px", "200px"]}>
-      <Skeleton height="140px" />
-      <Skeleton height="30px" />
-      <SkeletonText mt="4" noOfLines={4} spacing="4" />
-      <Flex justify="space-between" align="center">
-        <SkeletonCircle />
-        <SkeletonCircle />
-        <SkeletonCircle />
-      </Flex>
-    </Stack>
-  );
   const icons = (
     <Flex align="center" justify="space-around" fontSize={24}>
       <Icon
@@ -57,14 +44,14 @@ const SingleVideo = ({ type, id, addedAt, isFav }) => {
           as={AiFillStar}
           cursor="pointer"
           data-test-name="fav"
-          onClick={() => toggleFavHandler(type, id, isFav)}
+          onClick={() => toggleFavHandler(id, isFav)}
         />
       ) : (
         <Icon
           as={AiOutlineStar}
           cursor="pointer"
           data-test-name="notFav"
-          onClick={() => toggleFavHandler(type, id, isFav)}
+          onClick={() => toggleFavHandler(id, isFav)}
         />
       )}
     </Flex>
@@ -89,7 +76,22 @@ const SingleVideo = ({ type, id, addedAt, isFav }) => {
     );
   };
 
-  if (res && type === "YOUTUBE") {
+
+  let displayVideoData = (
+    <Stack width={["250px", "400px", "200px"]}>
+      <Skeleton height="140px" />
+      <Skeleton height="30px" />
+      <SkeletonText mt="4" noOfLines={4} spacing="4" />
+      <Flex justify="space-between" align="center">
+        <SkeletonCircle />
+        <SkeletonCircle />
+        <SkeletonCircle />
+      </Flex>
+    </Stack>
+  );
+ 
+ 
+  if (res && isYt) {
     const {
       snippet: {
         title,
@@ -100,7 +102,7 @@ const SingleVideo = ({ type, id, addedAt, isFav }) => {
       statistics: { viewCount: views, likeCount: likes },
     } = res.items[0];
     displayVideoData = getVideoDataTemplate(url, title, views, likes, addedAt);
-  } else if (res && type === "VIMEO") {
+  } else if (res && isVimeo) {
     const {
       name: title,
       metadata: {

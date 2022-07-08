@@ -37,7 +37,7 @@ const SingleVideo = ({ type, id, addedAt, isFav,isVimeo,isYt }) => {
         as={FaTrashAlt}
         cursor="pointer"
         data-test-name="delete"
-        onClick={() => deleteVideoHandler(type, id)}
+        onClick={() => deleteVideoHandler(id)}
       />{" "}
       {isFav ? (
         <Icon

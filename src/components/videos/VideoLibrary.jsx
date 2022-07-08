@@ -69,21 +69,6 @@ const VideoLibrary = () => {
           <Text>Videos per page: {videosPerPage}</Text>
         </Flex>
       </Flex>
-{/* 
-      <div>
-        <Heading as="h3" size="lg">
-          Your Youtube Library
-        </Heading>
-        <Videos type="YOUTUBE" />
-      </div>
-
-      <div>
-        <Heading as="h3" size="lg">
-          Your Vimeo Library
-        </Heading>
-        <Videos type="VIMEO" />
-      </div> */}
-
       <div>
         <Heading as="h3" size="lg">
           Your Video Library

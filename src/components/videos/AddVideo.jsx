@@ -22,9 +22,9 @@ const AddVideo = () => {
 
   //validations
   function matchYoutubeUrl(url) {
-    var p =
+    let p =
       /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
-    var matches = url.match(p);
+    let matches = url.match(p);
     if (matches) {
       return matches[1];
     }
@@ -32,9 +32,9 @@ const AddVideo = () => {
   }
 
   function matchVimeoUrl(url) {
-    var p =
+    let p =
       /(?:http|https)?:?\/?\/?(?:www\.)?(?:player\.)?vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/(?:[^\/]*)\/videos\/|video\/|)(\d+)(?:|\/\?)/;
-    var matches = url.match(p);
+    let matches = url.match(p);
     if (matches) {
       return matches[1];
     }
@@ -147,7 +147,7 @@ const AddVideo = () => {
         </Flex>
       )}
       {buttonMode == "VIMEO" && (
-        <div className={styles.input__container}>
+        <Flex gap={2}>
           <Input
             value={newVimeoId}
             onChange={(e) => setNewVimeoId(e.target.value)}
@@ -156,7 +156,7 @@ const AddVideo = () => {
           <Button type="submit" colorScheme="green" onClick={addVimeo}>
             Submit
           </Button>
-        </div>
+        </Flex>
       )}
       {error && <p className="error">{error}</p>}
     </Container>

@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import ReactPlayer from "react-player";
 import {
   Modal,
@@ -6,9 +6,13 @@ import {
   ModalContent,
   ModalBody,
   ModalCloseButton,
+  Spinner,
+  Flex
 } from "@chakra-ui/react";
 
-const PlayerModal = ({ type, id, hideModal,showModal }) => {
+const PlayerModal = ({ type, id, hideModal, showModal }) => {
+  const [loadingVideo,setLoadingVideo] = useState(true)
+
   let modalLink;
   if (type === "YOUTUBE") {
     modalLink = `https://www.youtube.com/watch?v=${id}`;
@@ -17,15 +21,30 @@ const PlayerModal = ({ type, id, hideModal,showModal }) => {
   }
 
   return (
-      <Modal size={['xs','xs','md','2xl']} isOpen={showModal} onClose={hideModal} motionPreset='slideInBottom'  isCentered>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalCloseButton />
-          <ModalBody p={10}>
-            <ReactPlayer controls url={modalLink} width="100%" />
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+    <Modal
+      size={["xs", "xs", "md", "2xl"]}
+      isOpen={showModal}
+      onClose={hideModal}
+      motionPreset="slideInBottom"
+      isCentered
+    >
+      <ModalOverlay />
+      <ModalContent backgroundColor="gray.200">
+        <ModalCloseButton />
+        <ModalBody p={10}>
+          <Flex align="center" justify="center">
+         {loadingVideo && <Spinner
+            thickness="6px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.500"
+            size="xl"
+          />}
+          <ReactPlayer controls url={modalLink}  width={loadingVideo ? '0px' : '100%'} display={loadingVideo ? 'none' : 'block'} onReady={()=> setLoadingVideo(false)} />
+          </Flex>
+        </ModalBody>
+      </ModalContent>
+    </Modal>
   );
 };
 

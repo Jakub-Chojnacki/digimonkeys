@@ -35,6 +35,24 @@ export function VideoProvider({children}){
         localStorage.setItem('ytVideos', JSON.stringify(demoYt))
         localStorage.setItem('vimeoVideos', JSON.stringify(demoVimeo))
     }
+
+    const deleteVideoHandler = (type,id) => {
+        if (type == "YOUTUBE") {
+          setYtStoredVideos((prev) => prev.filter((el) => el.id !== id));
+          let stored = JSON.parse(localStorage.getItem("ytVideos"));
+          localStorage.setItem(
+            "ytVideos",
+            JSON.stringify(stored.filter((el) => el.id !== id))
+          );
+        } else if (type == "VIMEO") {
+          setVimeoStoredVideos((prev) => prev.filter((el) => el.id !== id));
+          let stored = JSON.parse(localStorage.getItem("vimeoVideos"));
+          localStorage.setItem(
+            "vimeoVideos",
+            JSON.stringify(stored.filter((el) => el.id !== id))
+          );
+        }
+      };
     
     return (
         <VideoContext.Provider
@@ -53,7 +71,8 @@ export function VideoProvider({children}){
            setHasVisitedSite,
            videosPerPage,
            setVideosPerPage,
-           loadDemo
+           loadDemo,
+           deleteVideoHandler
              }}>
                  
             {children}

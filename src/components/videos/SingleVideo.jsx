@@ -3,7 +3,15 @@ import useFetchVideo from "../../hooks/useFetchVideo";
 import { AiOutlineStar, AiFillStar, AiFillEye } from "react-icons/ai";
 import { FaTrashAlt } from "react-icons/fa";
 import VideoContext from "../../context/video-context";
-import { Flex, Box, Text, Heading, Image, Icon,Spinner } from "@chakra-ui/react";
+import {
+  Flex,
+  Box,
+  Text,
+  Heading,
+  Image,
+  Icon,
+  Spinner,
+} from "@chakra-ui/react";
 import ModalPlayer from "./ModalPlayer";
 const SingleVideo = ({ type, id, addedAt, isFav }) => {
   const { res } = useFetchVideo(type, id);
@@ -13,31 +21,13 @@ const SingleVideo = ({ type, id, addedAt, isFav }) => {
     setYtStoredVideos,
     setVimeoStoredVideos,
     listView,
+    deleteVideoHandler,
   } = useContext(VideoContext);
   const [showModal, setShowModal] = useState(false);
 
   const showVideoHandler = () => {
     setShowModal(true);
   };
-
-  const deleteHandler = () => {
-    if (type == "YOUTUBE") {
-      setYtStoredVideos((prev) => prev.filter((el) => el.id !== id));
-      let stored = JSON.parse(localStorage.getItem("ytVideos"));
-      localStorage.setItem(
-        "ytVideos",
-        JSON.stringify(stored.filter((el) => el.id !== id))
-      );
-    } else if (type == "VIMEO") {
-      setVimeoStoredVideos((prev) => prev.filter((el) => el.id !== id));
-      let stored = JSON.parse(localStorage.getItem("vimeoVideos"));
-      localStorage.setItem(
-        "vimeoVideos",
-        JSON.stringify(stored.filter((el) => el.id !== id))
-      );
-    }
-  };
-
   const toggleFavHandler = () => {
     if (type === "YOUTUBE") {
       setYtStoredVideos(
@@ -88,33 +78,72 @@ const SingleVideo = ({ type, id, addedAt, isFav }) => {
     }
   };
 
-  let displayData = <p>Loading...</p>;
+  let displayVideoData = <p>Loading...</p>;
+  const icons = (
+    <Flex
+      align="center"
+      justify="space-around"
+      fontSize={24}
+    >
+      <Icon
+        as={AiFillEye}
+        cursor="pointer"
+        data-test-name="watch"
+        onClick={showVideoHandler}
+      />{" "}
+      <Icon
+        as={FaTrashAlt}
+        cursor="pointer"
+        data-test-name="delete"
+        onClick={() => deleteVideoHandler(type, id)}
+      />{" "}
+      {isFav ? (
+        <Icon
+          as={AiFillStar}
+          cursor="pointer"
+          data-test-name="fav"
+          onClick={toggleFavHandler}
+        />
+      ) : (
+        <Icon
+          as={AiOutlineStar}
+          cursor="pointer"
+          data-test-name="notFav"
+          onClick={toggleFavHandler}
+        />
+      )}
+    </Flex>
+  );
 
   // if and else if  breaks DRY principles but it's more readable this way
   if (res && type === "YOUTUBE") {
     const items = res.data.items[0];
-    displayData = (
-      <div>
+    displayVideoData = (
+      <Flex direction={listView ? "row" : "column"} width='100%'>
         <Image
           cursor="pointer"
           src={items.snippet.thumbnails.high.url}
           onClick={showVideoHandler}
         />
-        <Box padding={2}>
-          <Heading size="sm" noOfLines={2}>
-            {items.snippet.title}
-          </Heading>
-          <p>{`Views: ${items.statistics.viewCount}`}</p>
-          <p>{`Likes: ${items.statistics.likeCount}`}</p>
-          <p>{`Added at : ${addedAt}`}</p>
-        </Box>
-      </div>
+        <Flex direction='column' justify='space-between' flexGrow='3'>
+          <Box padding={2}>
+            <Heading size="sm" noOfLines={2}>
+              {items.snippet.title}
+            </Heading>
+            <p>{`Views: ${items.statistics.viewCount}`}</p>
+            <p>{`Likes: ${items.statistics.likeCount}`}</p>
+            <p>{`Added at : ${addedAt}`}</p>
+          </Box>
+          {icons}
+        </Flex>
+      </Flex>
     );
   } else if (res && type === "VIMEO") {
     const items = res.data;
-    displayData = (
-      <div>
+    displayVideoData = (
+      <Flex direction={listView ? "row" : "column"}>
         <Image src={items.pictures.sizes[3].link} onClick={showVideoHandler} />
+        <Flex direction='column' justify='space-between'>
         <Box p={2}>
           <Heading size="sm" noOfLines={2}>
             {items.name}
@@ -122,84 +151,32 @@ const SingleVideo = ({ type, id, addedAt, isFav }) => {
           <p>{`Likes: ${items.metadata.connections.likes.total}`}</p>
           <p>{`Added at : ${addedAt}`}</p>
         </Box>
-      </div>
+        {icons}
+        </Flex>
+      </Flex>
     );
   }
 
   let cardDisplay = (
-    <Flex color="light" direction="column" justify="space-between">
-      {displayData}
-      <Flex align="center" justify="space-around" fontSize={24}>
-        <Icon
-          cursor="pointer"
-          as={AiFillEye}
-          data-test-name="watch"
-          onClick={showVideoHandler}
-        />{" "}
-        <Icon
-          cursor="pointer"
-          as={FaTrashAlt}
-          data-test-name="delete"
-          onClick={deleteHandler}
-        />{" "}
-        {isFav ? (
-          <Icon
-            as={AiFillStar}
-            cursor="pointer"
-            data-test-name="fav"
-            onClick={toggleFavHandler}
-          />
-        ) : (
-          <Icon
-            as={AiOutlineStar}
-            cursor="pointer"
-            data-test-name="notFav"
-            onClick={toggleFavHandler}
-          />
-        )}{" "}
-      </Flex>
+    <Flex
+      background="gray.100"
+      p={4}
+      borderRadius="8px"
+      direction="column"
+      justify="space-between"
+      gap={2}
+    >
+      {displayVideoData}
+   
     </Flex>
   );
 
   let listDisplay = (
-    <div>
-      {displayData}
-      <Flex
-        direction={listView ? "column" : "row"}
-        align="center"
-        justify="space-around"
-        fontSize={24}
-      >
-        <Icon
-          as={AiFillEye}
-          cursor="pointer"
-          data-test-name="watch"
-          onClick={showVideoHandler}
-        />{" "}
-        <Icon
-          as={FaTrashAlt}
-          cursor="pointer"
-          data-test-name="delete"
-          onClick={deleteHandler}
-        />{" "}
-        {isFav ? (
-          <Icon
-            as={AiFillStar}
-            cursor="pointer"
-            data-test-name="fav"
-            onClick={toggleFavHandler}
-          />
-        ) : (
-          <Icon
-            as={AiOutlineStar}
-            cursor="pointer"
-            data-test-name="notFav"
-            onClick={toggleFavHandler}
-          />
-        )}
-      </Flex>
-    </div>
+    <Flex direction="row" justify="space-between" width='100%'>
+      {displayVideoData}
+    </Flex>
   );
+
   return (
     <Flex justify="space-between" marginBottom={4}>
       {!listView && cardDisplay}

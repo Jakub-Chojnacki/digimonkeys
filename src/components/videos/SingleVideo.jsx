@@ -1,4 +1,4 @@
-import React, { useContext} from "react";
+import React, { useContext,useState} from "react";
 import useFetchVideo from "../../hooks/useFetchVideo";
 import VideoContext from "../../context/video-context";
 import VideoActionIcons from "../UI/VideoActionIcons";
@@ -18,6 +18,7 @@ const SingleVideo = ({ id, addedAt, isFav, isVimeo, isYt }) => {
   const { res } = useFetchVideo(id, isYt, isVimeo);
   const { listView, showOnlyFav, showPlayerModal, setShowPlayerModal } =
     useContext(VideoContext);
+    const [showModal, setShowModal] = useState(false);
 
   const getVideoDataTemplate = (url, title, views, likes, addedAt) => {
     return (
@@ -25,7 +26,7 @@ const SingleVideo = ({ id, addedAt, isFav, isVimeo, isYt }) => {
         <Image
           cursor="pointer"
           src={url}
-          onClick={() => setShowPlayerModal(true)}
+          onClick={() => setShowModal(true)}
           maxW={listView && ["50%", "50%", "50%", "100%"]}
         />
         <Flex direction="column" justify="space-between" width="100%">
@@ -37,7 +38,7 @@ const SingleVideo = ({ id, addedAt, isFav, isVimeo, isYt }) => {
             <Text>{`Likes: ${likes}`}</Text>
             <Text>{`Added at : ${addedAt}`}</Text>
           </Box>
-          <VideoActionIcons isFav={isFav} id={id} />
+          <VideoActionIcons isFav={isFav} id={id} openVideoModal={()=> setShowModal(true)}/>
         </Flex>
       </Flex>
     );
@@ -111,13 +112,13 @@ const SingleVideo = ({ id, addedAt, isFav, isVimeo, isYt }) => {
         {displayVideoData}
       </Flex>
 
-      {showPlayerModal && (
+      {showModal && (
         <ModalPlayer
           isYt={isYt}
           isVimeo={isVimeo}
           id={id}
-          hideModal={() => setShowPlayerModal(false)}
-          showModal={showPlayerModal}
+          hideModal={() => setShowModal(false)}
+          showModal={showModal}
         />
       )}
     </Flex>

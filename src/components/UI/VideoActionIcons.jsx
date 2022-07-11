@@ -13,12 +13,9 @@ import {
 } from "@chakra-ui/react";
 import { AiOutlineStar, AiFillStar, AiFillEye } from "react-icons/ai";
 import { FaTrashAlt } from "react-icons/fa";
-const VideoActionIcons = ({ id,isFav }) => {
+const VideoActionIcons = ({ id,isFav,openVideoModal }) => {
   const [showPopover, setShowPopover] = useState(false);
-  const showVideoModalHandler = () => {
-    setShowPlayerModal(true);
-  };
-  const { deleteVideoHandler, toggleFavHandler, setShowPlayerModal } =
+  const { deleteVideoHandler, toggleFavHandler } =
     useContext(VideoContext);
   return (
     <Flex align="center" justify="space-around" fontSize={24}>
@@ -26,17 +23,17 @@ const VideoActionIcons = ({ id,isFav }) => {
         as={AiFillEye}
         cursor="pointer"
         data-test-name="watch"
-        onClick={showVideoModalHandler}
+        onClick={openVideoModal}
       />{" "}
-      <Popover isOpen={showPopover} onBlur={() => setShowPopover(false)}>
+      <Popover isOpen={showPopover} onBlur={() => setShowPopover(false)} >
         <PopoverTrigger>
           <Button onClick={() => setShowPopover(true)}>
             <Icon as={FaTrashAlt} cursor="pointer" data-test-name="delete" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent>
+        <PopoverContent >
           <PopoverHeader>Confirmation!</PopoverHeader>
-          <PopoverBody>
+          <PopoverBody >
             <Text fontSize={16}>
               Are you sure you want to delete this video?
             </Text>

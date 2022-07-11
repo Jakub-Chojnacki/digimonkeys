@@ -15,7 +15,6 @@ export function VideoProvider({ children }) {
   };
   const [hasVisitedSite, setHasVisitedSite] = useState(false);
   const [showOnlyFav, setShowOnlyFav] = useState(false);
-  const [showPlayerModal, setShowPlayerModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const demoVideos = [
     {
@@ -96,7 +95,7 @@ export function VideoProvider({ children }) {
       isFav: false,
     },
   ];
-  const [isVideoOrderReversed,setIsVideoOrderReversed] = useState(false)
+  const [isVideoOrderReversed, setIsVideoOrderReversed] = useState(false);
 
   const [storedVideos, setStoredVideos] = useState(
     JSON.parse(localStorage.getItem("storedVideos")) || []
@@ -199,12 +198,10 @@ export function VideoProvider({ children }) {
         setShowOnlyFav,
         validateYoutubeUrl,
         validateVimeoUrl,
-        showPlayerModal,
-        setShowPlayerModal,
         currentPage,
         setCurrentPage,
         isVideoOrderReversed,
-        setIsVideoOrderReversed
+        setIsVideoOrderReversed,
       }}
     >
       {children}

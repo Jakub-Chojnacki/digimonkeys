@@ -13,7 +13,6 @@ const Videos = () => {
     currentPage,
     setCurrentPage,
   } = useContext(VideoContext);
-
   const indexOfLastVid = currentPage * videosPerPage;
   const indexOfFirstVid = indexOfLastVid - videosPerPage;
   let currentVideos = storedVideos.slice(indexOfFirstVid, indexOfLastVid);
@@ -47,7 +46,7 @@ const Videos = () => {
   return (
     <Flex direction="column" justify="center">
       <Flex align="center" justify="center" gap={4} marginY={8}>
-        <LibraryActionButtons  />
+        <LibraryActionButtons />
       </Flex>
 
       <Grid

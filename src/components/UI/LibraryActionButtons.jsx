@@ -1,13 +1,20 @@
-import React, { useContext,useState } from "react";
+import React, { useContext, useState } from "react";
 import VideoContext from "../../context/video-context";
-import {Button } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 const LibraryActionButtons = () => {
-  const { clearStoredVideos, setShowOnlyFav, setCurrentPage, showOnlyFav,storedVideos,isVideoOrderReversed,setIsVideoOrderReversed } =
-    useContext(VideoContext);
-    const handleReverse = () => {
-        setIsVideoOrderReversed((prev) => !prev);
-      storedVideos.reverse();
-    };
+  const {
+    clearStoredVideos,
+    setShowOnlyFav,
+    setCurrentPage,
+    showOnlyFav,
+    storedVideos,
+    isVideoOrderReversed,
+    setIsVideoOrderReversed,
+  } = useContext(VideoContext);
+  const handleReverse = () => {
+    setIsVideoOrderReversed((prev) => !prev);
+    storedVideos.reverse();
+  };
   return (
     <>
       <Button

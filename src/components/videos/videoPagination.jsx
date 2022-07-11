@@ -50,7 +50,7 @@ const Pagination = (props) => {
         }
 
         return (
-          <Button colorScheme="blue" onClick={() => onPageChange(pageNumber)}>
+          <Button  key={pageNumber} colorScheme="blue" onClick={() => onPageChange(pageNumber)}>
             {pageNumber}
           </Button>
         );

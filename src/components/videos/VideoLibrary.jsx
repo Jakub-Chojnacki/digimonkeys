@@ -6,8 +6,9 @@ import {
   Heading,
   Text,
   Flex,
+  Icon,
 } from "@chakra-ui/react";
-import { AiOutlineUnorderedList } from "react-icons/ai";
+import { AiOutlineUnorderedList, AiFillStar } from "react-icons/ai";
 import { CgMenuGridR } from "react-icons/cg";
 import VideoContext from "../../context/video-context";
 import Videos from "./Videos";
@@ -19,6 +20,7 @@ const VideoLibrary = () => {
     videosPerPage,
     setVideosPerPage,
     loadDemo,
+    showOnlyFav,
   } = useContext(VideoContext);
 
   const handleChangeVidsPerPage = (e) => {
@@ -70,10 +72,20 @@ const VideoLibrary = () => {
         </Flex>
       </Flex>
       <div>
-        <Heading as="h3" size="lg">
-          Your Video Library
-        </Heading>
-        <Videos/>
+        {!showOnlyFav && (
+          <Heading as="h3" size="lg">
+            Your Video Library
+          </Heading>
+        )}
+        {showOnlyFav && (
+          <Flex align="center" gap={2}>
+            <Icon as={AiFillStar} color="#FF9529" fontSize={32}/>
+            <Heading as="h3" size="lg">
+              Your Favourite Videos
+            </Heading>
+          </Flex>
+        )}
+        <Videos />
       </div>
     </Container>
   );

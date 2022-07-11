@@ -10,13 +10,13 @@ import {
   Flex,
 } from "@chakra-ui/react";
 
-const PlayerModal = ({ type, id, hideModal, showModal }) => {
+const PlayerModal = ({ id, hideModal, showModal, isYt, isVimeo }) => {
   const [loadingVideo, setLoadingVideo] = useState(true);
 
   let modalLink;
-  if (type === "YOUTUBE") {
+  if (isYt) {
     modalLink = `https://www.youtube.com/watch?v=${id}`;
-  } else if (type === "VIMEO") {
+  } else if (isVimeo) {
     modalLink = `https://vimeo.com/${id}`;
   }
 

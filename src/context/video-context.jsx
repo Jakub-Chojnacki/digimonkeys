@@ -1,8 +1,20 @@
 import React from "react";
 import { createContext, useState } from "react";
+import { useToast } from "@chakra-ui/react";
 const VideoContext = createContext();
 export function VideoProvider({ children }) {
+  const toast = useToast();
+  const showToast = (msg,status,position) => {
+    toast({
+      description:`${msg}`,
+      status: `${status}`,
+      duration: 4000,
+      isClosable: true,
+      position: `${position}`
+    })
+  }
   const [hasVisitedSite, setHasVisitedSite] = useState(false);
+  const [showOnlyFav, setShowOnlyFav] = useState(false);
   const demoVideos = [
     {
       isYt: true,
@@ -92,19 +104,23 @@ export function VideoProvider({ children }) {
   const clearStoredVideos = () => {
     setStoredVideos([]);
     localStorage.setItem("storedVideos", JSON.stringify([]));
+    showToast("Deleted all videos","success","top")
   };
 
   const toggleListDisplay = () => {
     setListView(true);
+    showToast("Changed display mode to List","info","top left")
   };
 
   const toggleTileDisplay = () => {
     setListView(false);
+    showToast("Changed display mode to Tiles","info","top left")
   };
 
   const loadDemo = () => {
     setStoredVideos(demoVideos);
     localStorage.setItem("storedVideos", JSON.stringify(demoVideos));
+    showToast("Loaded demo videos","success","top")
   };
 
   const deleteVideoHandler = (id) => {
@@ -114,6 +130,7 @@ export function VideoProvider({ children }) {
       "storedVideos",
       JSON.stringify(stored.filter((el) => el.id !== id))
     );
+
   };
 
   const toggleFavHandler = (id, isFav) => {
@@ -158,6 +175,8 @@ export function VideoProvider({ children }) {
         toggleFavHandler,
         storedVideos,
         setStoredVideos,
+        showOnlyFav,
+        setShowOnlyFav,
       }}
     >
       {children}

@@ -9,7 +9,12 @@ const AddVideo = () => {
   const [error, setError] = useState("");
   const { storedVideos, setStoredVideos } = useContext(VideoContext);
 
-  //validations
+  const addVideoOnEnter = (e) => {
+    if (e.key === "Enter") {
+      AddNewVideo();
+    }
+  };
+
   function matchYoutubeUrl(url) {
     let ytRegex =
       /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(-nocookie)?\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/;
@@ -33,40 +38,58 @@ const AddVideo = () => {
   const AddNewVideo = () => {
     let validationYt = matchYoutubeUrl(newVideoId);
     let validationVimeo = matchVimeoUrl(newVideoId);
-    if (!validationYt && !validationVimeo) {
+    let videoAlreadyInLibrary =
+      storedVideos &&
+      storedVideos.find((vid) => vid.id === validationYt || validationVimeo) &&
+      newVideoId.length;
+
+    let linkIsValid = validationYt || validationVimeo;
+
+    if (linkIsValid && !videoAlreadyInLibrary) {
+      let newVideoData = {
+        isYt: Boolean(validationYt),
+        isVimeo: Boolean(validationVimeo),
+        id: validationYt ? validationYt : validationVimeo,
+        addedAt: format(Date.now(), "do MMM y"),
+        isFav: false,
+      };
+
+      let localStorageVideos = JSON.parse(localStorage.getItem("storedVideos"));
+
+      if (localStorageVideos != null) {
+        const newStoredVideo = JSON.stringify([
+          ...localStorageVideos,
+          newVideoData,
+        ]);
+        localStorage.setItem("storedVideos", newStoredVideo);
+      } else {
+        localStorage.setItem("storedVideos", JSON.stringify([newVideoData]));
+      }
+
+      setStoredVideos((prev) => [...prev, newVideoData]);
+      setNewVideoId("");
       toast({
-        description: "There was an error while adding the video",
+        description: "A video was added successfully",
         position: "top",
-        status: "error",
+        status: "success",
         duration: 4000,
         isClosable: true,
       });
+      setError("");
       return;
     }
 
-    let newVideoData = {
-      isYt: Boolean(validationYt),
-      isVimeo: Boolean(validationVimeo),
-      id: validationYt ? validationYt : validationVimeo,
-      addedAt: format(Date.now(), "do MMM y"),
-      isFav: false,
-    };
-
-    let stored = JSON.parse(localStorage.getItem("storedVideos"));
-
-    if (stored != null) {
-      const newStoredVideo = JSON.stringify([...stored, newVideoData]);
-      localStorage.setItem("storedVideos", newStoredVideo);
-    } else {
-      localStorage.setItem("storedVideos", JSON.stringify([newVideoData]));
+    if (!validationYt && !validationVimeo) {
+      setError("It is not a valid link.");
     }
 
-    setStoredVideos((prev) => [...prev, newVideoData]);
-
+    if (videoAlreadyInLibrary) {
+      setError("This video is already stored in the library.");
+    }
     toast({
-      description: "A video was added successfully",
+      description: `There was an error`,
       position: "top",
-      status: "success",
+      status: "error",
       duration: 4000,
       isClosable: true,
     });
@@ -79,6 +102,7 @@ const AddVideo = () => {
           value={newVideoId}
           onChange={(e) => setNewVideoId(e.target.value)}
           placeholder="Input a video link/id"
+          onKeyPress={addVideoOnEnter}
         />
         <Button type="submit" colorScheme="green" onClick={AddNewVideo}>
           Submit

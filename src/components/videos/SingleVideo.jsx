@@ -13,18 +13,25 @@ import {
   SkeletonCircle,
   SkeletonText,
   Stack,
-  Text
+  Text,
+  Button,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
 } from "@chakra-ui/react";
 import ModalPlayer from "./ModalPlayer";
-const SingleVideo = ({ type, id, addedAt, isFav,isVimeo,isYt }) => {
-  const { res } = useFetchVideo(type,id,isYt,isVimeo);
-  const { listView, deleteVideoHandler, toggleFavHandler } =
+const SingleVideo = ({ id, addedAt, isFav, isVimeo, isYt }) => {
+  const { res } = useFetchVideo(id, isYt, isVimeo);
+  const { listView, deleteVideoHandler, toggleFavHandler, showOnlyFav } =
     useContext(VideoContext);
   const [showModal, setShowModal] = useState(false);
-
+  const [showPopover, setShowPopover] = useState(false);
   const showVideoModalHandler = () => {
     setShowModal(true);
   };
+
   const icons = (
     <Flex align="center" justify="space-around" fontSize={24}>
       <Icon
@@ -33,12 +40,32 @@ const SingleVideo = ({ type, id, addedAt, isFav,isVimeo,isYt }) => {
         data-test-name="watch"
         onClick={showVideoModalHandler}
       />{" "}
-      <Icon
-        as={FaTrashAlt}
-        cursor="pointer"
-        data-test-name="delete"
-        onClick={() => deleteVideoHandler(id)}
-      />{" "}
+      <Popover isOpen={showPopover} onBlur={() => setShowPopover(false)}>
+        <PopoverTrigger>
+          <Button onClick={() => setShowPopover(true)}>
+            <Icon as={FaTrashAlt} cursor="pointer" data-test-name="delete" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent>
+          <PopoverHeader>Confirmation!</PopoverHeader>
+          <PopoverBody>
+            <Text fontSize={16}>
+              Are you sure you want to delete this video?
+            </Text>
+            <Flex marginTop={4} align="center" justify="space-around">
+              <Button
+                colorScheme="green"
+                onClick={() => deleteVideoHandler(id)}
+              >
+                Yes
+              </Button>
+              <Button colorScheme="red" onClick={() => setShowPopover(false)}>
+                No
+              </Button>
+            </Flex>
+          </PopoverBody>
+        </PopoverContent>
+      </Popover>
       {isFav ? (
         <Icon
           as={AiFillStar}
@@ -60,10 +87,15 @@ const SingleVideo = ({ type, id, addedAt, isFav,isVimeo,isYt }) => {
   const getVideoDataTemplate = (url, title, views, likes, addedAt) => {
     return (
       <Flex direction={listView ? "row" : "column"}>
-        <Image cursor="pointer" src={url} onClick={showVideoModalHandler} maxW={listView && ['50%','50%','50%','100%']}/>
-        <Flex direction="column" justify="space-between" width='100%'>
-          <Box padding={2} fontSize={['12','12','14']}>
-            <Heading size="sm" noOfLines={2} fontSize={['16','16','18']}>
+        <Image
+          cursor="pointer"
+          src={url}
+          onClick={showVideoModalHandler}
+          maxW={listView && ["50%", "50%", "50%", "100%"]}
+        />
+        <Flex direction="column" justify="space-between" width="100%">
+          <Box padding={2} fontSize={["12", "12", "14"]}>
+            <Heading size="sm" noOfLines={2} fontSize={["16", "16", "18"]}>
               {title}
             </Heading>
             {views && <Text>{`Views: ${views}`}</Text>}
@@ -75,7 +107,6 @@ const SingleVideo = ({ type, id, addedAt, isFav,isVimeo,isYt }) => {
       </Flex>
     );
   };
-
 
   let displayVideoData = (
     <Stack width={["250px", "400px", "200px"]}>
@@ -89,8 +120,7 @@ const SingleVideo = ({ type, id, addedAt, isFav,isVimeo,isYt }) => {
       </Flex>
     </Stack>
   );
- 
- 
+
   if (res && isYt) {
     const {
       snippet: {
@@ -121,8 +151,19 @@ const SingleVideo = ({ type, id, addedAt, isFav,isVimeo,isYt }) => {
     );
   }
 
+  let showVideo = true;
+
+  if (!isFav && showOnlyFav) {
+    showVideo = false;
+  }
+
   return (
-    <Flex justify="space-between" marginBottom={4} width="100%">
+    <Flex
+      justify="space-between"
+      marginBottom={4}
+      width="100%"
+      display={showVideo ? "flex" : "none"}
+    >
       <Flex
         background="gray.100"
         p={4}
@@ -134,9 +175,11 @@ const SingleVideo = ({ type, id, addedAt, isFav,isVimeo,isYt }) => {
       >
         {displayVideoData}
       </Flex>
+
       {showModal && (
         <ModalPlayer
-          type={type}
+          isYt={isYt}
+          isVimeo={isVimeo}
           id={id}
           hideModal={() => setShowModal(false)}
           showModal={showModal}

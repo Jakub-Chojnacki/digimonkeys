@@ -1,88 +1,23 @@
-import React, { useContext, useState } from "react";
+import React, { useContext} from "react";
 import useFetchVideo from "../../hooks/useFetchVideo";
-import { AiOutlineStar, AiFillStar, AiFillEye } from "react-icons/ai";
-import { FaTrashAlt } from "react-icons/fa";
 import VideoContext from "../../context/video-context";
+import VideoActionIcons from "../UI/VideoActionIcons";
 import {
   Flex,
   Box,
   Heading,
   Image,
-  Icon,
   Skeleton,
   SkeletonCircle,
   SkeletonText,
   Stack,
   Text,
-  Button,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverHeader,
-  PopoverBody,
 } from "@chakra-ui/react";
 import ModalPlayer from "./ModalPlayer";
 const SingleVideo = ({ id, addedAt, isFav, isVimeo, isYt }) => {
   const { res } = useFetchVideo(id, isYt, isVimeo);
-  const { listView, deleteVideoHandler, toggleFavHandler, showOnlyFav } =
+  const { listView, showOnlyFav, showPlayerModal, setShowPlayerModal } =
     useContext(VideoContext);
-  const [showModal, setShowModal] = useState(false);
-  const [showPopover, setShowPopover] = useState(false);
-  const showVideoModalHandler = () => {
-    setShowModal(true);
-  };
-
-  const icons = (
-    <Flex align="center" justify="space-around" fontSize={24}>
-      <Icon
-        as={AiFillEye}
-        cursor="pointer"
-        data-test-name="watch"
-        onClick={showVideoModalHandler}
-      />{" "}
-      <Popover isOpen={showPopover} onBlur={() => setShowPopover(false)}>
-        <PopoverTrigger>
-          <Button onClick={() => setShowPopover(true)}>
-            <Icon as={FaTrashAlt} cursor="pointer" data-test-name="delete" />
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent>
-          <PopoverHeader>Confirmation!</PopoverHeader>
-          <PopoverBody>
-            <Text fontSize={16}>
-              Are you sure you want to delete this video?
-            </Text>
-            <Flex marginTop={4} align="center" justify="space-around">
-              <Button
-                colorScheme="green"
-                onClick={() => deleteVideoHandler(id)}
-              >
-                Yes
-              </Button>
-              <Button colorScheme="red" onClick={() => setShowPopover(false)}>
-                No
-              </Button>
-            </Flex>
-          </PopoverBody>
-        </PopoverContent>
-      </Popover>
-      {isFav ? (
-        <Icon
-          as={AiFillStar}
-          cursor="pointer"
-          data-test-name="fav"
-          onClick={() => toggleFavHandler(id, isFav)}
-        />
-      ) : (
-        <Icon
-          as={AiOutlineStar}
-          cursor="pointer"
-          data-test-name="notFav"
-          onClick={() => toggleFavHandler(id, isFav)}
-        />
-      )}
-    </Flex>
-  );
 
   const getVideoDataTemplate = (url, title, views, likes, addedAt) => {
     return (
@@ -90,7 +25,7 @@ const SingleVideo = ({ id, addedAt, isFav, isVimeo, isYt }) => {
         <Image
           cursor="pointer"
           src={url}
-          onClick={showVideoModalHandler}
+          onClick={() => setShowPlayerModal(true)}
           maxW={listView && ["50%", "50%", "50%", "100%"]}
         />
         <Flex direction="column" justify="space-between" width="100%">
@@ -102,7 +37,7 @@ const SingleVideo = ({ id, addedAt, isFav, isVimeo, isYt }) => {
             <Text>{`Likes: ${likes}`}</Text>
             <Text>{`Added at : ${addedAt}`}</Text>
           </Box>
-          {icons}
+          <VideoActionIcons isFav={isFav} id={id} />
         </Flex>
       </Flex>
     );
@@ -176,13 +111,13 @@ const SingleVideo = ({ id, addedAt, isFav, isVimeo, isYt }) => {
         {displayVideoData}
       </Flex>
 
-      {showModal && (
+      {showPlayerModal && (
         <ModalPlayer
           isYt={isYt}
           isVimeo={isVimeo}
           id={id}
-          hideModal={() => setShowModal(false)}
-          showModal={showModal}
+          hideModal={() => setShowPlayerModal(false)}
+          showModal={showPlayerModal}
         />
       )}
     </Flex>

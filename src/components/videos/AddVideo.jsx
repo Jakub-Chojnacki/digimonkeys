@@ -7,7 +7,8 @@ const AddVideo = () => {
   const toast = useToast();
   const [newVideoId, setNewVideoId] = useState("");
   const [error, setError] = useState("");
-  const { storedVideos, setStoredVideos } = useContext(VideoContext);
+  const { storedVideos, setStoredVideos, validateYoutubeUrl, validateVimeoUrl } =
+    useContext(VideoContext);
 
   const addVideoOnEnter = (e) => {
     if (e.key === "Enter") {
@@ -15,29 +16,9 @@ const AddVideo = () => {
     }
   };
 
-  function matchYoutubeUrl(url) {
-    let ytRegex =
-      /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(-nocookie)?\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/;
-    let matches = url.match(ytRegex);
-    if (matches) {
-      return matches[6];
-    }
-    return false;
-  }
-
-  function matchVimeoUrl(url) {
-    let vimeoRegex =
-      /(?:http|https)?:?\/?\/?(?:www\.)?(?:player\.)?vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/(?:[^\/]*)\/videos\/|video\/|)(\d+)(?:|\/\?)/;
-    let matches = url.match(vimeoRegex);
-    if (matches) {
-      return matches[1];
-    }
-    return false;
-  }
-
   const AddNewVideo = () => {
-    let validationYt = matchYoutubeUrl(newVideoId);
-    let validationVimeo = matchVimeoUrl(newVideoId);
+    let validationYt = validateYoutubeUrl(newVideoId);
+    let validationVimeo = validateVimeoUrl(newVideoId);
     let videoAlreadyInLibrary =
       storedVideos &&
       storedVideos.find((vid) => vid.id === validationYt || validationVimeo) &&

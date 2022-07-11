@@ -4,17 +4,19 @@ import { useToast } from "@chakra-ui/react";
 const VideoContext = createContext();
 export function VideoProvider({ children }) {
   const toast = useToast();
-  const showToast = (msg,status,position) => {
+  const showToast = (msg, status, position) => {
     toast({
-      description:`${msg}`,
+      description: `${msg}`,
       status: `${status}`,
       duration: 4000,
       isClosable: true,
-      position: `${position}`
-    })
-  }
+      position: `${position}`,
+    });
+  };
   const [hasVisitedSite, setHasVisitedSite] = useState(false);
   const [showOnlyFav, setShowOnlyFav] = useState(false);
+  const [showPlayerModal, setShowPlayerModal] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
   const demoVideos = [
     {
       isYt: true,
@@ -94,6 +96,7 @@ export function VideoProvider({ children }) {
       isFav: false,
     },
   ];
+  const [isVideoOrderReversed,setIsVideoOrderReversed] = useState(false)
 
   const [storedVideos, setStoredVideos] = useState(
     JSON.parse(localStorage.getItem("storedVideos")) || []
@@ -104,23 +107,21 @@ export function VideoProvider({ children }) {
   const clearStoredVideos = () => {
     setStoredVideos([]);
     localStorage.setItem("storedVideos", JSON.stringify([]));
-    showToast("Deleted all videos","success","top")
+    showToast("Deleted all videos", "success", "top");
   };
 
   const toggleListDisplay = () => {
     setListView(true);
-    showToast("Changed display mode to List","info","top left")
   };
 
   const toggleTileDisplay = () => {
     setListView(false);
-    showToast("Changed display mode to Tiles","info","top left")
   };
 
   const loadDemo = () => {
     setStoredVideos(demoVideos);
     localStorage.setItem("storedVideos", JSON.stringify(demoVideos));
-    showToast("Loaded demo videos","success","top")
+    showToast("Loaded demo videos", "success", "top");
   };
 
   const deleteVideoHandler = (id) => {
@@ -130,7 +131,6 @@ export function VideoProvider({ children }) {
       "storedVideos",
       JSON.stringify(stored.filter((el) => el.id !== id))
     );
-
   };
 
   const toggleFavHandler = (id, isFav) => {
@@ -158,6 +158,26 @@ export function VideoProvider({ children }) {
     );
   };
 
+  function validateYoutubeUrl(url) {
+    let ytRegex =
+      /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(-nocookie)?\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/;
+    let matches = url.match(ytRegex);
+    if (matches) {
+      return matches[6];
+    }
+    return false;
+  }
+
+  function validateVimeoUrl(url) {
+    let vimeoRegex =
+      /(?:http|https)?:?\/?\/?(?:www\.)?(?:player\.)?vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/(?:[^\/]*)\/videos\/|video\/|)(\d+)(?:|\/\?)/;
+    let matches = url.match(vimeoRegex);
+    if (matches) {
+      return matches[1];
+    }
+    return false;
+  }
+
   return (
     <VideoContext.Provider
       value={{
@@ -177,6 +197,14 @@ export function VideoProvider({ children }) {
         setStoredVideos,
         showOnlyFav,
         setShowOnlyFav,
+        validateYoutubeUrl,
+        validateVimeoUrl,
+        showPlayerModal,
+        setShowPlayerModal,
+        currentPage,
+        setCurrentPage,
+        isVideoOrderReversed,
+        setIsVideoOrderReversed
       }}
     >
       {children}

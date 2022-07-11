@@ -1,31 +1,21 @@
 import React, { useState, useContext } from "react";
-import { Button, Text, Flex, Grid } from "@chakra-ui/react";
-import VideoPagination from "../UI/Pagination";
+import { Text, Flex, Grid } from "@chakra-ui/react";
+import Pagination from "../videos/videoPagination";
 import SingleVideo from "./SingleVideo";
 import VideoContext from "../../context/video-context";
+import LibraryActionButtons from "../UI/LibraryActionButtons";
 const Videos = () => {
   const {
-    clearStoredVideos,
     listView,
     videosPerPage,
     storedVideos,
     showOnlyFav,
-    setShowOnlyFav,
+    currentPage,
+    setCurrentPage,
   } = useContext(VideoContext);
-  const [isReversed, setIsReversed] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const handleReverse = () => {
-    setIsReversed((prev) => !prev);
-    storedVideos.reverse();
-  };
 
   const indexOfLastVid = currentPage * videosPerPage;
   const indexOfFirstVid = indexOfLastVid - videosPerPage;
-  const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
   let currentVideos = storedVideos.slice(indexOfFirstVid, indexOfLastVid);
   let favouriteVideos = storedVideos.filter((video) => video.isFav == true);
   let displayVideo = currentVideos.map((video) => {
@@ -41,35 +31,23 @@ const Videos = () => {
     );
   });
 
+  let displayFavouriteVideos = favouriteVideos.map((video) => {
+    return (
+      <SingleVideo
+        key={video.id}
+        id={video.id}
+        addedAt={video.addedAt}
+        isFav={video.isFav}
+        isVimeo={video.isVimeo}
+        isYt={video.isYt}
+      />
+    );
+  });
+
   return (
     <Flex direction="column" justify="center">
       <Flex align="center" justify="center" gap={4} marginY={8}>
-        {
-          <Button
-            colorScheme="blue"
-            fontSize={{ sm: 12, lg: 16 }}
-            onClick={() => {
-              setShowOnlyFav((prev) => !prev);
-            }}
-          >
-            {!showOnlyFav ? "Show Favourite Videos" : "Show All Videos"}
-          </Button>
-        }
-        <Button
-          colorScheme="blue"
-          onClick={handleReverse}
-          fontSize={{ sm: 12, lg: 16 }}
-        >
-          {!isReversed ? "Sort by oldest" : "Sort by newest"}
-        </Button>
-
-        <Button
-          onClick={clearStoredVideos}
-          colorScheme="red"
-          fontSize={{ sm: 12, lg: 16 }}
-        >
-          Clear All
-        </Button>
+        <LibraryActionButtons  />
       </Flex>
 
       <Grid
@@ -79,26 +57,24 @@ const Videos = () => {
         gap={4}
       >
         {!showOnlyFav && displayVideo}
-        {showOnlyFav &&
-          favouriteVideos.map((video) => {
-            return (
-              <SingleVideo
-                key={video.id}
-                id={video.id}
-                addedAt={video.addedAt}
-                isFav={video.isFav}
-                isVimeo={video.isVimeo}
-                isYt={video.isYt}
-              />
-            );
-          })}
+
+        {showOnlyFav && displayFavouriteVideos}
       </Grid>
+      {!showOnlyFav && (
+        <Pagination
+          currentPage={currentPage}
+          totalCount={storedVideos.length}
+          pageSize={videosPerPage}
+          onPageChange={(page) => setCurrentPage(page)}
+        />
+      )}
 
       {showOnlyFav && (
-        <VideoPagination
-          itemsPerPage={videosPerPage}
-          totalItems={favouriteVideos.length}
-          paginate={paginate}
+        <Pagination
+          currentPage={currentPage}
+          totalCount={favouriteVideos.length}
+          pageSize={videosPerPage}
+          onPageChange={(page) => setCurrentPage(page)}
         />
       )}
 

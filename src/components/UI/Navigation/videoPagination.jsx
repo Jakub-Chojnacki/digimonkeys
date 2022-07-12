@@ -1,6 +1,6 @@
 import React from "react";
-import { usePagination, DOTS } from "../../hooks/usePagination";
-import { Button, Text, Flex } from "@chakra-ui/react";
+import { usePagination, DOTS } from "../../../hooks/usePagination";
+import { Button, Flex } from "@chakra-ui/react";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 const Pagination = (props) => {
   const {

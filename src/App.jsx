@@ -1,5 +1,5 @@
 import Layout from './components/UI/Layout'
-import MainNav from './components/UI/MainNav'
+import MainNav from './components/UI/Navigation/MainNav'
 
 function App() {
   return (

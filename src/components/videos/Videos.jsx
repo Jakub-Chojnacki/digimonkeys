@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Text, Flex, Grid } from "@chakra-ui/react";
-import Pagination from "../videos/videoPagination";
+import Pagination from "../UI/Navigation/videoPagination";
 import SingleVideo from "./SingleVideo";
 import VideoContext from "../../context/video-context";
 import LibraryActionButtons from "../UI/LibraryActionButtons";
@@ -16,7 +16,8 @@ const Videos = () => {
   const indexOfLastVid = currentPage * videosPerPage;
   const indexOfFirstVid = indexOfLastVid - videosPerPage;
   let currentVideos = storedVideos.slice(indexOfFirstVid, indexOfLastVid);
-  let favouriteVideos = storedVideos.filter((video) => video.isFav == true);
+  let favouriteVideos = storedVideos.filter((video) => video.isFav == true)
+  let currentFavVideos = favouriteVideos.slice(indexOfFirstVid, indexOfLastVid);
   let displayVideo = currentVideos.map((video) => {
     return (
       <SingleVideo
@@ -30,7 +31,7 @@ const Videos = () => {
     );
   });
 
-  let displayFavouriteVideos = favouriteVideos.map((video) => {
+  let displayFavouriteVideos = currentFavVideos.map((video) => {
     return (
       <SingleVideo
         key={video.id}

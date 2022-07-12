@@ -68,12 +68,14 @@ const AddVideo = () => {
       setError("This video is already stored in the library.");
     }
     toast({
-      description: `There was an error`,
+      description: `There was an error while adding the video`,
       position: "top",
       status: "error",
       duration: 4000,
       isClosable: true,
     });
+
+    
   };
 
   return (

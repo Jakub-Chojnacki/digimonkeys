@@ -12,24 +12,27 @@ import {
   SkeletonText,
   Stack,
   Text,
+  AspectRatio 
 } from "@chakra-ui/react";
 import ModalPlayer from "./ModalPlayer";
 const SingleVideo = ({ id, addedAt, isFav, isVimeo, isYt }) => {
   const { res } = useFetchVideo(id, isYt, isVimeo);
-  const { listView, showOnlyFav, showPlayerModal, setShowPlayerModal } =
+  const { listView, showOnlyFav,  } =
     useContext(VideoContext);
     const [showModal, setShowModal] = useState(false);
 
   const getVideoDataTemplate = (url, title, views, likes, addedAt) => {
     return (
-      <Flex direction={listView ? "row" : "column"}>
+      <Flex direction={listView ? "row" : "column"}  height="100%">
+        <AspectRatio ratio={!listView ? 4/3 : 16/9} minW="50%">
         <Image
           cursor="pointer"
           src={url}
           onClick={() => setShowModal(true)}
-          maxW={listView && ["50%", "50%", "50%", "100%"]}
         />
-        <Flex direction="column" justify="space-between" width="100%">
+        </AspectRatio>
+       
+        <Flex direction="column" justify="space-between"  width="100%" height="100%" align="center">
           <Box padding={2} fontSize={["12", "12", "14"]}>
             <Heading size="sm" noOfLines={2} fontSize={["16", "16", "18"]}>
               {title}

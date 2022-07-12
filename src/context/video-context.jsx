@@ -160,9 +160,13 @@ export function VideoProvider({ children }) {
   function validateYoutubeUrl(url) {
     let ytRegex =
       /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(-nocookie)?\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/;
-    let matches = url.match(ytRegex);
-    if (matches) {
-      return matches[6];
+    let matchesYoutube = url.match(ytRegex);
+    let matchesYoutubeId = url.match(/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/)
+    if (matchesYoutube) {
+      return matchesYoutube[6];
+    }
+    if(!matchesYoutube && matchesYoutubeId){
+      return matchesYoutubeId[0]
     }
     return false;
   }
@@ -170,9 +174,13 @@ export function VideoProvider({ children }) {
   function validateVimeoUrl(url) {
     let vimeoRegex =
       /(?:http|https)?:?\/?\/?(?:www\.)?(?:player\.)?vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/(?:[^\/]*)\/videos\/|video\/|)(\d+)(?:|\/\?)/;
-    let matches = url.match(vimeoRegex);
-    if (matches) {
-      return matches[1];
+    let matchesVimeo = url.match(vimeoRegex);
+    let matchesNumbers =  url.match(/^\d*$/);
+    if (matchesVimeo) {
+      return matchesVimeo[1];
+    }
+    if(!matchesVimeo && matchesNumbers){
+      return matchesNumbers[0]
     }
     return false;
   }

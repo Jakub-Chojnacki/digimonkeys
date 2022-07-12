@@ -1,5 +1,5 @@
 import { FaGithub } from "react-icons/fa";
-import { Heading, Flex, Icon } from "@chakra-ui/react";
+import { Heading, Flex, Icon, Link } from "@chakra-ui/react";
 const MainNav = () => {
   return (
     <Flex
@@ -10,12 +10,12 @@ const MainNav = () => {
       justify="space-between"
       align="center"
     >
-      <a href="/">
+      <Link href="/">
         <Heading fontSize={24}>Video-Player</Heading>
-      </a>
-      <a target="_blank" href="https://github.com/Jakub-Chojnacki/digimonkeys">
+      </Link>
+      <Link target="_blank" href="https://github.com/Jakub-Chojnacki/digimonkeys">
         <Icon as={FaGithub} fontSize={32} />
-      </a>
+      </Link>
     </Flex>
   );
 };

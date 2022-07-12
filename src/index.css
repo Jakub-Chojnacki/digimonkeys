@@ -62,11 +62,3 @@ select {
 body {
   font-family: "Poppins", sans-serif;
 }
-/* overwrite bootstrap style to center the pagination menu */
-.pagination {
-  justify-content: center;
-}
-
-.error {
-  color: #ff3333;
-}

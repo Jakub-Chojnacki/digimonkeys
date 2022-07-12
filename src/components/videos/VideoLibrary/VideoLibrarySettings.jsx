@@ -52,23 +52,26 @@ const VideoLibrarySettings = () => {
         </Button>
       </Flex>
       <Flex align="center" gap={4}>
-
         <Popover isOpen={showPopover} onBlur={() => setShowPopover(false)}>
           <PopoverTrigger>
-          <Button
-          colorScheme="red"
-          onClick={()=>setShowPopover(true)}
-          fontSize={['11','12','16']}
-          paddingX={10}
-        >
-          Load Demo Videos
-        </Button>
+            <Button
+              colorScheme="red"
+              onClick={() => setShowPopover(true)}
+              fontSize={["11", "12", "16"]}
+              paddingX={10}
+            >
+              Load Demo Videos
+            </Button>
           </PopoverTrigger>
           <PopoverContent>
             <PopoverHeader>Confirmation!</PopoverHeader>
             <PopoverBody>
-              <Text fontSize={14}>Are you sure you want to load demo videos?</Text>
-              <Text fontSize={12} color="red.400">IT WILL OVERWRITE YOUR VIDEOS!!!</Text>
+              <Text fontSize={14}>
+                Are you sure you want to load demo videos?
+              </Text>
+              <Text fontSize={12} color="red.400">
+                IT WILL OVERWRITE YOUR VIDEOS!!!
+              </Text>
               <Flex marginTop={4} align="center" justify="space-around">
                 <Button colorScheme="green" onClick={handleSubmitConfirmation}>
                   Yes
@@ -80,7 +83,7 @@ const VideoLibrarySettings = () => {
             </PopoverBody>
           </PopoverContent>
         </Popover>
-        <Text color="red" fontSize={['8','12','14','16']}>
+        <Text color="red" fontSize={["8", "12", "14", "16"]}>
           Note: This will overwrite your existing library!!!
         </Text>
       </Flex>

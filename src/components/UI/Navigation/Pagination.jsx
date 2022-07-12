@@ -1,6 +1,6 @@
 import React from "react";
 import { usePagination, DOTS } from "../../../hooks/usePagination";
-import { Button, Flex } from "@chakra-ui/react";
+import { Button, Flex, Box } from "@chakra-ui/react";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 const Pagination = (props) => {
   const {
@@ -46,7 +46,7 @@ const Pagination = (props) => {
       <BsChevronLeft onClick={onPrevious} />
       {paginationRange.map((pageNumber) => {
         if (pageNumber === DOTS) {
-          return <li key={pageNumber}>&#8230;</li>;
+          return <Box key={pageNumber}>&#8230;</Box>;
         }
 
         return (

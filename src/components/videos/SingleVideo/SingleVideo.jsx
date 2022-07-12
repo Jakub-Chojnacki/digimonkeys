@@ -1,66 +1,54 @@
-import React, { useContext,useState} from "react";
-import useFetchVideo from "../../hooks/useFetchVideo";
-import VideoContext from "../../context/video-context";
-import VideoActionIcons from "../UI/VideoActionIcons";
-import {
-  Flex,
-  Box,
-  Heading,
-  Image,
-  Skeleton,
-  SkeletonCircle,
-  SkeletonText,
-  Stack,
-  Text,
-  AspectRatio 
-} from "@chakra-ui/react";
-import ModalPlayer from "./ModalPlayer";
+import React, { useContext, useState } from "react";
+import useFetchVideo from "../../../hooks/useFetchVideo";
+import VideoContext from "../../../context/video-context";
+import VideoActionIcons from "./VideoActionIcons";
+import { Flex, Box, Heading, Image, Text, AspectRatio } from "@chakra-ui/react";
+import ModalPlayer from "../ModalPlayer";
 const SingleVideo = ({ id, addedAt, isFav, isVimeo, isYt }) => {
+  const { listView } = useContext(VideoContext);
+  const [showModal, setShowModal] = useState(false);
   const { res } = useFetchVideo(id, isYt, isVimeo);
-  const { listView, showOnlyFav,  } =
-    useContext(VideoContext);
-    const [showModal, setShowModal] = useState(false);
+
+  let gotYoutubeData = res && isYt;
+  let gotVimeoData = res && isVimeo;
+  let displayVideoData;
 
   const getVideoDataTemplate = (url, title, views, likes, addedAt) => {
     return (
-      <Flex direction={listView ? "row" : "column"}  height="100%">
-        <AspectRatio ratio={!listView ? 4/3 : 16/9} minW="50%">
-        <Image
-          cursor="pointer"
-          src={url}
-          onClick={() => setShowModal(true)}
-        />
+      <Flex direction={listView ? "row" : "column"} height="100%">
+        <AspectRatio ratio={!listView ? 4 / 3 : 16 / 9} minW="50%">
+          <Image
+            cursor="pointer"
+            src={url}
+            onClick={() => setShowModal(true)}
+          />
         </AspectRatio>
-       
-        <Flex direction="column" justify="space-between"  width="100%" height="100%" align="center">
-          <Box padding={2} fontSize={["12", "12", "14"]}>
+
+        <Flex
+          direction="column"
+          justify="space-between"
+          width="100%"
+          height="100%"
+          align="center"
+        >
+          <Box padding={2} fontSize={["12", "12", "14"]} width="100%">
             <Heading size="sm" noOfLines={2} fontSize={["16", "16", "18"]}>
               {title}
             </Heading>
-            {views && <Text>{`Views: ${views}`}</Text>}
+            {/* {views && <Text>{`Views: ${views}`}</Text>} */}
             <Text>{`Likes: ${likes}`}</Text>
             <Text>{`Added at : ${addedAt}`}</Text>
           </Box>
-          <VideoActionIcons isFav={isFav} id={id} openVideoModal={()=> setShowModal(true)}/>
+          <VideoActionIcons
+            isFav={isFav}
+            id={id}
+            openVideoModal={() => setShowModal(true)}
+          />
         </Flex>
       </Flex>
     );
   };
-
-  let displayVideoData = (
-    <Stack width={["250px", "400px", "200px"]}>
-      <Skeleton height="140px" />
-      <Skeleton height="30px" />
-      <SkeletonText mt="4" noOfLines={4} spacing="4" />
-      <Flex justify="space-between" align="center">
-        <SkeletonCircle />
-        <SkeletonCircle />
-        <SkeletonCircle />
-      </Flex>
-    </Stack>
-  );
-
-  if (res && isYt) {
+  if (gotYoutubeData && res.items[0]) {
     const {
       snippet: {
         title,
@@ -71,7 +59,7 @@ const SingleVideo = ({ id, addedAt, isFav, isVimeo, isYt }) => {
       statistics: { viewCount: views, likeCount: likes },
     } = res.items[0];
     displayVideoData = getVideoDataTemplate(url, title, views, likes, addedAt);
-  } else if (res && isVimeo) {
+  } else if (gotVimeoData) {
     const {
       name: title,
       metadata: {
@@ -88,12 +76,14 @@ const SingleVideo = ({ id, addedAt, isFav, isVimeo, isYt }) => {
       likes,
       addedAt
     );
-  }
-
-  let showVideo = true;
-
-  if (!isFav && showOnlyFav) {
-    showVideo = false;
+  } else {
+    displayVideoData = getVideoDataTemplate(
+      "https://via.placeholder.com/250",
+      "Loading...",
+      null,
+      "unknown",
+      "unknown"
+    );
   }
 
   return (
@@ -101,7 +91,6 @@ const SingleVideo = ({ id, addedAt, isFav, isVimeo, isYt }) => {
       justify="space-between"
       marginBottom={4}
       width="100%"
-      display={showVideo ? "flex" : "none"}
     >
       <Flex
         background="gray.100"

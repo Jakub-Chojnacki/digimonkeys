@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import VideoContext from "../../context/video-context";
+import VideoContext from "../../../context/video-context";
 import {
   Flex,
   Icon,
@@ -13,27 +13,33 @@ import {
 } from "@chakra-ui/react";
 import { AiOutlineStar, AiFillStar, AiFillEye } from "react-icons/ai";
 import { FaTrashAlt } from "react-icons/fa";
-const VideoActionIcons = ({ id,isFav,openVideoModal }) => {
+const VideoActionIcons = ({ id, isFav, openVideoModal }) => {
   const [showPopover, setShowPopover] = useState(false);
-  const { deleteVideoHandler, toggleFavHandler } =
-    useContext(VideoContext);
+  const { deleteVideoHandler, toggleFavHandler } = useContext(VideoContext);
   return (
-    <Flex align="center" justify="space-around" fontSize={24}>
-      <Icon
-        as={AiFillEye}
-        cursor="pointer"
-        data-test-name="watch"
+    <Flex align="center" justify="space-around" fontSize={20} width="100%">
+      <Button
         onClick={openVideoModal}
-      />{" "}
-      <Popover isOpen={showPopover} onBlur={() => setShowPopover(false)} >
+        _hover={{
+          background: "white",
+        }}
+      >
+        <Icon as={AiFillEye} cursor="pointer" data-test-name="watch"  fontSize={24}/>
+      </Button>
+      <Popover isOpen={showPopover} onBlur={() => setShowPopover(false)}>
         <PopoverTrigger>
-          <Button onClick={() => setShowPopover(true)}>
-            <Icon as={FaTrashAlt} cursor="pointer" data-test-name="delete" />
+          <Button
+            onClick={() => setShowPopover(true)}
+            _hover={{
+              background: "white",
+            }}
+          >
+            <Icon as={FaTrashAlt} cursor="pointer" data-test-name="delete"  fontSize={20}/>
           </Button>
         </PopoverTrigger>
-        <PopoverContent >
+        <PopoverContent>
           <PopoverHeader>Confirmation!</PopoverHeader>
-          <PopoverBody >
+          <PopoverBody>
             <Text fontSize={16}>
               Are you sure you want to delete this video?
             </Text>
@@ -52,19 +58,23 @@ const VideoActionIcons = ({ id,isFav,openVideoModal }) => {
         </PopoverContent>
       </Popover>
       {isFav ? (
-        <Icon
-          as={AiFillStar}
-          cursor="pointer"
-          data-test-name="fav"
+        <Button
           onClick={() => toggleFavHandler(id, isFav)}
-        />
+          _hover={{
+            background: "white",
+          }}
+        >
+          <Icon as={AiFillStar} cursor="pointer" data-test-name="fav" fontSize={20} />
+        </Button>
       ) : (
-        <Icon
-          as={AiOutlineStar}
-          cursor="pointer"
-          data-test-name="notFav"
+        <Button
           onClick={() => toggleFavHandler(id, isFav)}
-        />
+          _hover={{
+            background: "white",
+          }}
+        >
+          <Icon as={AiOutlineStar} cursor="pointer" data-test-name="notFav" fontSize={20}/>
+        </Button>
       )}
     </Flex>
   );

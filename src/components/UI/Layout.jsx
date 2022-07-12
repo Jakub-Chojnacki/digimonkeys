@@ -1,5 +1,5 @@
 import React from "react";
-import VideoLibrary from "../videos/VideoLibrary";
+import VideoLibrary from "../videos/VideoLibrary/VideoLibrary";
 import AddVideo from "../videos/AddVideo";
 import { Flex, Container } from "@chakra-ui/react";
 const Layout = () => {

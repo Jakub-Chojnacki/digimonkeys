@@ -22,7 +22,7 @@ const PlayerModal = ({ id, hideModal, showModal, isYt, isVimeo }) => {
 
   return (
     <Modal
-      size={["xs", "xs", "md", "2xl"]}
+      size={["xs", "md", "md", "2xl"]}
       isOpen={showModal}
       onClose={hideModal}
       motionPreset="slideInBottom"

@@ -21,7 +21,6 @@ const useFetchVideo = (identifier,isYt,isVimeo) => {
       try {
         const response = await axios.get(url, { headers: yourHeaders });
         setRes(response.data);
-        setIsPending(false);
       } catch (err) {
         setError(err);
       }

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import VideoContext from "../../context/video-context";
+import VideoContext from "../../../context/video-context";
 import {
   Flex,
   Icon,
@@ -11,7 +11,7 @@ import {
   PopoverHeader,
   PopoverBody,
 } from "@chakra-ui/react";
-const LibraryActionButtons = () => {
+const VideoLibraryActionButtons = () => {
   const [showPopover, setShowPopover] = useState(false);
   const handleSubmitConfirmation = () => {
     clearStoredVideos();
@@ -34,11 +34,12 @@ const LibraryActionButtons = () => {
     <>
       <Button
         colorScheme="blue"
-        fontSize={{ sm: 12, lg: 16 }}
+        fontSize={['8','12','16']}
         onClick={() => {
           setShowOnlyFav((prev) => !prev);
           setCurrentPage(1);
         }}
+        paddingX={4}
       >
         {!showOnlyFav ? "Show Favourite Videos" : "Show All Videos"}
       </Button>
@@ -46,7 +47,7 @@ const LibraryActionButtons = () => {
       <Button
         colorScheme="blue"
         onClick={handleReverse}
-        fontSize={{ sm: 12, lg: 16 }}
+        fontSize={['8','12','16']}
       >
         {!isVideoOrderReversed ? "Sort by oldest" : "Sort by newest"}
       </Button>
@@ -56,7 +57,7 @@ const LibraryActionButtons = () => {
           <Button
             onClick={() => setShowPopover(true)}
             colorScheme="red"
-            fontSize={{ sm: 12, lg: 16 }}
+            fontSize={['8','12','16']}
           >
             Clear All
           </Button>
@@ -80,4 +81,4 @@ const LibraryActionButtons = () => {
   );
 };
 
-export default LibraryActionButtons;
+export default VideoLibraryActionButtons;

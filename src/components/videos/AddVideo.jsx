@@ -21,10 +21,10 @@ const AddVideo = () => {
     let validationVimeo = validateVimeoUrl(newVideoId);
     let videoAlreadyInLibrary =
       storedVideos &&
-      storedVideos.find((vid) => vid.id === validationYt || validationVimeo) &&
+      storedVideos.find((vid) => vid.id === validationYt || vid.id === validationVimeo)  &&
       newVideoId.length;
 
-    let linkIsValid = validationYt || validationVimeo;
+    let linkIsValid = Boolean(validationYt) || Boolean(validationVimeo);
 
     if (linkIsValid && !videoAlreadyInLibrary) {
       let newVideoData = {

@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { AiOutlineUnorderedList } from "react-icons/ai";
 import { CgMenuGridR } from "react-icons/cg";
-import VideoContext from "../../context/video-context";
+import VideoContext from "../../../context/video-context";
 const VideoLibrarySettings = () => {
   const {
     toggleListDisplay,
@@ -58,7 +58,8 @@ const VideoLibrarySettings = () => {
           <Button
           colorScheme="red"
           onClick={()=>setShowPopover(true)}
-          fontSize={{ sm: "11", md: "16" }}
+          fontSize={['11','12','16']}
+          paddingX={10}
         >
           Load Demo Videos
         </Button>
@@ -66,7 +67,7 @@ const VideoLibrarySettings = () => {
           <PopoverContent>
             <PopoverHeader>Confirmation!</PopoverHeader>
             <PopoverBody>
-              <Text fontSize={16}>Are you sure you want to load demo videos?</Text>
+              <Text fontSize={14}>Are you sure you want to load demo videos?</Text>
               <Text fontSize={12} color="red.400">IT WILL OVERWRITE YOUR VIDEOS!!!</Text>
               <Flex marginTop={4} align="center" justify="space-around">
                 <Button colorScheme="green" onClick={handleSubmitConfirmation}>
@@ -79,7 +80,7 @@ const VideoLibrarySettings = () => {
             </PopoverBody>
           </PopoverContent>
         </Popover>
-        <Text color="red">
+        <Text color="red" fontSize={['8','12','14','16']}>
           Note: This will overwrite your existing library!!!
         </Text>
       </Flex>

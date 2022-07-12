@@ -1,9 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { Text, Flex, Grid } from "@chakra-ui/react";
-import Pagination from "../UI/Navigation/videoPagination";
-import SingleVideo from "./SingleVideo";
+import Pagination from "../UI/Navigation/Pagination";
+import SingleVideo from "./SingleVideo/SingleVideo";
 import VideoContext from "../../context/video-context";
-import LibraryActionButtons from "../UI/LibraryActionButtons";
 const Videos = () => {
   const {
     listView,
@@ -16,7 +15,7 @@ const Videos = () => {
   const indexOfLastVid = currentPage * videosPerPage;
   const indexOfFirstVid = indexOfLastVid - videosPerPage;
   let currentVideos = storedVideos.slice(indexOfFirstVid, indexOfLastVid);
-  let favouriteVideos = storedVideos.filter((video) => video.isFav == true)
+  let favouriteVideos = storedVideos.filter((video) => video.isFav == true);
   let currentFavVideos = favouriteVideos.slice(indexOfFirstVid, indexOfLastVid);
   let displayVideo = currentVideos.map((video) => {
     return (
@@ -46,10 +45,6 @@ const Videos = () => {
 
   return (
     <Flex direction="column" justify="center">
-      <Flex align="center" justify="center" gap={4} marginY={8}>
-        <LibraryActionButtons />
-      </Flex>
-
       <Grid
         templateColumns={
           !listView && ["1fr", "null", "repeat(2, 1fr)", "repeat(4, 1fr)"]

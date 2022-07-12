@@ -4,11 +4,11 @@ import { useToast } from "@chakra-ui/react";
 const VideoContext = createContext();
 export function VideoProvider({ children }) {
   const toast = useToast();
-  const showToast = (msg, status, position) => {
+  const showToast = (msg, status, duration,position) => {
     toast({
       description: `${msg}`,
       status: `${status}`,
-      duration: 4000,
+      duration: `${duration}`,
       isClosable: true,
       position: `${position}`,
     });
@@ -16,6 +16,12 @@ export function VideoProvider({ children }) {
   const [hasVisitedSite, setHasVisitedSite] = useState(false);
   const [showOnlyFav, setShowOnlyFav] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isVideoOrderReversed, setIsVideoOrderReversed] = useState(false);
+  const [storedVideos, setStoredVideos] = useState(
+    JSON.parse(localStorage.getItem("storedVideos")) || []
+  );
+  const [videosPerPage, setVideosPerPage] = useState(12);
+  const [listView, setListView] = useState(false);
   const demoVideos = [
     {
       isYt: true,
@@ -95,18 +101,12 @@ export function VideoProvider({ children }) {
       isFav: false,
     },
   ];
-  const [isVideoOrderReversed, setIsVideoOrderReversed] = useState(false);
-
-  const [storedVideos, setStoredVideos] = useState(
-    JSON.parse(localStorage.getItem("storedVideos")) || []
-  );
-  const [videosPerPage, setVideosPerPage] = useState(12);
-  const [listView, setListView] = useState(false);
 
   const clearStoredVideos = () => {
     setStoredVideos([]);
     localStorage.setItem("storedVideos", JSON.stringify([]));
-    showToast("Deleted all videos", "success", "top");
+    showToast("Deleted all videos", "success",4000, "top");
+    setCurrentPage(1);
   };
 
   const toggleListDisplay = () => {
@@ -120,7 +120,7 @@ export function VideoProvider({ children }) {
   const loadDemo = () => {
     setStoredVideos(demoVideos);
     localStorage.setItem("storedVideos", JSON.stringify(demoVideos));
-    showToast("Loaded demo videos", "success", "top");
+    showToast("Loaded demo videos", "success",4000, "top");
   };
 
   const deleteVideoHandler = (id) => {
@@ -133,6 +133,9 @@ export function VideoProvider({ children }) {
   };
 
   const toggleFavHandler = (id, isFav) => {
+    if(!isFav){ showToast(`Video was added to favourite`,"info",1100,"top left")}
+    if(isFav){ showToast(`Video was removed from favourite`,"info",1100,"top left")}
+   
     setStoredVideos(
       storedVideos.map((item) => {
         if (item.id === id) {
@@ -154,19 +157,22 @@ export function VideoProvider({ children }) {
         }
         return item;
       })
-    );
+    )
+  
   };
 
   function validateYoutubeUrl(url) {
     let ytRegex =
       /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(-nocookie)?\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/;
     let matchesYoutube = url.match(ytRegex);
-    let matchesYoutubeId = url.match(/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/)
+    let matchesYoutubeId = url.match(
+      /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/
+    );
     if (matchesYoutube) {
       return matchesYoutube[6];
     }
-    if(!matchesYoutube && matchesYoutubeId){
-      return matchesYoutubeId[0]
+    if (!matchesYoutube && matchesYoutubeId) {
+      return matchesYoutubeId[0];
     }
     return false;
   }
@@ -175,12 +181,12 @@ export function VideoProvider({ children }) {
     let vimeoRegex =
       /(?:http|https)?:?\/?\/?(?:www\.)?(?:player\.)?vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/(?:[^\/]*)\/videos\/|video\/|)(\d+)(?:|\/\?)/;
     let matchesVimeo = url.match(vimeoRegex);
-    let matchesNumbers =  url.match(/^\d*$/);
+    let matchesNumbers = url.match(/^\d*$/);
     if (matchesVimeo) {
       return matchesVimeo[1];
     }
-    if(!matchesVimeo && matchesNumbers){
-      return matchesNumbers[0]
+    if (!matchesVimeo && matchesNumbers) {
+      return matchesNumbers.input;
     }
     return false;
   }

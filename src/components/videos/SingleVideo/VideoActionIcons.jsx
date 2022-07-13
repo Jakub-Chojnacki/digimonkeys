@@ -14,6 +14,7 @@ import {
 } from '@chakra-ui/react';
 
 import VideoContext from '../../../context/video-context';
+import ConfirmationModal from '../../UI/ConfirmationModal';
 
 const VideoActionIcons = ({ id, isFav, openVideoModal }) => {
   const [showPopover, setShowPopover] = useState(false);
@@ -23,9 +24,7 @@ const VideoActionIcons = ({ id, isFav, openVideoModal }) => {
     <Flex align="center" justify="space-around" fontSize={20} width="100%">
       <Button
         onClick={openVideoModal}
-        _hover={{
-          background: 'white',
-        }}
+        colorScheme="gray"
       >
         <Icon
           as={AiFillEye}
@@ -34,48 +33,23 @@ const VideoActionIcons = ({ id, isFav, openVideoModal }) => {
           fontSize={24}
         />
       </Button>
-      <Popover isOpen={showPopover} onBlur={() => setShowPopover(false)}>
-        <PopoverTrigger>
-          <Button
-            onClick={() => setShowPopover(true)}
-            _hover={{
-              background: 'white',
-            }}
-          >
-            <Icon
-              as={FaTrashAlt}
-              cursor="pointer"
-              data-test-name="delete"
-              fontSize={20}
-            />
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent>
-          <PopoverHeader>Confirmation!</PopoverHeader>
-          <PopoverBody>
-            <Text fontSize={16}>
-              Are you sure you want to delete this video?
-            </Text>
-            <Flex marginTop={4} align="center" justify="space-around">
-              <Button
-                colorScheme="green"
-                onClick={() => deleteVideoHandler(id)}
-              >
-                Yes
-              </Button>
-              <Button colorScheme="red" onClick={() => setShowPopover(false)}>
-                No
-              </Button>
-            </Flex>
-          </PopoverBody>
-        </PopoverContent>
-      </Popover>
+
+        <ConfirmationModal
+          buttonText={<Icon
+            as={FaTrashAlt}
+            cursor="pointer"
+            data-test-name="delete"
+            fontSize={20}
+            background="none"
+          />}
+          buttonColorScheme="gray"
+          confirmationText={"Are you sure you want to delete this video?"}
+          confirmationAction={() => deleteVideoHandler(id)}
+        />
       {isFav ? (
         <Button
           onClick={() => toggleFavHandler(id, isFav)}
-          _hover={{
-            background: 'white',
-          }}
+          colorScheme="gray"
         >
           <Icon
             as={AiFillStar}
@@ -87,9 +61,7 @@ const VideoActionIcons = ({ id, isFav, openVideoModal }) => {
       ) : (
         <Button
           onClick={() => toggleFavHandler(id, isFav)}
-          _hover={{
-            background: 'white',
-          }}
+          colorScheme="gray"
         >
           <Icon
             as={AiOutlineStar}

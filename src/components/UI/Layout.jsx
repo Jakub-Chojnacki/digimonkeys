@@ -7,7 +7,7 @@ import AddVideo from "../videos/AddVideo";
 const Layout = () => {
   return (
     <Flex direction="column" align="center">
-       <Container as='main' maxW='1200px' pX={['0','6','8']}>
+       <Container as='main' maxW='1200px' paddingX={['0','6','8']}>
         <VideoLibrary />
       </Container>
       <AddVideo/>

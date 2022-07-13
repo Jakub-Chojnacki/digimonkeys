@@ -1,9 +1,11 @@
-import React, { useContext, useState } from "react";
-import useFetchVideo from "../../../hooks/useFetchVideo";
-import VideoContext from "../../../context/video-context";
-import VideoActionIcons from "./VideoActionIcons";
-import { Flex, Box, Heading, Image, Text, AspectRatio } from "@chakra-ui/react";
-import ModalPlayer from "../ModalPlayer";
+import React, { useContext, useState } from 'react';
+import { Flex, Box, Heading, Image, Text, AspectRatio } from '@chakra-ui/react';
+
+import useFetchVideo from '../../../hooks/useFetchVideo';
+import VideoContext from '../../../context/video-context';
+import VideoActionIcons from './VideoActionIcons';
+import ModalPlayer from '../ModalPlayer';
+
 const SingleVideo = ({ id, addedAt, isFav, isVimeo, isYt }) => {
   const { listView } = useContext(VideoContext);
   const [showModal, setShowModal] = useState(false);
@@ -15,7 +17,7 @@ const SingleVideo = ({ id, addedAt, isFav, isVimeo, isYt }) => {
 
   const getVideoDataTemplate = (url, title, views, likes, addedAt) => {
     return (
-      <Flex direction={listView ? "row" : "column"} height="100%">
+      <Flex direction={listView ? 'row' : 'column'} height="100%">
         <AspectRatio ratio={!listView ? 4 / 3 : 16 / 9} minW="50%">
           <Image
             cursor="pointer"
@@ -31,8 +33,8 @@ const SingleVideo = ({ id, addedAt, isFav, isVimeo, isYt }) => {
           height="100%"
           align="center"
         >
-          <Box padding={2} fontSize={["12", "12", "14"]} width="100%">
-            <Heading size="sm" noOfLines={2} fontSize={["16", "16", "18"]}>
+          <Box padding={2} fontSize={['12', '12', '14']} width="100%">
+            <Heading size="sm" noOfLines={2} fontSize={['16', '16', '18']} marginBottom={2}>
               {title}
             </Heading>
             {/* {views && <Text>{`Views: ${views}`}</Text>} */}
@@ -78,20 +80,16 @@ const SingleVideo = ({ id, addedAt, isFav, isVimeo, isYt }) => {
     );
   } else {
     displayVideoData = getVideoDataTemplate(
-      "https://via.placeholder.com/250",
-      "Loading...",
+      'https://via.placeholder.com/250',
+      'Loading...',
       null,
-      "unknown",
-      "unknown"
+      'unknown',
+      'unknown'
     );
   }
 
   return (
-    <Flex
-      justify="space-between"
-      marginBottom={4}
-      width="100%"
-    >
+    <Flex justify="space-between" marginBottom={4} width="100%">
       <Flex
         background="gray.100"
         p={4}

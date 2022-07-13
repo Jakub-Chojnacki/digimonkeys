@@ -1,14 +1,16 @@
 import React from "react";
+import { Flex, Container } from "@chakra-ui/react";
+
 import VideoLibrary from "../videos/VideoLibrary/VideoLibrary";
 import AddVideo from "../videos/AddVideo";
-import { Flex, Container } from "@chakra-ui/react";
+
 const Layout = () => {
   return (
-    <Flex direction="column" padding={8} gap={4} align="center">
-      <AddVideo/>
-      <Container as='main' maxW='1200px'>
+    <Flex direction="column" align="center">
+       <Container as='main' maxW='1200px' pX={['0','6','8']}>
         <VideoLibrary />
       </Container>
+      <AddVideo/>
     </Flex>
   );
 };

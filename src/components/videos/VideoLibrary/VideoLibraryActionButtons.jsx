@@ -1,5 +1,6 @@
-import React, { useContext, useState } from "react";
-import VideoContext from "../../../context/video-context";
+import React, { useContext, useState } from 'react';
+import { AiOutlineStar, AiFillStar } from 'react-icons/ai';
+import VideoContext from '../../../context/video-context';
 import {
   Flex,
   Icon,
@@ -10,7 +11,7 @@ import {
   PopoverContent,
   PopoverHeader,
   PopoverBody,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
 const VideoLibraryActionButtons = () => {
   const [showPopover, setShowPopover] = useState(false);
   const handleSubmitConfirmation = () => {
@@ -31,33 +32,33 @@ const VideoLibraryActionButtons = () => {
     storedVideos.reverse();
   };
   return (
-    <>
+    <Flex gap={2}>
       <Button
-        colorScheme="blue"
-        fontSize={['8','12','16']}
+        colorScheme={!showOnlyFav ? 'gray' : 'blue'}
+        fontSize={['8', '12', '16']}
         onClick={() => {
           setShowOnlyFav((prev) => !prev);
           setCurrentPage(1);
         }}
-        paddingX={4}
       >
-        {!showOnlyFav ? "Show Favourite Videos" : "Show All Videos"}
+        <Icon as={!showOnlyFav ? AiOutlineStar : AiFillStar} marginRight={2}/> Only Show
+        Favourite Videos
       </Button>
 
       <Button
         colorScheme="blue"
         onClick={handleReverse}
-        fontSize={['8','12','16']}
+        fontSize={['8', '12', '16']}
       >
-        {!isVideoOrderReversed ? "Sort by oldest" : "Sort by newest"}
+        {!isVideoOrderReversed ? 'Sort by oldest' : 'Sort by newest'}
       </Button>
 
       <Popover isOpen={showPopover} onBlur={() => setShowPopover(false)}>
         <PopoverTrigger>
           <Button
             onClick={() => setShowPopover(true)}
-            colorScheme="red"
-            fontSize={['8','12','16']}
+            colorScheme="blue"
+            fontSize={['8', '12', '16']}
           >
             Clear All
           </Button>
@@ -77,7 +78,7 @@ const VideoLibraryActionButtons = () => {
           </PopoverBody>
         </PopoverContent>
       </Popover>
-    </>
+    </Flex>
   );
 };
 

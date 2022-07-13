@@ -1,12 +1,14 @@
 import { FaGithub } from "react-icons/fa";
 import { Heading, Flex, Icon, Link } from "@chakra-ui/react";
+
 const MainNav = () => {
+
   return (
     <Flex
       as="header"
       color="white"
       bgColor="#D02B20"
-      p={4}
+      p={2}
       justify="space-between"
       align="center"
     >
@@ -18,6 +20,7 @@ const MainNav = () => {
       </Link>
     </Flex>
   );
+  
 };
 
 export default MainNav;

@@ -1,8 +1,6 @@
 import React, { useContext, useState } from "react";
 import {
-  Select,
   Button,
-  Heading,
   Text,
   Flex,
   Popover,
@@ -13,15 +11,18 @@ import {
 } from "@chakra-ui/react";
 import { AiOutlineUnorderedList } from "react-icons/ai";
 import { CgMenuGridR } from "react-icons/cg";
+
 import VideoContext from "../../../context/video-context";
+
 const VideoLibrarySettings = () => {
+
   const {
     toggleListDisplay,
     toggleTileDisplay,
     listView,
     videosPerPage,
     setVideosPerPage,
-    loadDemo,
+    loadDemo
   } = useContext(VideoContext);
 
   const handleChangeVidsPerPage = (e) => {
@@ -33,11 +34,8 @@ const VideoLibrarySettings = () => {
     setShowPopover(false);
   };
   return (
-    <Flex marginY={6} gap={4} direction="column">
-      <Flex gap={4}>
-        <Heading as={"h4"} size="md">
-          Display mode :
-        </Heading>
+    <Flex marginY={6} gap={2} direction="row">
+      <Flex>
         <Button
           colorScheme={!listView ? "blue" : "gray"}
           onClick={toggleTileDisplay}
@@ -51,14 +49,13 @@ const VideoLibrarySettings = () => {
           <AiOutlineUnorderedList />
         </Button>
       </Flex>
-      <Flex align="center" gap={4}>
+      <Flex align="start" direction="column">
         <Popover isOpen={showPopover} onBlur={() => setShowPopover(false)}>
           <PopoverTrigger>
             <Button
-              colorScheme="red"
+              colorScheme="blue"
               onClick={() => setShowPopover(true)}
               fontSize={["11", "12", "16"]}
-              paddingX={10}
             >
               Load Demo Videos
             </Button>
@@ -72,7 +69,7 @@ const VideoLibrarySettings = () => {
               <Text fontSize={12} color="red.400">
                 IT WILL OVERWRITE YOUR VIDEOS!!!
               </Text>
-              <Flex marginTop={4} align="center" justify="space-around">
+              <Flex marginTop={4} align="center">
                 <Button colorScheme="green" onClick={handleSubmitConfirmation}>
                   Yes
                 </Button>
@@ -83,18 +80,6 @@ const VideoLibrarySettings = () => {
             </PopoverBody>
           </PopoverContent>
         </Popover>
-        <Text color="red" fontSize={["8", "12", "14", "16"]}>
-          Note: This will overwrite your existing library!!!
-        </Text>
-      </Flex>
-
-      <Flex gap={4} align="center">
-        <Select size="md" onClick={handleChangeVidsPerPage} maxW="80px">
-          <option value="12">12</option>
-          <option value="8">8</option>
-          <option value="4">4</option>
-        </Select>
-        <Text>Videos per page: {videosPerPage}</Text>
       </Flex>
     </Flex>
   );

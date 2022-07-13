@@ -1,8 +1,10 @@
 import React, { useContext } from "react";
 import { Text, Flex, Grid } from "@chakra-ui/react";
+
 import Pagination from "../UI/Navigation/Pagination";
 import SingleVideo from "./SingleVideo/SingleVideo";
 import VideoContext from "../../context/video-context";
+
 const Videos = () => {
   const {
     listView,
@@ -18,27 +20,29 @@ const Videos = () => {
   let favouriteVideos = storedVideos.filter((video) => video.isFav == true);
   let currentFavVideos = favouriteVideos.slice(indexOfFirstVid, indexOfLastVid);
   let displayVideo = currentVideos.map((video) => {
+    const {id,addedAt,isFav,isVimeo,isYt}= video 
     return (
       <SingleVideo
-        key={video.id}
-        id={video.id}
-        addedAt={video.addedAt}
-        isFav={video.isFav}
-        isVimeo={video.isVimeo}
-        isYt={video.isYt}
+        key={id}
+        id={id}
+        addedAt={addedAt}
+        isFav={isFav}
+        isVimeo={isVimeo}
+        isYt={isYt}
       />
     );
   });
 
   let displayFavouriteVideos = currentFavVideos.map((video) => {
+    const {id,addedAt,isFav,isVimeo,isYt}= video 
     return (
       <SingleVideo
-        key={video.id}
-        id={video.id}
-        addedAt={video.addedAt}
-        isFav={video.isFav}
-        isVimeo={video.isVimeo}
-        isYt={video.isYt}
+        key={id}
+        id={id}
+        addedAt={addedAt}
+        isFav={isFav}
+        isVimeo={isVimeo}
+        isYt={isYt}
       />
     );
   });

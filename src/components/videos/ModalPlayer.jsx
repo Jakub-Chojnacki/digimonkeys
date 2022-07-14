@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import ReactPlayer from "react-player";
+import React, { useState } from 'react';
+import ReactPlayer from 'react-player';
 import {
   Modal,
   ModalOverlay,
@@ -8,21 +8,26 @@ import {
   ModalCloseButton,
   Spinner,
   Flex,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
 
 const PlayerModal = ({ id, hideModal, showModal, isYt, isVimeo }) => {
+
   const [loadingVideo, setLoadingVideo] = useState(true);
 
   let modalLink;
+
   if (isYt) {
     modalLink = `https://www.youtube.com/watch?v=${id}`;
-  } else if (isVimeo) {
+  }
+
+  if (isVimeo) {
     modalLink = `https://vimeo.com/${id}`;
   }
 
   return (
+
     <Modal
-      size={["xs", "md", "md", "2xl"]}
+      size={['xs', 'md', 'md', '2xl']}
       isOpen={showModal}
       onClose={hideModal}
       motionPreset="slideInBottom"
@@ -45,14 +50,15 @@ const PlayerModal = ({ id, hideModal, showModal, isYt, isVimeo }) => {
             <ReactPlayer
               controls
               url={modalLink}
-              width={loadingVideo ? "0px" : "100%"}
-              display={loadingVideo ? "none" : "block"}
+              width={loadingVideo ? '0px' : '100%'}
+              display={loadingVideo ? 'none' : 'block'}
               onReady={() => setLoadingVideo(false)}
             />
           </Flex>
         </ModalBody>
       </ModalContent>
     </Modal>
+    
   );
 };
 

@@ -6,6 +6,7 @@ import ConfirmationModal from '../../UI/ConfirmationModal';
 import VideoContext from '../../../context/video-context';
 
 const VideoLibrarySettings = () => {
+
   const { toggleListDisplay, toggleTileDisplay, listView, loadDemo } =
     useContext(VideoContext);
 
@@ -19,6 +20,7 @@ const VideoLibrarySettings = () => {
   );
 
   return (
+
     <Flex marginY={6} gap={2} direction="row">
       <Flex>
         <Button
@@ -43,6 +45,7 @@ const VideoLibrarySettings = () => {
         />
       </Flex>
     </Flex>
+    
   );
 };
 

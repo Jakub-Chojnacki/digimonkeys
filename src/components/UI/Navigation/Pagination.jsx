@@ -1,8 +1,8 @@
-import React,{useContext} from 'react';
+import React, { useContext } from 'react';
 import { Flex, Box, Icon, Text, Select } from '@chakra-ui/react';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 
-import VideoContext from "../../../context/video-context";
+import VideoContext from '../../../context/video-context';
 import { usePagination, DOTS } from '../../../hooks/usePagination';
 
 const Pagination = ({
@@ -12,6 +12,7 @@ const Pagination = ({
   currentPage,
   pageSize,
 }) => {
+
   const paginationRange = usePagination({
     currentPage,
     totalCount,
@@ -19,69 +20,63 @@ const Pagination = ({
     pageSize,
   });
 
-  const {
-    setVideosPerPage,
-  } = useContext(VideoContext);
+  const { setVideosPerPage, setCurrentPage } = useContext(VideoContext);
+  let totalPageCount = Math.ceil(totalCount / pageSize);
 
   const handleChangeVidsPerPage = (e) => {
     setVideosPerPage(e.target.value);
+    setCurrentPage(1);
   };
 
   const onChangePageToPrevious = () => {
     if (currentPage > 1) {
       onPageChange(currentPage - 1);
     }
-
-    // if (currentPage === 1) {
-    //   onPageChange(paginationRange.length);
-    // }
   };
 
-  if (currentPage === 0 || paginationRange.length < 2) {
-    return null;
-  }
-
   const onChangePageToNext = () => {
-    console.log(paginationRange.length)
-    if (currentPage < totalCount) {
+    if (currentPage < totalPageCount) {
       onPageChange(currentPage + 1);
     }
-
-    // if (currentPage === paginationRange.length) {
-    //   onPageChange(1);
-    // }
   };
 
   return (
-    <Flex align="center" justify="center">
+    <Flex align="center" justify="center" gap={4}>
       <Flex align="center" gap={2} justify-self="center">
-      <Icon
-        as={BsChevronLeft}
-        onClick={onChangePageToPrevious}
-        cursor="pointer"
-      />
-      {paginationRange.map((pageNumber) => {
-        if (pageNumber === DOTS) {
-          return <Box key={`dots${Math.floor(Math.random() * 100)}`}>&#8230;</Box>;
-        }
+        <Icon
+          as={BsChevronLeft}
+          onClick={onChangePageToPrevious}
+          cursor="pointer"
+        />
 
-        return (
-          <Text
-            key={pageNumber}
-            onClick={() => onPageChange(pageNumber)}
-            backgroundColor={currentPage === pageNumber ? 'blue.400' : 'none'}
-            color={currentPage === pageNumber ? 'white' : 'blue.400'}
-            borderColor={'blue.400'}
-            border="1px"
-            cursor="pointer"
-            paddingX={2}
-          >
-            {pageNumber}
-          </Text>
-        );
-      })}
+        {paginationRange.map((pageNumber) => {
+          if (pageNumber === DOTS) {
+            return (
+              <Box key={`dots${Math.floor(Math.random() * 100)}`}>&#8230;</Box>
+            );
+          }
 
-      <Icon as={BsChevronRight} onClick={onChangePageToNext} cursor="pointer" />
+          return (
+            <Text
+              key={pageNumber}
+              onClick={() => onPageChange(pageNumber)}
+              backgroundColor={currentPage === pageNumber ? 'blue.400' : 'none'}
+              color={currentPage === pageNumber ? 'white' : 'blue.400'}
+              borderColor={'blue.400'}
+              border="1px"
+              cursor="pointer"
+              paddingX={2}
+            >
+              {pageNumber}
+            </Text>
+          );
+        })}
+
+        <Icon
+          as={BsChevronRight}
+          onClick={onChangePageToNext}
+          cursor="pointer"
+        />
       </Flex>
       <Flex gap={4} align="center">
         <Select size="md" onChange={handleChangeVidsPerPage}>
@@ -90,8 +85,8 @@ const Pagination = ({
           <option value="4">4 per page</option>
         </Select>
       </Flex>
-      
     </Flex>
+    
   );
 };
 

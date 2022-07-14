@@ -9,23 +9,26 @@ import {
   Box,
   useDisclosure,
   Button,
-  Text,
 } from '@chakra-ui/react';
+
 const ConfirmationModal = ({
   buttonText,
   buttonColorScheme,
   confirmationText,
   confirmationAction,
 }) => {
+
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const ConfirmAction = () => {
     confirmationAction();
-    onClose()
-  }
+    onClose();
+  };
+  
   return (
+    
     <Box>
-      <Button colorScheme={buttonColorScheme} onClick={onOpen}>
+      <Button fontSize={['9','12', '16','16']} colorScheme={buttonColorScheme} onClick={onOpen}>
         {buttonText}
       </Button>
       <Modal
@@ -40,18 +43,21 @@ const ConfirmationModal = ({
           <ModalCloseButton />
           <ModalBody p={10}>
             <Flex align="center" justify="center" direction="column">
-              <Text fontSize={16}>{confirmationText}</Text>
+              {confirmationText}
               <Flex marginTop={4} align="center" justify="space-around" gap={6}>
                 <Button colorScheme="green" onClick={ConfirmAction}>
                   Yes
                 </Button>
-                <Button colorScheme="red" onClick={onClose}>No</Button>
+                <Button colorScheme="red" onClick={onClose}>
+                  No
+                </Button>
               </Flex>
             </Flex>
           </ModalBody>
         </ModalContent>
       </Modal>
     </Box>
+
   );
 };
 

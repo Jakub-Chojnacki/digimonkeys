@@ -4,6 +4,7 @@ import VideoContext from "../../context/video-context";
 import { format } from "date-fns";
 
 const AddVideo = () => {
+
   const toast = useToast();
   const [newVideoId, setNewVideoId] = useState("");
   const [error, setError] = useState("");
@@ -67,6 +68,7 @@ const AddVideo = () => {
     if (videoAlreadyInLibrary) {
       setError("This video is already stored in the library.");
     }
+    
     toast({
       description: `There was an error while adding the video`,
       position: "top",
@@ -74,8 +76,6 @@ const AddVideo = () => {
       duration: 4000,
       isClosable: true,
     });
-
-    
   };
 
   return (

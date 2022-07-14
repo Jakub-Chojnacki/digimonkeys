@@ -20,12 +20,15 @@ const VideoLibraryActionButtons = () => {
     isVideoOrderReversed,
     setIsVideoOrderReversed,
   } = useContext(VideoContext);
+  
   const handleReverse = () => {
     setIsVideoOrderReversed((prev) => !prev);
     storedVideos.reverse();
   };
+
   return (
-    <Flex gap={2}>
+    
+    <Flex gap={2} justify={{lg:"end"}}>
       <Button
         colorScheme={!showOnlyFav ? 'gray' : 'blue'}
         fontSize={['8', '12', '16']}
@@ -47,6 +50,7 @@ const VideoLibraryActionButtons = () => {
       </Button>
       <ConfirmationModal buttonText="Clear All" buttonColorScheme="blue" confirmationText={"Are you sure you want to clear videos?"} confirmationAction={clearStoredVideos} />
     </Flex>
+
   );
 };
 

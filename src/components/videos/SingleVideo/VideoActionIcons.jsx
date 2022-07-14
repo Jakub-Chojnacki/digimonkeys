@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext} from 'react';
 import { AiOutlineStar, AiFillStar, AiFillEye } from 'react-icons/ai';
 import { FaTrashAlt } from 'react-icons/fa';
 import {
@@ -8,7 +8,7 @@ import {
 } from '@chakra-ui/react';
 
 import VideoContext from '../../../context/video-context';
-import ConfirmationModal from '../../UI/ConfirmationModal';
+import ConfirmationModal from '../../UI/Modals/ConfirmationModal';
 
 const VideoActionIcons = ({ id, isFav, openVideoModal }) => {
   const { deleteVideoHandler, toggleFavHandler } = useContext(VideoContext);

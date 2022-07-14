@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import { Button, Text, Flex } from '@chakra-ui/react';
 import { AiOutlineUnorderedList } from 'react-icons/ai';
 import { CgMenuGridR } from 'react-icons/cg';
-import ConfirmationModal from '../../UI/ConfirmationModal';
+
+import ConfirmationModal from '../../UI/Modals/ConfirmationModal';
 import VideoContext from '../../../context/video-context';
 
 const VideoLibrarySettings = () => {

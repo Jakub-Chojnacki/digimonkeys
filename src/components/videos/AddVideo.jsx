@@ -1,7 +1,8 @@
 import React, { useState, useContext } from "react";
 import { Input, Button, Flex, Container, useToast } from "@chakra-ui/react";
-import VideoContext from "../../context/video-context";
 import { format } from "date-fns";
+
+import VideoContext from "../../context/video-context";
 
 const AddVideo = () => {
 
@@ -20,6 +21,7 @@ const AddVideo = () => {
   const AddNewVideo = () => {
     let validationYt = validateYoutubeUrl(newVideoId);
     let validationVimeo = validateVimeoUrl(newVideoId);
+
     let videoAlreadyInLibrary =
       storedVideos &&
       storedVideos.find((vid) => vid.id === validationYt || vid.id === validationVimeo)  &&

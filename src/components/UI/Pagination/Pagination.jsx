@@ -20,7 +20,7 @@ const Pagination = ({
     pageSize,
   });
 
-  const { setVideosPerPage, setCurrentPage } = useContext(VideoContext);
+  const { setVideosPerPage, setCurrentPage} = useContext(VideoContext);
   let totalPageCount = Math.ceil(totalCount / pageSize);
 
   const handleChangeVidsPerPage = (e) => {
@@ -41,6 +41,7 @@ const Pagination = ({
   };
 
   return (
+
     <Flex align="center" justify="center" gap={4}>
       <Flex align="center" gap={2} justify-self="center">
         <Icon

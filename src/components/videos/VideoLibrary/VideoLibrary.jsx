@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Flex, Box, Grid } from '@chakra-ui/react';
+import { Container, Box, Grid } from '@chakra-ui/react';
 
 import VideoLibrarySettings from './VideoLibrarySettings';
 import VideoLibraryActionButtons from './VideoLibraryActionButtons';

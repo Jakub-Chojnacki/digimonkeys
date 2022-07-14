@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Text, Flex, Grid } from "@chakra-ui/react";
 
-import Pagination from "../UI/Navigation/Pagination";
+import Pagination from "../UI/Pagination/Pagination";
 import SingleVideo from "./SingleVideo/SingleVideo";
 import VideoContext from "../../context/video-context";
 
@@ -15,8 +15,6 @@ const Videos = () => {
     currentPage,
     setCurrentPage,
   } = useContext(VideoContext);
-
-
 
   const indexOfLastVid = currentPage * videosPerPage;
   const indexOfFirstVid = indexOfLastVid - videosPerPage;

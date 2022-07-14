@@ -1,8 +1,10 @@
-import React from 'react';
-import { createContext, useState } from 'react';
+import React, { createContext, useState } from 'react';
 import { useToast } from '@chakra-ui/react';
+
 const VideoContext = createContext();
+
 export function VideoProvider({ children }) {
+
   const toast = useToast();
   const showToast = (msg, status, duration, position) => {
     toast({
@@ -13,6 +15,7 @@ export function VideoProvider({ children }) {
       position: `${position}`,
     });
   };
+
   const [hasVisitedSite, setHasVisitedSite] = useState(false);
   const [showOnlyFav, setShowOnlyFav] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -102,12 +105,7 @@ export function VideoProvider({ children }) {
     },
   ];
 
-  const clearStoredVideos = () => {
-    setStoredVideos([]);
-    localStorage.setItem('storedVideos', JSON.stringify([]));
-    showToast('Deleted all videos', 'success', 4000, 'top');
-    setCurrentPage(1);
-  };
+
 
   const toggleListDisplay = () => {
     setListView(true);
@@ -162,6 +160,13 @@ export function VideoProvider({ children }) {
         return item;
       })
     );
+  };
+
+  const clearStoredVideos = () => {
+    setStoredVideos([]);
+    localStorage.setItem('storedVideos', JSON.stringify([]));
+    showToast('Deleted all videos', 'success', 4000, 'top');
+    setCurrentPage(1);
   };
 
   function validateYoutubeUrl(url) {

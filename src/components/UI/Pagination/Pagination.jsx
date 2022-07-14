@@ -12,7 +12,6 @@ const Pagination = ({
   currentPage,
   pageSize,
 }) => {
-
   const paginationRange = usePagination({
     currentPage,
     totalCount,
@@ -20,7 +19,8 @@ const Pagination = ({
     pageSize,
   });
 
-  const { setVideosPerPage, setCurrentPage} = useContext(VideoContext);
+  const { videosPerPage, setVideosPerPage, setCurrentPage } =
+    useContext(VideoContext);
   let totalPageCount = Math.ceil(totalCount / pageSize);
 
   const handleChangeVidsPerPage = (e) => {
@@ -41,7 +41,6 @@ const Pagination = ({
   };
 
   return (
-
     <Flex align="center" justify="center" gap={4}>
       <Flex align="center" gap={2} justify-self="center">
         <Icon
@@ -81,13 +80,18 @@ const Pagination = ({
       </Flex>
       <Flex gap={4} align="center">
         <Select size="md" onChange={handleChangeVidsPerPage}>
-          <option value="12">12 per page</option>
-          <option value="8">8 per page</option>
-          <option value="4">4 per page</option>
+          <option selected={videosPerPage === '12'} value="12">
+            12 per page
+          </option>
+          <option selected={videosPerPage === '8'} value="8">
+            8 per page
+          </option>
+          <option selected={videosPerPage === '4'} value="4">
+            4 per page
+          </option>
         </Select>
       </Flex>
     </Flex>
-    
   );
 };
 

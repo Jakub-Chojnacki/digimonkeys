@@ -14,14 +14,14 @@ const PlayerModal = ({ id, hideModal, showModal, isYt, isVimeo }) => {
 
   const [loadingVideo, setLoadingVideo] = useState(true);
 
-  let modalLink;
+  let modalVideoLink;
 
   if (isYt) {
-    modalLink = `https://www.youtube.com/watch?v=${id}`;
+    modalVideoLink = `https://www.youtube.com/watch?v=${id}`;
   }
 
   if (isVimeo) {
-    modalLink = `https://vimeo.com/${id}`;
+    modalVideoLink = `https://vimeo.com/${id}`;
   }
 
   return (
@@ -49,7 +49,7 @@ const PlayerModal = ({ id, hideModal, showModal, isYt, isVimeo }) => {
             )}
             <ReactPlayer
               controls
-              url={modalLink}
+              url={modalVideoLink}
               width={loadingVideo ? '0px' : '100%'}
               display={loadingVideo ? 'none' : 'block'}
               onReady={() => setLoadingVideo(false)}

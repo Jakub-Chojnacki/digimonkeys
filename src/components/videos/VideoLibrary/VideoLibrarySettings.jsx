@@ -13,7 +13,7 @@ const VideoLibrarySettings = () => {
 
   const confirmationModalText = (
     <>
-      <Text fontSize={14}>Are you sure you want to load demo videos?</Text>
+      <Text fontSize={["14","16","16","18"]}>Are you sure you want to load demo videos?</Text>
       <Text fontSize={12} color="red.400">
         IT WILL OVERWRITE YOUR VIDEOS!!!
       </Text>

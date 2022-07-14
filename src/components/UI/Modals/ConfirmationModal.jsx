@@ -44,7 +44,7 @@ const ConfirmationModal = ({
           <ModalBody p={10}>
             <Flex align="center" justify="center" direction="column">
               {confirmationText}
-              <Flex marginTop={4} align="center" justify="space-around" gap={6}>
+              <Flex marginTop={6} align="center" justify="space-around" gap={6} w="100%">
                 <Button colorScheme="green" onClick={ConfirmAction}>
                   Yes
                 </Button>

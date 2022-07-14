@@ -10,7 +10,7 @@ import {
 import VideoContext from '../../../context/video-context';
 import ConfirmationModal from '../../UI/Modals/ConfirmationModal';
 
-const VideoActionIcons = ({ id, isFav, openVideoModal }) => {
+const SingleVideoActionIcons = ({ id, isFav, openVideoModal }) => {
   const { deleteVideoHandler, toggleFavHandler } = useContext(VideoContext);
 
   return (
@@ -71,4 +71,4 @@ const VideoActionIcons = ({ id, isFav, openVideoModal }) => {
   );
 };
 
-export default VideoActionIcons;
+export default SingleVideoActionIcons;

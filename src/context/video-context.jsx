@@ -18,6 +18,7 @@ export function VideoProvider({ children }) {
 
   const [hasVisitedSite, setHasVisitedSite] = useState(false);
   const [showOnlyFav, setShowOnlyFav] = useState(false);
+  const [showAddVideoInput, setShowAddVideoInput] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [isVideoOrderReversed, setIsVideoOrderReversed] = useState(false);
   const [storedVideos, setStoredVideos] = useState(
@@ -224,6 +225,8 @@ export function VideoProvider({ children }) {
         setCurrentPage,
         isVideoOrderReversed,
         setIsVideoOrderReversed,
+        showAddVideoInput, 
+        setShowAddVideoInput
       }}
     >
       {children}

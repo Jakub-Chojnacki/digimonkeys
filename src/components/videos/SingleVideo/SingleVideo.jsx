@@ -3,7 +3,7 @@ import { Flex, Box, Heading, Image, Text, AspectRatio } from '@chakra-ui/react';
 
 import useFetchVideo from '../../../hooks/useFetchVideo';
 import VideoContext from '../../../context/video-context';
-import VideoActionIcons from './VideoActionIcons';
+import SingleVideoActionIcons from './SingleVideoActionIcons';
 import ModalPlayer from '../../UI/Modals/ModalPlayer'
 
 const SingleVideo = ({ id, addedAt, isFav, isVimeo, isYt }) => {
@@ -16,6 +16,7 @@ const SingleVideo = ({ id, addedAt, isFav, isVimeo, isYt }) => {
   let displayVideoData;
 
   const getVideoDataTemplate = (url, title, views, likes, addedAt) => {
+
     return (
       <Flex direction={listView ? 'row' : 'column'} height="100%">
         <AspectRatio
@@ -53,13 +54,14 @@ const SingleVideo = ({ id, addedAt, isFav, isVimeo, isYt }) => {
               fontSize={listView && { xl: '20' }}
             >{`Added at : ${addedAt}`}</Text>
           </Box>
-          <VideoActionIcons
+          <SingleVideoActionIcons
             isFav={isFav}
             id={id}
             openVideoModal={() => setShowModal(true)}
           />
         </Flex>
       </Flex>
+      
     );
   };
 

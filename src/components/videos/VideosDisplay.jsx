@@ -1,12 +1,12 @@
-import React, { useContext } from "react";
-import { Text, Flex, Grid } from "@chakra-ui/react";
+import React, { useContext } from 'react';
+import { Text, Flex, Grid } from '@chakra-ui/react';
 
-import Pagination from "../UI/Pagination/Pagination";
-import SingleVideo from "./SingleVideo/SingleVideo";
-import VideoContext from "../../context/video-context";
+import Pagination from '../UI/Pagination/Pagination';
+import SingleVideo from './SingleVideo/SingleVideo';
+import VideoContext from '../../context/video-context';
 
-const Videos = () => {
-
+const VideosDisplay = () => {
+  
   const {
     listView,
     videosPerPage,
@@ -25,9 +25,9 @@ const Videos = () => {
   let currentFavVideos = favouriteVideos.slice(indexOfFirstVid, indexOfLastVid);
 
   let libraryIsEmpty = !favouriteVideos.length && !currentVideos.length;
-  
+
   let displayVideo = currentVideos.map((video) => {
-    const {id,addedAt,isFav,isVimeo,isYt}= video 
+    const { id, addedAt, isFav, isVimeo, isYt } = video;
     return (
       <SingleVideo
         key={id}
@@ -41,7 +41,7 @@ const Videos = () => {
   });
 
   let displayFavouriteVideos = currentFavVideos.map((video) => {
-    const {id,addedAt,isFav,isVimeo,isYt}= video 
+    const { id, addedAt, isFav, isVimeo, isYt } = video;
     return (
       <SingleVideo
         key={id}
@@ -55,20 +55,25 @@ const Videos = () => {
   });
 
   return (
-
     <Flex direction="column" justify="center">
       <Grid
         templateColumns={
-          !listView && ["1fr", "1fr", "repeat(2, 1fr)", "repeat(4, 1fr)"]
+          !listView && ['1fr', '1fr', 'repeat(2, 1fr)', 'repeat(4, 1fr)']
         }
         gap={4}
       >
         {!showOnlyFav && displayVideo}
 
         {showOnlyFav && displayFavouriteVideos}
-
       </Grid>
-      {!showOnlyFav && (
+
+      {libraryIsEmpty && (
+        <Text align="center">
+          Your library is empty! Please add some videos.
+        </Text>
+      )}
+
+      {(!showOnlyFav && !libraryIsEmpty) && (
         <Pagination
           currentPage={currentPage}
           totalCount={storedVideos.length}
@@ -77,7 +82,7 @@ const Videos = () => {
         />
       )}
 
-      {showOnlyFav && (
+      {(showOnlyFav && !libraryIsEmpty) && (
         <Pagination
           currentPage={currentPage}
           totalCount={favouriteVideos.length}
@@ -86,14 +91,9 @@ const Videos = () => {
         />
       )}
 
-      {libraryIsEmpty && (
-        <Text align="center">
-          Your library is empty! Please add some videos.
-        </Text>
-      )}
+     
     </Flex>
-  
   );
 };
 
-export default Videos;
+export default VideosDisplay;

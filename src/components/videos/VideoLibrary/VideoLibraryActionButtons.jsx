@@ -47,9 +47,9 @@ const VideoLibraryActionButtons = () => {
         {!isVideoOrderReversed ? 'Sort by oldest' : 'Sort by newest'}
       </Button>
       <ConfirmationModal
-        buttonText="Clear All"
+        buttonText="Delete All"
         buttonColorScheme="blue"
-        confirmationText={'Are you sure you want to clear videos?'}
+        confirmationText={'Are you sure you want to delete ALL videos?'}
         confirmationAction={clearStoredVideos}
       />
     </Flex>

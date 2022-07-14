@@ -3,7 +3,7 @@ import { Container, Box, Grid } from '@chakra-ui/react';
 
 import VideoLibrarySettings from './VideoLibrarySettings';
 import VideoLibraryActionButtons from './VideoLibraryActionButtons';
-import Videos from '../Videos';
+import VideosDisplay from '../VideosDisplay';
 
 const VideoLibrary = () => {
 
@@ -14,7 +14,7 @@ const VideoLibrary = () => {
         <VideoLibraryActionButtons />
       </Grid>
       <Box marginY={6}>
-        <Videos />
+        <VideosDisplay />
       </Box>
     </Container>
   );

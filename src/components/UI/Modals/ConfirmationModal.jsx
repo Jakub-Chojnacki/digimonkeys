@@ -28,7 +28,7 @@ const ConfirmationModal = ({
   return (
     
     <Box>
-      <Button fontSize={['9','12', '16','16']} colorScheme={buttonColorScheme} onClick={onOpen}>
+      <Button fontSize={['8', '12','12', '16']} colorScheme={buttonColorScheme} onClick={onOpen}>
         {buttonText}
       </Button>
       <Modal

@@ -20,7 +20,7 @@ const MainNav = () => {
       </Link>
 
       <Flex align="center" justify="center" gap={['2', '4', '6', '8']}>
-        <AddVideoModal />
+        {/* <AddVideoModal /> */}
         
         <Link
           target="_blank"

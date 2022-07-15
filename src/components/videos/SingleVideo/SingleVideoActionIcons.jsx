@@ -15,7 +15,7 @@ const SingleVideoActionIcons = ({ id, isFav, openVideoModal }) => {
 
   return (
 
-    <Flex align="center" justify="space-around" fontSize={20} width="100%">
+    <Flex align="center" justify="space-between" fontSize={20} width="100%">
       <Button
         onClick={openVideoModal}
         colorScheme="gray"
@@ -33,7 +33,7 @@ const SingleVideoActionIcons = ({ id, isFav, openVideoModal }) => {
             as={FaTrashAlt}
             cursor="pointer"
             data-test-name="delete"
-            fontSize={20}
+            fontSize={22}
             background="none"
           />}
           buttonColorScheme="gray"
@@ -50,7 +50,7 @@ const SingleVideoActionIcons = ({ id, isFav, openVideoModal }) => {
             as={AiFillStar}
             cursor="pointer"
             data-test-name="fav"
-            fontSize={20}
+            fontSize={24}
           />
         </Button>
       ) : (
@@ -62,7 +62,7 @@ const SingleVideoActionIcons = ({ id, isFav, openVideoModal }) => {
             as={AiOutlineStar}
             cursor="pointer"
             data-test-name="notFav"
-            fontSize={20}
+            fontSize={24}
           />
         </Button>
       )}

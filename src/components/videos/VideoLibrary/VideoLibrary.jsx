@@ -9,7 +9,7 @@ const VideoLibrary = () => {
 
   return (
     <Container maxW="1200px" marginY={6}>
-      <Grid alignItems="center" gap={4}  templateColumns={{lg:"repeat(2, 1fr)"}}>
+      <Grid alignItems="center" gap={4}  templateColumns={{md:"repeat(2, 1fr)"}}>
         <VideoLibrarySettings />
         <VideoLibraryActionButtons />
       </Grid>

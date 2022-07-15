@@ -95,13 +95,16 @@ const AddVideo = () => {
   };
 
   return (
-    <Container gap={2}>
+    <Container gap={2} marginY={6} background="gray.100" p={6} maxW={["350px","400px","450px","500px"]}>
+      <Text marginLeft={2} marginBottom={2} fontWeight="bold">Input a video link/id below:</Text>
       <Flex gap={2}>
         <Input
           value={newVideoId}
           onChange={(e) => setNewVideoId(e.target.value)}
-          placeholder="Input a video link/id"
           onKeyPress={addVideoOnEnter}
+          variant='outline' 
+          colorScheme="blue"
+          borderColor="gray.500"
         />
         <Button type="submit" colorScheme="green" onClick={AddNewVideo}>
           Submit

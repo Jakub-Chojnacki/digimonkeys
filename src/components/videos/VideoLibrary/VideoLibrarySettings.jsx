@@ -8,14 +8,29 @@ import VideoContext from '../../../context/video-context';
 
 const VideoLibrarySettings = () => {
 
-  const { toggleListDisplay, toggleTileDisplay, listView, loadDemo } =
-    useContext(VideoContext);
+  const {
+    toggleListDisplay,
+    toggleTileDisplay,
+    listView,
+    loadDemo,
+    clearStoredVideos,
+  } = useContext(VideoContext);
 
-  const confirmationModalText = (
+  const loadDemoConfirmationModalText = (
     <>
-      <Text fontSize={["14","16","16","18"]}>Are you sure you want to load demo videos?</Text>
+      <Text fontSize={['14', '16', '16', '18']}>
+        Are you sure you want to load demo videos?
+      </Text>
       <Text fontSize={12} color="red.400">
         IT WILL OVERWRITE YOUR VIDEOS!!!
+      </Text>
+    </>
+  );
+
+  const deleteConfirmationModalText = (
+    <>
+      <Text align="center" fontSize="20">
+        Are you sure you want to delete ALL videos?
       </Text>
     </>
   );
@@ -41,10 +56,16 @@ const VideoLibrarySettings = () => {
         <ConfirmationModal
           buttonText="Load Demo Videos"
           buttonColorScheme="blue"
-          confirmationText={confirmationModalText}
+          confirmationText={loadDemoConfirmationModalText}
           confirmationAction={loadDemo}
         />
       </Flex>
+      <ConfirmationModal
+        buttonText="Delete All"
+        buttonColorScheme="blue"
+        confirmationText={deleteConfirmationModalText}
+        confirmationAction={clearStoredVideos}
+      />
     </Flex>
     
   );

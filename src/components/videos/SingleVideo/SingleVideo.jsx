@@ -4,9 +4,10 @@ import { Flex, Box, Heading, Image, Text, AspectRatio } from '@chakra-ui/react';
 import useFetchVideo from '../../../hooks/useFetchVideo';
 import VideoContext from '../../../context/video-context';
 import SingleVideoActionIcons from './SingleVideoActionIcons';
-import ModalPlayer from '../../UI/Modals/ModalPlayer'
+import PlayerModal from '../../UI/Modals/PlayerModal'
 
 const SingleVideo = ({ id, addedAt, isFav, isVimeo, isYt }) => {
+  
   const { listView } = useContext(VideoContext);
   const [showModal, setShowModal] = useState(false);
   const { res } = useFetchVideo(id, isYt, isVimeo);
@@ -36,8 +37,9 @@ const SingleVideo = ({ id, addedAt, isFav, isVimeo, isYt }) => {
           width="100%"
           height="100%"
           align="center"
+          paddingX={listView && ["2","2","4","8"]}
         >
-          <Box padding={2} fontSize={['12', '12', '14']} width="100%">
+          <Box padding={2} fontSize={['12', '12', '14']} width="100%" >
             <Heading
               size="sm"
               noOfLines={2}
@@ -49,9 +51,9 @@ const SingleVideo = ({ id, addedAt, isFav, isVimeo, isYt }) => {
               {title}
             </Heading>
             {/* {views && <Text>{`Views: ${views}`}</Text>} */}
-            <Text fontSize={listView && { xl: '20' }}>{`Likes: ${likes}`}</Text>
+            <Text fontSize={listView && {sm:"14",md:"16", xl: '20'}}>{`Likes: ${likes}`}</Text>
             <Text
-              fontSize={listView && { xl: '20' }}
+              fontSize={listView && {sm:"14",md:"16", xl: '20' }}
             >{`Added at : ${addedAt}`}</Text>
           </Box>
           <SingleVideoActionIcons
@@ -123,7 +125,7 @@ const SingleVideo = ({ id, addedAt, isFav, isVimeo, isYt }) => {
       </Flex>
 
       {showModal && (
-        <ModalPlayer
+        <PlayerModal
           isYt={isYt}
           isVimeo={isVimeo}
           id={id}

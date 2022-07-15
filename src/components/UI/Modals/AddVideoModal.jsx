@@ -13,7 +13,6 @@ import {
 import AddVideo from '../../videos/AddVideo';
 
 const AddVideoModal = () => {
-
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -42,7 +41,6 @@ const AddVideoModal = () => {
         </ModalContent>
       </Modal>
     </>
-
   );
 };
 

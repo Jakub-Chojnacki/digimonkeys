@@ -11,10 +11,10 @@ import VideoContext from '../../../context/video-context';
 import ConfirmationModal from '../../UI/Modals/ConfirmationModal';
 
 const SingleVideoActionIcons = ({ id, isFav, openVideoModal }) => {
+  
   const { deleteVideoHandler, toggleFavHandler } = useContext(VideoContext);
 
   return (
-
     <Flex align="center" justify="space-between" fontSize={20} width="100%">
       <Button
         onClick={openVideoModal}
@@ -67,8 +67,8 @@ const SingleVideoActionIcons = ({ id, isFav, openVideoModal }) => {
         </Button>
       )}
     </Flex>
-
   );
+  
 };
 
 export default SingleVideoActionIcons;

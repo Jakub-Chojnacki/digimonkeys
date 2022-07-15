@@ -6,7 +6,7 @@ import VideoContext from '../../../context/video-context';
 import { usePagination, DOTS } from '../../../hooks/usePagination';
 
 const Pagination = ({
-  onPageChange,
+  changePage,
   totalCount,
   siblingCount = 1,
   currentPage,
@@ -25,6 +25,7 @@ const Pagination = ({
   let totalPageCount = Math.ceil(totalCount / pageSize);
   
   const displayPaginationNumbers = paginationRange.map((pageNumber) => {
+
     if (pageNumber === DOTS) {
       return <Box key={`dots${Math.floor(Math.random() * 100)}`}>&#8230;</Box>;
     }
@@ -32,7 +33,7 @@ const Pagination = ({
     return (
       <Text
         key={pageNumber}
-        onClick={() => onPageChange(pageNumber)}
+        onClick={() => changePage(pageNumber)}
         backgroundColor={currentPage === pageNumber ? 'blue.400' : 'none'}
         color={currentPage === pageNumber ? 'white' : 'blue.400'}
         borderColor={'blue.400'}
@@ -42,9 +43,9 @@ const Pagination = ({
       >
         {pageNumber}
       </Text>
+      
     );
   });
-
 
   const handleChangeVidsPerPage = (e) => {
     setVideosPerPage(e.target.value);
@@ -53,20 +54,18 @@ const Pagination = ({
 
   const onChangePageToPrevious = () => {
     if (currentPage > 1) {
-      onPageChange(currentPage - 1);
+      changePage(currentPage - 1);
     }
   };
 
   const onChangePageToNext = () => {
     if (currentPage < totalPageCount) {
-      onPageChange(currentPage + 1);
+      changePage(currentPage + 1);
     }
   };
 
-
   return (
-
-    <Flex align="center" justify="center" gap={4}>
+    <Flex align="center" justify="center" gap={4} marginTop={8}>
       <Flex align="center" gap={2} justify-self="center">
         <Icon
           as={BsChevronLeft}

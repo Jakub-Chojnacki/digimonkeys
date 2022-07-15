@@ -26,7 +26,6 @@ const VideoLibraryActionButtons = () => {
   };
 
   return (
-
     <Flex gap={2} justify={{ md: 'end' }}>
       <Button
         colorScheme="blue"
@@ -45,8 +44,8 @@ const VideoLibraryActionButtons = () => {
         Only Show Favourite Videos
       </Button>
     </Flex>
-
   );
+  
 };
 
 export default VideoLibraryActionButtons;

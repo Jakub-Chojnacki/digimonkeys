@@ -60,10 +60,10 @@ const VideosDisplay = () => {
         templateColumns={
           !listView && ['1fr', '1fr', 'repeat(2, 1fr)', 'repeat(4, 1fr)']
         }
-        gap={4}
+        gap={8}
       >
         {!showOnlyFav && displayVideo}
-
+        
         {showOnlyFav && displayFavouriteVideos}
       </Grid>
 
@@ -78,7 +78,7 @@ const VideosDisplay = () => {
           currentPage={currentPage}
           totalCount={storedVideos.length}
           pageSize={videosPerPage}
-          onPageChange={(page) => setCurrentPage(page)}
+          changePage={(page) => setCurrentPage(page)}
         />
       )}
 
@@ -87,13 +87,12 @@ const VideosDisplay = () => {
           currentPage={currentPage}
           totalCount={favouriteVideos.length}
           pageSize={videosPerPage}
-          onPageChange={(page) => setCurrentPage(page)}
+          changePage={(page) => setCurrentPage(page)}
         />
       )}
-
-     
     </Flex>
   );
+
 };
 
 export default VideosDisplay;

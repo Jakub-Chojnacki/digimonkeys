@@ -25,7 +25,6 @@ const PlayerModal = ({ id, hideModal, showModal, isYt, isVimeo }) => {
   }
 
   return (
-
     <Modal
       size={['xs', 'md', 'md', '2xl']}
       isOpen={showModal}
@@ -58,7 +57,6 @@ const PlayerModal = ({ id, hideModal, showModal, isYt, isVimeo }) => {
         </ModalBody>
       </ModalContent>
     </Modal>
-    
   );
 };
 

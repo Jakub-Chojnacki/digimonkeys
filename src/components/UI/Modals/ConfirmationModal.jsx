@@ -26,7 +26,6 @@ const ConfirmationModal = ({
   };
   
   return (
-    
     <Box>
       <Button fontSize={['8', '12','12', '16']} colorScheme={buttonColorScheme} onClick={onOpen}>
         {buttonText}
@@ -57,7 +56,6 @@ const ConfirmationModal = ({
         </ModalContent>
       </Modal>
     </Box>
-
   );
 };
 

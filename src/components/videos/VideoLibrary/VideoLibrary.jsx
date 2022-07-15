@@ -8,8 +8,8 @@ import VideosDisplay from '../VideosDisplay';
 const VideoLibrary = () => {
 
   return (
-    <Container maxW="1200px" marginY={6}>
-      <Grid alignItems="center" gap={4}  templateColumns={{md:"repeat(2, 1fr)"}}>
+    <Container  maxW="1100px">
+      <Grid alignItems="center" templateColumns={{md:"repeat(2, 1fr)"}}>
         <VideoLibrarySettings />
         <VideoLibraryActionButtons />
       </Grid>

@@ -22,7 +22,7 @@ const SingleVideo = ({ id, addedAt, isFav, isVimeo, isYt }) => {
       <Flex direction={listView ? 'row' : 'column'} height="100%">
         <AspectRatio
           ratio={!listView ? 4 / 3 : 16 / 9}
-          minW={['50%', '50%', '40%', '40%']}
+          minW={['50%', '50%', '45%', '45%']}
         >
           <Image
             cursor="pointer"
@@ -50,7 +50,7 @@ const SingleVideo = ({ id, addedAt, isFav, isVimeo, isYt }) => {
             >
               {title}
             </Heading>
-            {/* {views && <Text>{`Views: ${views}`}</Text>} */}
+            {views && <Text>{`Views: ${views}`}</Text>}
             <Text fontSize={listView && {sm:"14",md:"16", xl: '20'}}>{`Likes: ${likes}`}</Text>
             <Text
               fontSize={listView && {sm:"14",md:"16", xl: '20' }}
@@ -111,7 +111,7 @@ const SingleVideo = ({ id, addedAt, isFav, isVimeo, isYt }) => {
   }
 
   return (
-    <Flex justify="space-between" marginBottom={4} width="100%">
+    <Flex justify="space-between">
       <Flex
         background="gray.100"
         p={4}

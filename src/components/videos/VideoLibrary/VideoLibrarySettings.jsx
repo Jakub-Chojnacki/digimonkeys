@@ -36,9 +36,8 @@ const VideoLibrarySettings = () => {
   );
 
   return (
-
-    <Flex marginY={6} gap={2} direction="row">
-      <Flex>
+    <Flex gap={2} direction="row">
+      <Flex gap={1}>
         <Button
           colorScheme={!listView ? 'blue' : 'gray'}
           onClick={toggleTileDisplay}
@@ -67,8 +66,8 @@ const VideoLibrarySettings = () => {
         confirmationAction={clearStoredVideos}
       />
     </Flex>
-    
   );
+  
 };
 
 export default VideoLibrarySettings;

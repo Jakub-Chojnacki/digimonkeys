@@ -26,6 +26,7 @@ export function VideoProvider({ children }) {
   );
   const [videosPerPage, setVideosPerPage] = useState(12);
   const [listView, setListView] = useState(false);
+
   const demoVideos = [
     {
       isYt: true,
@@ -65,7 +66,7 @@ export function VideoProvider({ children }) {
     {
       isYt: true,
       isVimeo: false,
-      id: ' ahCwqrYpIuM',
+      id: 'ahCwqrYpIuM',
       addedAt: '8th Jul 2022',
       isFav: false,
      
@@ -113,8 +114,6 @@ export function VideoProvider({ children }) {
       isFav: false,
     },
   ];
-
-
 
   const toggleListDisplay = () => {
     setListView(true);
@@ -183,7 +182,7 @@ export function VideoProvider({ children }) {
       /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(-nocookie)?\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/;
     let matchesYoutube = url.match(ytRegex);
     let matchesYoutubeId = url.match(
-      /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/
+      /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9_]+)$/
     );
     if (matchesYoutube) {
       return matchesYoutube[6];

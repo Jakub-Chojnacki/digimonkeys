@@ -95,7 +95,7 @@ const AddVideo = () => {
   };
 
   return (
-    <Container gap={2} marginY={6} background="gray.100" p={6} maxW={["350px","400px","450px","500px"]}>
+    <Container gap={2}  p={6} maxW={["350px","400px","450px","500px"]}>
       <Text marginLeft={2} marginBottom={2} fontWeight="bold">Input a video link/id below:</Text>
       <Flex gap={2}>
         <Input
@@ -117,6 +117,7 @@ const AddVideo = () => {
       )}
     </Container>
   );
+  
 };
 
 export default AddVideo;
